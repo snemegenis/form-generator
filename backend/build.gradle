@@ -1,0 +1,48 @@
+subprojects {
+    buildscript {
+        ext {
+            springBootVersion = '1.4.3.RELEASE'
+        }
+        repositories {
+            mavenLocal()
+            mavenCentral()
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+            classpath("io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE")
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://projectlombok.org/mavenrepo"
+        }
+        maven {
+            url "http://jaspersoft.artifactoryonline.com/jaspersoft/jaspersoft-repo"
+        }
+        maven {
+            url "http://jasperreports.sourceforge.net/maven2"
+        }
+    }
+
+    dependencies {
+        compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+        testCompile 'junit:junit:4.12'
+        testCompile("org.springframework.boot:spring-boot-starter-test")
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+}

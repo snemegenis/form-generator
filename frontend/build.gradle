@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath "com.moowork.gradle:gradle-node-plugin:1.0.1"
+    }
+}
+
+apply plugin: 'com.moowork.node'
+
+task webpack_build(type: NpmTask, dependsOn: 'npmInstall') {
+    args= ['run-script', 'build']
+}
+
+task webpack_dev(type: NpmTask, dependsOn: 'npmInstall') {
+    args= ['run-script', 'dev']
+}
+
+task node_test(type: NpmTask, dependsOn: 'npmInstall') {
+    args= ['run-script', 'run-test']
+}

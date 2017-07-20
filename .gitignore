@@ -1,0 +1,10 @@
+target
+bin
+.settings
+.idea
+.project
+*.iml
+**/node_modules
+/build/
+.classpath
+*.jasper

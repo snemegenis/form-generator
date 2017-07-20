@@ -1,0 +1,23 @@
+{
+  "patients": {
+    "isLoading": false,
+    "isLoadingError": false,
+    "data": [
+      {
+        "id": 1,
+        "firstName": "Petras",
+        "lastName": "Petraitis"
+      },
+      {
+        "id": 2,
+        "firstName": "Jonas",
+        "lastName": "Jonaitis"
+      }
+    ]
+  },
+  "user": {
+    "id": 1,
+    "username": "petrjon"
+  }
+}
+

@@ -1,0 +1,52 @@
+{
+  "id": 1,
+  "history": "Some history of Petras",
+  "patient": {
+    "id": 1,
+    "first_name": "Petras",
+    "last_name": "Petraitis",
+    "occupation": "Carpenter",
+    "mobile_phone": "+37061495802",
+    "address": "Pasvaistes 12-89, Vilnius, Lietuva",
+    "employer": "UAB \"Laisvo vejo kontora\"",
+    "birth_date": "1985-05-14",
+    "personal_id": "38505144789",
+    "email": "petras@petras.com"
+  },
+  "treatments": [
+    "AMBULATORIC",
+    "OTHER"
+  ],
+  "disability_types": [
+    "WORKING_CAPACITY_LEVEL"
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2015-01-15",
+      "doctor_type": "Therapist",
+      "observation": "Very serious and dangerous illness",
+      "attachment": "Some attachments"
+    },
+    {
+      "id": 2,
+      "date": "2015-01-16",
+      "doctor_type": "Surgeon",
+      "observation": "Nothing new",
+      "attachment": "Some more attachments"
+    }
+  ],
+  "main_diagnosis": {
+    "code": "SER-1231",
+    "text": "Rhinitus posiblus vulgaris",
+    "functional_class": "The first class",
+    "degree": "medium",
+    "stage": "simple",
+    "history": "Some history",
+    "details": "Some details"
+  },
+  "barthel_index": 2,
+  "other_treatment": "Some other treatment of Petras",
+  "treatment_history": "Some treatment history of Petras",
+  "active": true
+}

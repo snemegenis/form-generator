@@ -1,0 +1,10 @@
+server:
+  port: 8090
+  contextPath: /report
+
+liquibase:
+  change-log: "classpath:/db/changelog/change-log-1.0.xml"
+
+security:
+  basic:
+    enabled: false
