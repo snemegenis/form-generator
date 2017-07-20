@@ -17,7 +17,7 @@ const Patient = ({id, firstName, lastName, onClick=f=>f}) => {
             </span>
         </div>
         <div className="actions">
-            <button onClick={onClick(id)}>Print</button>
+            <button onClick={() => onClick(id, firstName, lastName)}>Print</button>
         </div>
     </div>
 };
@@ -26,7 +26,7 @@ Patient.propTypes = {
     id: PropTypes.number.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
-    onClick: PropTypes.function.isRequired
+    onClick: PropTypes.func.isRequired
 };
 
 export default Patient;

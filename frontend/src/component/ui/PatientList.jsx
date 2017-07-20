@@ -25,7 +25,7 @@ const PatientList = ({patients, loading, onPatientClick}) => {
 PatientList.propTypes = {
     patients: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
-    onPatientClick: PropTypes.function.isRequired
+    onPatientClick: PropTypes.func.isRequired
 };
 
 export default PatientList;

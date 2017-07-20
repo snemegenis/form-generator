@@ -1,6 +1,6 @@
 server:
   port: 8090
-  contextPath: /report
+  contextPath: /form
 
 liquibase:
   change-log: "classpath:/db/changelog/change-log-1.0.xml"

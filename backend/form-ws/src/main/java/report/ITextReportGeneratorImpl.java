@@ -245,7 +245,7 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
         document.add(title2);
 
         // Date and number
-        LocalDate reportDate = CommonHelper.valueOrDefault((LocalDate) parameters.get(ReportConstants.PARAM_DATE), null);
+        LocalDate reportDate = CommonHelper.valueOrDefault((LocalDate) parameters.get(ReportConstants.PARAM_DATE), LocalDate.now());
         boolean printDate = CommonHelper.valueOrDefault((Boolean) parameters.get(ReportConstants.PARAM_PRINT_DATE), false);
         int reportNbr = CommonHelper.valueOrDefault((Integer) parameters.get(ReportConstants.PARAM_NBR), 0);
         boolean printNbr = CommonHelper.valueOrDefault((Boolean) parameters.get(ReportConstants.PARAM_PRINT_NBR), false);

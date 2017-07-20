@@ -1,6 +1,6 @@
 import request from "superagent";
 import constants from "./constant";
-import fileDownload from "react-file-donwload";
+let fileDownload = require("react-file-download");
 
 const loadPatients = (doctorId) => ({
     type: constants.LOAD_PATIENT_LIST,
@@ -14,7 +14,7 @@ const printPatient = (patientId) => ({
 
 export const loadPatientsAction = (doctorId) => dispatch => {
     dispatch(loadPatients(doctorId));
-    return request.post('http://localhost:8090/report/rest/v1/patient/list')
+    return request.post('http://localhost:8090/form/rest/v1/patient/list')
         .send({doctorId}).then(
             response => {
                 setTimeout(() => {
@@ -31,10 +31,10 @@ export const loadPatientsAction = (doctorId) => dispatch => {
 
 export const printPatientAction = (patientId, patientFirstName, patientLastName) => dispatch => {
     dispatch(printPatient(patientId));
-    return request.post('http://localhost:8090/report/rest/v1/patient/print')
+    return request.post('http://localhost:8090/form/rest/v1/report/disability').responseType('blob')
         .send({patientId}).then(
             response => {
-                fileDownload(response.data, patientFirstName + "_" + patientLastName + ".pdf");
+                fileDownload(response.body, patientFirstName + "_" + patientLastName + ".pdf");
                 dispatch(printPatientSuccessAction(patientId, response.body));
             }
         );

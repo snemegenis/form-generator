@@ -13,10 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import report.ReportGenerator;
 
 import java.util.Collections;
@@ -45,6 +42,7 @@ public class ReportController extends ControllerBase {
             method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/pdf")
+    @CrossOrigin(origins = "http://localhost:8081")
     public ResponseEntity<ByteArrayResource> print(@RequestBody DisabilityReportParams params) {
         HttpHeaders headers = addHeaders(new HttpHeaders());
         Patient patient = patientMapper.getById(params.getPatientId());
@@ -63,6 +61,9 @@ public class ReportController extends ControllerBase {
             byte[] reportData = reportGenerator
                     .generate("disability-report", parameters, Collections.singletonList(reportMapper
                             .getDisabilityReport(params.getPatientId())));
+            if (reportData == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            }
             return ResponseEntity.ok().headers(headers).contentLength(reportData.length).contentType(MediaType
                     .parseMediaType("application/octet-stream"))
                     .body(new ByteArrayResource(reportData));
