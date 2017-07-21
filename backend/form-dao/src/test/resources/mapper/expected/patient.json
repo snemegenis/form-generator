@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "first_name": "Petras",
+  "last_name": "Petraitis",
+  "occupation": "Carpenter",
+  "mobile_phone": "+37061495802",
+  "address": "Pasvaistes 12-89, Vilnius, Lietuva",
+  "employer": "UAB \"Laisvo vejo kontora\"",
+  "birth_date": "1985-05-14",
+  "personal_id": "38505144789",
+  "email": "petras@petras.com",
+  "disability_report_id": 1
+}

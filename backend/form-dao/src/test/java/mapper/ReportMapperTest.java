@@ -2,6 +2,7 @@ package mapper;
 
 import bean.DisabilityReport;
 import bean.Treatment;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -29,24 +30,18 @@ import org.unitils.reflectionassert.ReflectionAssert;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { PersistenceConfig.class, PersistenceConfigForTest.class })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class, TransactionalTestExecutionListener.class })
-public class ReportMapperTest {
+public class ReportMapperTest extends MapperTestBase{
 
     @Autowired
     private ReportMapper reportMapper;
 
-    @Autowired
-    private ObjectMapper mapper;
-
     @Test
     public void testGetList() throws Exception {
 
-        DisabilityReport expected = readFromClassPath("/mapper/expected/disability-report.json", DisabilityReport.class);
+        DisabilityReport expected = readFromClassPath("/mapper/expected/disability-report.json",
+                new TypeReference<DisabilityReport>() {});
         DisabilityReport actual = reportMapper.getDisabilityReport(1);
         ReflectionAssert.assertReflectionEquals(expected, actual);
     }
 
-    private <T> T readFromClassPath(String classpath, Class<T> clazz) throws java.io.IOException {
-        Resource report = new ClassPathResource(classpath);
-        return mapper.readValue(report.getFile(), clazz);
-    }
 }

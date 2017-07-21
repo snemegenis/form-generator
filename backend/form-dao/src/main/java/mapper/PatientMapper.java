@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import sqlbuilder.PatientSQLBuilder;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by liutkvai on 9/2/2016.
