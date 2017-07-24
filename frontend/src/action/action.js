@@ -1,5 +1,6 @@
 import request from "superagent";
 import constants from "./constant";
+
 let fileDownload = require("react-file-download");
 
 const loadPatients = (doctorId) => ({
@@ -14,7 +15,7 @@ const printPatient = (patientId) => ({
 
 export const loadPatientsAction = (doctorId) => dispatch => {
     dispatch(loadPatients(doctorId));
-    return request.post('http://localhost:8090/form/rest/v1/patient/list')
+    return request.post(APP_CONFIG.API_URL + '/form/rest/v1/patient/list')
         .send({doctorId}).then(
             response => {
                 setTimeout(() => {

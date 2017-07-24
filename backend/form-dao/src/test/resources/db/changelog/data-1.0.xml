@@ -45,18 +45,6 @@
 			<column name="address">Smauglio 1-891, Kaunas, Lietuva</column>
 			<column name="employer">UAB "Idurtas Pirstas"</column>
 		</insert>
-		<insert tableName="patient">
-			<column name="id">3</column>
-			<column name="first_name">Antanas</column>
-			<column name="last_name">Antanaitis</column>
-			<column name="occupation">Barber</column>
-			<column name="birth_date">1939-03-11</column>
-			<column name="personal_id">33903111891</column>
-			<column name="phone">+37061495820</column>
-			<column name="address">Kazanaviciaus 2-8, Kaunas, Lietuva</column>
-			<column name="employer">UAB "Prakirpta ausis"</column>
-			<column name="doctor_id">1</column>
-		</insert>
 	</changeSet>
 	<changeSet author="liutkvai" id="data-4">
 		<insert tableName="disability_report">

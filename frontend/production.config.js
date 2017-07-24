@@ -1,5 +1,4 @@
 exports.babel = function (options) {
-    console.log(options);
     return {
         module : {
             loaders: [

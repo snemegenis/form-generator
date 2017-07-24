@@ -16,7 +16,7 @@ const PatientList = ({patients, loading, onPatientClick}) => {
             patients.map(patient =>
                 <li key={patient.id} >
                     <Patient id={patient.id} firstName={patient.firstName} lastName={patient.lastName}
-                             onClick={onPatientClick}/>
+                             onClick={onPatientClick} disabled={!patient.disabilityReportId}/>
                 </li>)
         }
     </ul>
