@@ -5,12 +5,11 @@ import {printPatientAction} from "../../action/action";
 const VisiblePatients = (props, {store}) => {
     const {patients} = store.getState();
     return <PatientList patients={patients.data} loading={patients.isLoading}
-                        onPatientClick={
+                        onPrint={
                             (id, firstName, lastName) => {
-                                console.log('print patient');
                                 store.dispatch(printPatientAction(id, firstName, lastName))
                                 }
-                            }/>;
+                            } onAdd={()=>{console.log('route to add')}}/>;
 };
 
 VisiblePatients.contextTypes = {

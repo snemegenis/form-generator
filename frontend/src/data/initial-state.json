@@ -5,11 +5,13 @@
     "data": [
       {
         "id": 1,
+        "personalId": "17809011221",
         "firstName": "Petras",
         "lastName": "Petraitis"
       },
       {
         "id": 2,
+        "personalId": "17809021222",
         "firstName": "Jonas",
         "lastName": "Jonaitis"
       }

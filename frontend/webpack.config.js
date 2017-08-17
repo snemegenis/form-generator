@@ -46,7 +46,7 @@ var common = {
             template: path.resolve(SRC_DIR, 'index.html')
         }),
         new ExtendedDefinePlugin({
-            APP_CONFIG: appConfig,
+            APP_CONFIG: appConfig
         })
     ]
 };

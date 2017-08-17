@@ -1,11 +1,11 @@
 import React, {PropTypes} from "react";
 
-const Patient = ({id, firstName, lastName, disabled, onClick=f=>f}) => {
+const Patient = ({id, personalId, firstName, lastName, disabled, onPrint=f=>f}) => {
     return <div className="patient">
         <div className="contents">
             <span>
-                <strong>Id:</strong>
-                <span>{id}</span>
+                <strong>Personal id:</strong>
+                <span>{personalId}</span>
             </span>
             <span>
                 <strong>First name:</strong>
@@ -15,9 +15,9 @@ const Patient = ({id, firstName, lastName, disabled, onClick=f=>f}) => {
                 <strong>Last name:</strong>
                 <span>{lastName}</span>
             </span>
-        </div>
-        <div className="actions">
-            <button disabled={disabled} onClick={() => onClick(id, firstName, lastName)}>Print</button>
+            <span className="actions">
+                <button disabled={disabled} onClick={() => onPrint(id, firstName, lastName)}>Print</button>
+            </span>
         </div>
     </div>
 };
@@ -27,7 +27,7 @@ Patient.propTypes = {
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired
+    onPrint: PropTypes.func.isRequired
 };
 
 export default Patient;
