@@ -8,3 +8,9 @@ liquibase:
 security:
   basic:
     enabled: false
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
