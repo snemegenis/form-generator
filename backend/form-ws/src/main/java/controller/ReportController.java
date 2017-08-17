@@ -3,8 +3,8 @@ package controller;
 import bean.DisabilityReportParams;
 import bean.Doctor;
 import bean.Patient;
-import bean.request.PatientFilter;
 import constants.ReportConstants;
+import lombok.extern.slf4j.Slf4j;
 import mapper.PatientMapper;
 import mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import report.ReportGenerator;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +26,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "report", consumes = "application/json")
+@Slf4j
 public class ReportController extends ControllerBase {
 
     @Autowired
