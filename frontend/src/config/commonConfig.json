@@ -1,0 +1,4 @@
+{
+  "API_URL": "http://localhost:8090",
+  "API_APP_PREFIX": "/form/rest/v1"
+}

@@ -18,6 +18,7 @@ if (process.env.NODE_ENV == 'prod') {
     nconf.file('./src/config/prodConfig.json');
 }
 nconf.file('./src/config/devConfig.json');
+nconf.file('./src/config/commonConfig.json');
 let appConfig = nconf.get();
 
 var common = {

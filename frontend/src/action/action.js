@@ -1,5 +1,6 @@
-import request from "superagent";
 import constants from "./constant";
+import PatientApi from "../api/patient-api"
+import ReportApi from "../api/report-api"
 
 let fileDownload = require("react-file-download");
 
@@ -15,16 +16,10 @@ const printPatient = (patientId) => ({
 
 export const loadPatientsAction = (doctorId) => dispatch => {
     dispatch(loadPatients(doctorId));
-    return request.post(APP_CONFIG.API_URL + '/form/rest/v1/patient/list')
-        .send({doctorId}).then(
-            response => {
-                setTimeout(() => {
-                    console.log('Data received: ', response);
-                    dispatch(loadPatientsSuccessAction(doctorId, response.body));
-                }, 2000);
-            },
+    return PatientApi.load(doctorId).then(
+            response => dispatch(loadPatientsSuccessAction(doctorId, response.body)),
             error => {
-                console.log('error occurred: ', error);
+                console.log(error);
                 dispatch(loadPatientsErrorAction(doctorId, error));
             });
 
@@ -32,8 +27,7 @@ export const loadPatientsAction = (doctorId) => dispatch => {
 
 export const printPatientAction = (patientId, patientFirstName, patientLastName) => dispatch => {
     dispatch(printPatient(patientId));
-    return request.post('http://localhost:8090/form/rest/v1/report/disability').responseType('blob')
-        .send({patientId}).then(
+    return ReportApi.print(patientId).then(
             response => {
                 fileDownload(response.body, patientFirstName + "_" + patientLastName + ".pdf");
                 dispatch(printPatientSuccessAction(patientId, response.body));
@@ -58,6 +52,12 @@ export const loadPatientsSuccessAction = (doctorId, patients) => ({
     patients: patients ? patients : [],
     loadedAt: Date.now(),
     doctorId
+});
+
+export const addPatientAction = (doctorId, error) => ({
+  type: constants.LOAD_PATIENT_LIST_ERROR,
+  error,
+  doctorId
 });
 
 export const loginAction = (username, password) => ({

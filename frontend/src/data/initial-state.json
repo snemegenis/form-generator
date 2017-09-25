@@ -2,6 +2,7 @@
   "patients": {
     "isLoading": false,
     "isLoadingError": false,
+    "activePatientId": null,
     "data": [
       {
         "id": 1,

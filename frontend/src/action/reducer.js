@@ -10,6 +10,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
             };
         case constants.LOAD_PATIENT_LIST_SUCCESS:
             return {
+                ...state,
                 isLoading: false,
                 isLoadingError: false,
                 data: action.patients,
@@ -18,6 +19,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
             };
         case constants.LOAD_PATIENT_LIST_ERROR:
             return {
+               ...state,
                 data: [],
                 isLoading: false,
                 isLoadingError: false,
