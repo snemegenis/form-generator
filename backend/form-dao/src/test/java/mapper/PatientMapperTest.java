@@ -51,4 +51,19 @@ public class PatientMapperTest extends MapperTestBase {
 
     }
 
+    @Test
+    public void testAddPatient() throws Exception {
+        Patient newPatient = readFromClassPath("/mapper/expected/new-patient.json",
+                new TypeReference<Patient>() {});
+        List<Patient> expected = readFromClassPath("/mapper/expected/patients.json",
+                new TypeReference<List<Patient>>() {});
+        expected.add(newPatient);
+
+        patientMapper.add(newPatient);
+        List<Patient> actual = patientMapper.getListByFilter(null);
+        assertListEquals(expected, actual);
+
+    }
+
+
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * Created by vaidelius on 16.7.3.
  */
 @NoArgsConstructor
-@ToString
+@ToString(callSuper = true)
 @Getter
 @Setter
 public class Patient extends Person {

@@ -1,12 +1,11 @@
 package mapper;
 
 import bean.Patient;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
 import sqlbuilder.PatientSQLBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -22,5 +21,11 @@ public interface PatientMapper {
     @Select("SELECT * FROM patient WHERE id = #{id}")
     @Transactional(readOnly = true)
     Patient getById(final Integer id);
+
+    @Insert({ "INSERT INTO patient (first_name, last_name, occupation, birth_date, personal_id, email, phone, " +
+            "mobile_phone, address, employer) VALUES (#{firstName}, #{lastName}, #{occupation}, #{birthDate}, " +
+            "#{personalId}, #{email}, #{phone}, #{mobilePhone}, #{address}, #{employer})" })
+    @Options(useGeneratedKeys = true, keyColumn = "id")
+    void add(Patient patient);
 
 }

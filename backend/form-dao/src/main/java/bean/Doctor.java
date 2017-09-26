@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * Created by vaidelius on 16.7.3.
  */
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @Getter
 @Setter
