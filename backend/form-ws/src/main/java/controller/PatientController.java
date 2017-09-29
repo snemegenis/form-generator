@@ -29,4 +29,15 @@ public class PatientController {
         return patientMapper.getListByFilter(filter.getDoctorId());
     }
 
+    @RequestMapping(value = "add",
+            method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json")
+    @CrossOrigin(origins = "http://localhost:8081")
+    public Patient addPatient(@RequestBody Patient patient) {
+        patientMapper.add(patient);
+        return patient;
+    }
+
+
 }

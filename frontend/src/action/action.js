@@ -14,6 +14,35 @@ const printPatient = (patientId) => ({
     patientId
 });
 
+const savePatient = (doctorId, patient) => ({
+  type: constants.SAVE_PATIENT,
+  doctorId,
+  patient
+});
+
+export const savePatientAction = (patient) => dispatch => {
+  dispatch(savePatient(patient));
+  return PatientApi.save(patient).then(
+    response => dispatch(savePatientSuccessAction(response.body)),
+    error => {
+      console.log(error);
+      dispatch(savePatientErrorAction(error));
+    });
+
+};
+
+export const savePatientErrorAction = (patient, error) => ({
+  type: constants.SAVE_PATIENT_ERROR,
+  error,
+  patient
+});
+
+export const savePatientSuccessAction = (patient) => ({
+  type: constants.SAVE_PATIENT_SUCCESS,
+  patient,
+  updatedAt: Date.now(),
+});
+
 export const loadPatientsAction = (doctorId) => dispatch => {
     dispatch(loadPatients(doctorId));
     return PatientApi.load(doctorId).then(
@@ -52,12 +81,6 @@ export const loadPatientsSuccessAction = (doctorId, patients) => ({
     patients: patients ? patients : [],
     loadedAt: Date.now(),
     doctorId
-});
-
-export const addPatientAction = (doctorId, error) => ({
-  type: constants.LOAD_PATIENT_LIST_ERROR,
-  error,
-  doctorId
 });
 
 export const loginAction = (username, password) => ({

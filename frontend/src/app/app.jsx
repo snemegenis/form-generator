@@ -1,4 +1,3 @@
-import {PropTypes} from 'react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import storeFactory from '../store/index.js';
@@ -8,6 +7,7 @@ import {loadPatientsAction} from '../action/action';
 import {Provider} from 'react-redux'
 import {Router, Route, hashHistory} from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import NotificationsSystem from 'reapop';
 
 require('../style/main.css');
 
@@ -17,6 +17,7 @@ const history = syncHistoryWithStore(hashHistory, store);
 const PatientsPage = () => {
   return (
     <div>
+      <NotificationsSystem/>
       <VisiblePatients />
     </div>
   );
@@ -25,6 +26,7 @@ const PatientsPage = () => {
 const AddPatientPage = () => {
   return (
     <div>
+      <NotificationsSystem/>
       <AddPatient />
     </div>
   );
