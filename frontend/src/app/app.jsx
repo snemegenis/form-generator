@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import storeFactory from '../store/index.js';
@@ -9,6 +10,10 @@ import {Router, Route, hashHistory} from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import NotificationsSystem from 'reapop';
 
+import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.min.css';
+import '!style-loader!css-loader!font-awesome/css/font-awesome.min.css';
+import theme from 'reapop-theme-bootstrap';
+
 require('../style/main.css');
 
 let store = storeFactory();
@@ -17,7 +22,7 @@ const history = syncHistoryWithStore(hashHistory, store);
 const PatientsPage = () => {
   return (
     <div>
-      <NotificationsSystem/>
+      <NotificationsSystem theme={theme}/>
       <VisiblePatients />
     </div>
   );
@@ -26,7 +31,7 @@ const PatientsPage = () => {
 const AddPatientPage = () => {
   return (
     <div>
-      <NotificationsSystem/>
+      <NotificationsSystem theme={theme}/>
       <AddPatient />
     </div>
   );

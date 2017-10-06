@@ -1,6 +1,7 @@
 import constants from "./constant";
 import PatientApi from "../api/patient-api"
 import ReportApi from "../api/report-api"
+import {addNotification as notify} from 'reapop';
 
 let fileDownload = require("react-file-download");
 
@@ -46,9 +47,12 @@ export const savePatientSuccessAction = (patient) => ({
 export const loadPatientsAction = (doctorId) => dispatch => {
     dispatch(loadPatients(doctorId));
     return PatientApi.load(doctorId).then(
-            response => dispatch(loadPatientsSuccessAction(doctorId, response.body)),
+            response => {
+              dispatch(notify({message: "Patients loaded successfully.", status: 200, position: 'tc'}));
+              dispatch(loadPatientsSuccessAction(doctorId, response.body))},
             error => {
                 console.log(error);
+                dispatch(notify({message: "Patients loading error.", status: 500, position: 'tc'}));
                 dispatch(loadPatientsErrorAction(doctorId, error));
             });
 
