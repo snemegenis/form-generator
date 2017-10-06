@@ -2,7 +2,10 @@ package mapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import liquibase.Liquibase;
+import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.junit.After;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -14,6 +17,9 @@ import java.util.List;
  * Created by liutkvai on 7/21/2017.
  */
 public abstract class MapperTestBase {
+
+    @Autowired
+    private SpringLiquibase liquibase;
 
     @Autowired
     protected ObjectMapper mapper;

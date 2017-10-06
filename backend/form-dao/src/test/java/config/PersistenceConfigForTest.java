@@ -59,6 +59,7 @@ public class PersistenceConfigForTest {
     @Bean
     public SpringLiquibase liquibase() throws Exception {
         SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDropFirst(true);
         liquibase.setDataSource(dataSource());
         liquibase.setChangeLog("classpath:/db/changelog/change-log-1.0.xml");
         return liquibase;

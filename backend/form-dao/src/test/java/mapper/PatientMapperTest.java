@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,6 +27,7 @@ import java.util.List;
 @ContextConfiguration(classes = {PersistenceConfig.class, PersistenceConfigForTest.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PatientMapperTest extends MapperTestBase {
 
     @Autowired
@@ -60,6 +62,20 @@ public class PatientMapperTest extends MapperTestBase {
         expected.add(newPatient);
 
         patientMapper.add(newPatient);
+        List<Patient> actual = patientMapper.getListByFilter(null);
+        assertListEquals(expected, actual);
+
+    }
+
+    @Test
+    public void testUpdatePatient() throws Exception {
+        Patient newPatient = readFromClassPath("/mapper/expected/new-patient.json",
+                new TypeReference<Patient>() {});
+        newPatient.setId(1);
+        List<Patient> expected = readFromClassPath("/mapper/expected/updated-patients.json",
+                new TypeReference<List<Patient>>() {});
+
+        patientMapper.update(newPatient);
         List<Patient> actual = patientMapper.getListByFilter(null);
         assertListEquals(expected, actual);
 
