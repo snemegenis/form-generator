@@ -1,33 +1,31 @@
 import React, {PropTypes} from "react";
+import {Form, Control} from "react-redux-form";
 
-const PatientForm = ({doctorId, patient, onSave = f => f}) => {
+class PatientForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  let _personalId;
+  handleSubmit(patient) {
+    this.props.onSave(patient);
+  }
 
-  const save = event => {
-    event.preventDefault();
-    onSave({
-      personalId: _personalId.value
-    });
-  };
-
-
-  return <form className="patient-form" onSubmit={save}>
-    <div className="contents">
-      {patient.id ? <input type="hidden" value={patient.id}/> : ''}
-      <label>
-        <strong>Personal id:</strong>
-        <input ref={input => _personalId = input} type="text" value={patient.personalId}/>
+  render() {
+    return <Form model="patients.activePatient" onSubmit={(patient)=>{this.handleSubmit(patient)}}>
+        <label htmlFor="patient.personalId">
+          <strong>Personal id:</strong>
+          <Control.text model="patients.activePatient.personalId" id="patient.personalId" />
+        </label>
+      <label htmlFor="patient.firstName">
+        <strong>First Name:</strong>
+        <Control.text model="patients.activePatient.firstName" id="patient.firstName" />
       </label>
-    </div>
-    <div className="actions">
-      <button>Save</button>
-    </div>
-  </form>
-};
+        <button type="submit">Save</button>
+      </Form>
+  }
+}
 
 PatientForm.propTypes = {
-  patient: PropTypes.object.isRequired,
   onSave: PropTypes.func.isRequired
 };
 

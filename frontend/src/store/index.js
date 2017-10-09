@@ -3,15 +3,19 @@ import initialStateData from '../data/initial-state.json';
 import {patients, user} from '../action/reducer';
 import {createLogger} from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import { routerReducer } from 'react-router-redux'
+import {routerReducer} from 'react-router-redux'
 import {reducer as notificationsReducer} from 'reapop';
+import {combineForms} from 'react-redux-form';
 
 const logger = createLogger();
 
 const storeFactory = (initialState = initialStateData) =>
-    applyMiddleware(thunkMiddleware, logger)(createStore)(combineReducers(
-        {patients, user, routing: routerReducer,
-          notifications: notificationsReducer()}), initialState);
+  applyMiddleware(thunkMiddleware, logger)(createStore)(combineForms(
+    {
+      user, patients,
+      routing: routerReducer,
+      notifications: notificationsReducer()
+    }), initialState);
 
 
 export default storeFactory;

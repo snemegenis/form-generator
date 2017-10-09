@@ -18,14 +18,11 @@ const VisiblePatients = connect(state => ({
   })
 )(PatientList);
 
-const AddPatient = connect(state => ({
-    doctorId: state.user.id,
-    patient: state.patients.activePatientId ? state.patients.data[state.patients.activePatientId] : {}
-  }),
+const AddPatient = connect(null,
   (dispatch, dispatchProps) => ({
-    onSave(personalId) {
-      console.log('Saving '+personalId);
-      dispatch(savePatientAction({personalId}));
+    onSave(person) {
+      console.log('Saving '+person);
+      dispatch(savePatientAction({personalId: person.personalId}));
     }
   })
 )(PatientForm);
