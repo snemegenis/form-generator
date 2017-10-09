@@ -31,6 +31,6 @@ public interface PatientMapper {
     @Insert({ "UPDATE patient set first_name=#{firstName}, last_name=#{lastName}, occupation=#{occupation}, " +
             "birth_date=#{birthDate}, personal_id=#{personalId}, email=#{email}, phone=#{phone}, " +
             "mobile_phone=#{mobilePhone}, address=#{address}, employer=#{employer} WHERE id=#{id}" })
-    void update(Patient patient);
+    int update(Patient patient);
 
 }
