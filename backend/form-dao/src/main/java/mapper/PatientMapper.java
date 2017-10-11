@@ -23,8 +23,8 @@ public interface PatientMapper {
     Patient getById(final Integer id);
 
     @Insert({ "INSERT INTO patient (first_name, last_name, occupation, birth_date, personal_id, email, phone, " +
-            "mobile_phone, address, employer) VALUES (#{firstName}, #{lastName}, #{occupation}, #{birthDate}, " +
-            "#{personalId}, #{email}, #{phone}, #{mobilePhone}, #{address}, #{employer})" })
+            "mobile_phone, address, employer, doctor_id) VALUES (#{firstName}, #{lastName}, #{occupation}, " +
+            "#{birthDate}, #{personalId}, #{email}, #{phone}, #{mobilePhone}, #{address}, #{employer}, #{doctorId})" })
     @Options(useGeneratedKeys = true, keyColumn = "id")
     void add(Patient patient);
 

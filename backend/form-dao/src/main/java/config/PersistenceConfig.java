@@ -1,5 +1,9 @@
 package config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -39,6 +43,14 @@ public class PersistenceConfig {
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setConfigLocation(mybatisConfig);
         return sessionFactory.getObject();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, true);
+        return mapper;
     }
 
 }
