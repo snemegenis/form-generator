@@ -1,3 +1,5 @@
-body {
-    background: cornsilk;
+.patient-form>.field>label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
 }

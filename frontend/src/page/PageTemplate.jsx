@@ -3,7 +3,7 @@ import theme from 'reapop-theme-bootstrap';
 import NotificationsSystem from 'reapop';
 
 const PageTemplate = ({children}) =>
-  <div className="page">
+  <div className="container">
     <NotificationsSystem theme={theme}/>
     {children}
   </div>;

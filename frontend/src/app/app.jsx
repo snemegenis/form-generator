@@ -12,8 +12,9 @@ import AddPatientPage from '../page/AddPatientPage.jsx'
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.min.css';
 import '!style-loader!css-loader!font-awesome/css/font-awesome.min.css';
+import '!style-loader!css-loader!react-datepicker/dist/react-datepicker.css';
 
-require('../style/main.css');
+import '../style/main.css';
 
 let store = storeFactory();
 const history = syncHistoryWithStore(hashHistory, store);

@@ -5,7 +5,10 @@ import PageTemplate from './PageTemplate.jsx';
 const AddPatientPage = () => {
   return (
     <PageTemplate>
-      <AddPatient />
+      <div className="page-header">
+        <h1>Add Patient</h1>
+        <AddPatient />
+      </div>
     </PageTemplate>
   );
 };

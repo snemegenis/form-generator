@@ -41,8 +41,13 @@ var common = {
         loader: 'json-loader'
       },
       {
+        test: /main\.css$/,
+        loaders: ['style', 'css-loader?minimize=true'],
+      },
+      {
         test: /\.css$/,
         loaders: ['style', CSSLoader],
+        exclude: /main\.css$/
       },
       {
         test: /\.scss$/,
