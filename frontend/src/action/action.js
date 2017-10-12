@@ -6,8 +6,7 @@ import {addNotification as notify} from 'reapop';
 let fileDownload = require("react-file-download");
 
 const loadPatients = (doctorId) => ({
-  type: constants.LOAD_PATIENT_LIST,
-  doctorId
+  type: constants.LOAD_PATIENT_LIST
 });
 
 const printPatient = (patientId) => ({
@@ -47,17 +46,17 @@ export const savePatientSuccessAction = (patient) => ({
   updatedAt: Date.now(),
 });
 
-export const loadPatientsAction = (doctorId) => dispatch => {
-  dispatch(loadPatients(doctorId));
-  return PatientApi.load(doctorId).then(
+export const loadPatientsAction = () => dispatch => {
+  dispatch(loadPatients());
+  return PatientApi.load().then(
     response => {
       dispatch(notify({message: "Patients loaded successfully.", status: 200, position: 'tc'}));
-      dispatch(loadPatientsSuccessAction(doctorId, response.body))
+      dispatch(loadPatientsSuccessAction(response.body))
     },
     error => {
       console.log(error);
       dispatch(notify({message: "Patients loading error.", status: 500, position: 'tc'}));
-      dispatch(loadPatientsErrorAction(doctorId, error));
+      dispatch(loadPatientsErrorAction(error));
     });
 
 };
@@ -78,17 +77,15 @@ export const printPatientSuccessAction = (patientId, data) => ({
   data
 });
 
-export const loadPatientsErrorAction = (doctorId, error) => ({
+export const loadPatientsErrorAction = (error) => ({
   type: constants.LOAD_PATIENT_LIST_ERROR,
-  error,
-  doctorId
+  error
 });
 
-export const loadPatientsSuccessAction = (doctorId, patients) => ({
+export const loadPatientsSuccessAction = (patients) => ({
   type: constants.LOAD_PATIENT_LIST_SUCCESS,
   patients: patients ? patients : [],
-  loadedAt: Date.now(),
-  doctorId
+  loadedAt: Date.now()
 });
 
 export const loginAction = (username, password) => ({

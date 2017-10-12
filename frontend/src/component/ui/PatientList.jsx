@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 
 
-const PatientList = ({patients, loading, onPrint=f=>f, onAdd=f=>f}) => {
+const PatientList = ({patients, loading, onDisabilityAdd=f=>f, onPrint=f=>f, onAdd=f=>f}) => {
     if (loading) {
         return <div>Data is loading</div>
     }
@@ -18,7 +18,8 @@ const PatientList = ({patients, loading, onPrint=f=>f, onAdd=f=>f}) => {
                     <li key={patient.id} >
                         <Patient id={patient.id} personalId={patient.personalId}
                                  firstName={patient.firstName} lastName={patient.lastName}
-                                 onPrint={onPrint} disabled={!patient.disabilityReportId}/>
+                                 onPrint={onPrint} disabled={!patient.disabilityReportId}
+                                 onDisabilityAdd={onDisabilityAdd}/>
                     </li>)
             }
             </ul>

@@ -9,10 +9,10 @@ import {Router, Route, hashHistory} from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import PatientsPage from '../page/PatientsPage.jsx'
 import AddPatientPage from '../page/AddPatientPage.jsx'
+import AddPatientDisabilityPage from "../page/AddPatientDisabilityPage.jsx";
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.min.css';
 import '!style-loader!css-loader!font-awesome/css/font-awesome.min.css';
-import '!style-loader!css-loader!react-datepicker/dist/react-datepicker.css';
 
 import '../style/main.css';
 
@@ -24,11 +24,12 @@ ReactDOM.render(<Provider store={store}>
     <div className="main">
       <Route exact path="/" component={PatientsPage}/>
       <Route path="/patient/add" component={AddPatientPage}/>
+      <Route path="/patient/disability/add" component={AddPatientDisabilityPage}/>
     </div>
   </Router>
 </Provider>, document.getElementById('app'));
 
 store.dispatch(loginAction('petrjon', '123'));
 setTimeout(() => {
-  store.dispatch(loadPatientsAction(store.getState().user.id));
+  store.dispatch(loadPatientsAction());
 }, 1000);

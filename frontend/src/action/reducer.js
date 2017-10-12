@@ -15,7 +15,8 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
-        activePatient: action.patient.id,
+        activePatient: {},
+        data: [action.patient, ...state.data],
         error: null
       };
     case constants.SAVE_PATIENT_ERROR:
