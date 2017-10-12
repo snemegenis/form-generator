@@ -32,7 +32,6 @@
 			<column name="mobile_phone">+37061495802</column>
 			<column name="address">Pasvaistes 12-89, Vilnius, Lietuva</column>
 			<column name="employer">UAB "Laisvo vejo kontora"</column>
-			<column name="doctor_id">1</column>
 		</insert>
 		<insert tableName="patient">
 			<column name="id">2</column>

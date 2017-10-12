@@ -14,17 +14,18 @@ import java.util.List;
 @Mapper
 public interface PatientMapper {
 
-    @SelectProvider(type = PatientSQLBuilder.class, method = "buildListByFilter")
+    @Select("SELECT p.*, dr.id as disability_report_id FROM patient p " +
+            "LEFT JOIN disability_report dr ON dr.patient_id = p.id")
     @Transactional(readOnly = true)
-    List<Patient> getListByFilter(final Integer doctorId);
+    List<Patient> getList();
 
     @Select("SELECT * FROM patient WHERE id = #{id}")
     @Transactional(readOnly = true)
     Patient getById(final Integer id);
 
     @Insert({ "INSERT INTO patient (first_name, last_name, occupation, birth_date, personal_id, email, phone, " +
-            "mobile_phone, address, employer, doctor_id) VALUES (#{firstName}, #{lastName}, #{occupation}, " +
-            "#{birthDate}, #{personalId}, #{email}, #{phone}, #{mobilePhone}, #{address}, #{employer}, #{doctorId})" })
+            "mobile_phone, address, employer) VALUES (#{firstName}, #{lastName}, #{occupation}, " +
+            "#{birthDate}, #{personalId}, #{email}, #{phone}, #{mobilePhone}, #{address}, #{employer})" })
     @Options(useGeneratedKeys = true, keyColumn = "id")
     void add(Patient patient);
 

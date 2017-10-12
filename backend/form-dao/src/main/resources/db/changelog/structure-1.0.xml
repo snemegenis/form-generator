@@ -64,8 +64,6 @@
 			</column>
 			<column name="employer" type="VARCHAR(100)">
 			</column>
-			<column name="doctor_id" type="INTEGER">
-			</column>
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-4">
@@ -213,13 +211,6 @@
 								 baseTableName="disability_type"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id" />
-	</changeSet>
-	<changeSet author="liutkvai" id="foreign-key-7">
-		<addForeignKeyConstraint constraintName="patient_doctor_fk"
-								 baseTableName="patient"
-								 baseColumnNames="doctor_id"
-								 referencedTableName="doctor"
 								 referencedColumnNames="id" />
 	</changeSet>
 	<changeSet author="liutkvai" id="primary-key-1">

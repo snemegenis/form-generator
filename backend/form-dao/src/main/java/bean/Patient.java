@@ -23,13 +23,11 @@ public class Patient extends Person {
     private String address;
     private String employer;
     private Integer disabilityReportId;
-    private Integer doctorId;
 
     @Builder
     public Patient(Integer id, String firstName, String lastName, String occupation,
                    LocalDate birthDate, String personalId, String email, String phone,
-                   String mobilePhone, String address, String employer, Integer doctorId,
-            Integer disabilityReportId) {
+                   String mobilePhone, String address, String employer, Integer disabilityReportId) {
         super(id, firstName, lastName, occupation);
         this.birthDate = birthDate;
         this.personalId = personalId;
@@ -38,7 +36,6 @@ public class Patient extends Person {
         this.mobilePhone = mobilePhone;
         this.address = address;
         this.employer = employer;
-        this.doctorId = doctorId;
         this.disabilityReportId = disabilityReportId;
     }
 

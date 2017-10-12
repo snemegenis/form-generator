@@ -32,7 +32,6 @@
 			<column name="mobile_phone">+37061495802</column>
 			<column name="address">Pasvaistes 12-89, Vilnius, Lietuva</column>
 			<column name="employer">UAB "Laisvo vejo kontora"</column>
-			<column name="doctor_id">1</column>
 		</insert>
 		<insert tableName="patient">
 			<column name="id">2</column>
@@ -55,7 +54,6 @@
 			<column name="phone">+37061495820</column>
 			<column name="address">Kazanaviciaus 2-8, Kaunas, Lietuva</column>
 			<column name="employer">UAB "Prakirpta ausis"</column>
-			<column name="doctor_id">1</column>
 		</insert>
 	</changeSet>
 	<changeSet author="liutkvai" id="data-4">
