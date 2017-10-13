@@ -3,6 +3,7 @@
     "isLoading": false,
     "isLoadingError": false,
     "activePatient": {},
+    "activeDisability": {},
     "data": [
       {
         "id": 1,

@@ -1,16 +1,17 @@
 import React from 'react';
-import {AddPatient} from '../component/container/index';
+import {AddDisability} from '../component/container/index';
 import PageTemplate from './PageTemplate.jsx';
+import { withRouter } from 'react-router'
 
-const AddPatientDisabilityPage = () => {
+const AddPatientDisabilityPage = (match) => {
   return (
     <PageTemplate>
       <div className="page-header">
         <h1>Add Patient disability</h1>
-        <AddPatient />
+        <AddDisability patientId={match.params.patientId}/>
       </div>
     </PageTemplate>
   );
 };
 
-export default AddPatientDisabilityPage;
+export default withRouter(AddPatientDisabilityPage);

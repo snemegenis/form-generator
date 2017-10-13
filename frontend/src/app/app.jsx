@@ -24,7 +24,7 @@ ReactDOM.render(<Provider store={store}>
     <div className="main">
       <Route exact path="/" component={PatientsPage}/>
       <Route path="/patient/add" component={AddPatientPage}/>
-      <Route path="/patient/disability/add" component={AddPatientDisabilityPage}/>
+      <Route path="/patient/:patientId/disability/add" component={AddPatientDisabilityPage}/>
     </div>
   </Router>
 </Provider>, document.getElementById('app'));

@@ -19,7 +19,7 @@ const PatientList = ({patients, loading, onDisabilityAdd=f=>f, onPrint=f=>f, onA
                         <Patient id={patient.id} personalId={patient.personalId}
                                  firstName={patient.firstName} lastName={patient.lastName}
                                  onPrint={onPrint} disabled={!patient.disabilityReportId}
-                                 onDisabilityAdd={onDisabilityAdd}/>
+                                 onDisabilityAdd={() => onDisabilityAdd(patient.id)}/>
                     </li>)
             }
             </ul>

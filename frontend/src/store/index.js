@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import {routerReducer} from 'react-router-redux'
 import {reducer as notificationsReducer} from 'reapop';
 import {combineForms} from 'react-redux-form';
-
+import { reducer as formReducer } from 'redux-form'
 const logger = createLogger();
 
 const storeFactory = (initialState = initialStateData) =>
@@ -14,6 +14,7 @@ const storeFactory = (initialState = initialStateData) =>
     {
       user, patients,
       routing: routerReducer,
+      form: formReducer,
       notifications: notificationsReducer()
     }), initialState);
 

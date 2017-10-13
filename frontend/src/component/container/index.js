@@ -4,6 +4,7 @@ import {printPatientAction, savePatientAction} from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import {actions} from "react-redux-form";
+import DisabilityForm from "../ui/DisabilityForm.jsx";
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
@@ -16,8 +17,8 @@ const VisiblePatients = connect(state => ({
     onAdd() {
       hashHistory.push('/patient/add');
     },
-    onDisabilityAdd() {
-      hashHistory.push('/patient/disability/add');
+    onDisabilityAdd(patientId) {
+      hashHistory.push(`/patient/${patientId}/disability/add`);
     }
   })
 )(PatientList);
@@ -38,7 +39,24 @@ const AddPatient = connect(state => ({
   })
 )(PatientForm);
 
+const AddDisability = connect(
+  (state, ownProps) => ({
+    formData: {
+      ...state.patients.activeDisability,
+      patientId: ownProps.patientId
+    },
+  }),
+  dispatch => ({
+    onSave(disability) {
+      console.log('disability: ', disability);
+      hashHistory.push('/');
+    },
+
+  })
+)(DisabilityForm);
+
 export {
   VisiblePatients,
-  AddPatient
+  AddPatient,
+  AddDisability
 };
