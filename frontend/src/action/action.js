@@ -2,6 +2,7 @@ import constants from "./constant";
 import PatientApi from "../api/patient-api"
 import ReportApi from "../api/report-api"
 import {addNotification as notify} from 'reapop';
+import {actions} from "react-redux-form";
 
 let fileDownload = require("react-file-download");
 
@@ -24,10 +25,12 @@ export const savePatientAction = (patient) => dispatch => {
   dispatch(savePatient(patient));
   return PatientApi.save(patient).then(
     response => {
-      dispatch(savePatientSuccessAction(response.body))
+      dispatch(actions.reset('patients.activePatient'));
+      dispatch(savePatientSuccessAction(response.body));
       dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
     },
     error => {
+      dispatch(actions.reset('patients.activePatient'));
       dispatch(savePatientErrorAction(error));
       dispatch(notify({message: "Patient saving error.", status: 500, position: 'tc'}));
     });

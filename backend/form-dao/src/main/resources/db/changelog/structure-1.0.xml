@@ -4,7 +4,7 @@
 		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
 	<changeSet author="liutkvai" id="table-1">
-		<createTable tableName="doctor" >
+		<createTable tableName="doctor">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -21,7 +21,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-2">
-		<createTable tableName="user" >
+		<createTable tableName="user">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -35,7 +35,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-3">
-		<createTable tableName="patient" >
+		<createTable tableName="patient">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -67,7 +67,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-4">
-		<createTable tableName="disability_report" >
+		<createTable tableName="disability_report">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -96,7 +96,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-5">
-		<createTable tableName="treatment" >
+		<createTable tableName="treatment">
 			<column name="disability_report_id" type="integer">
 				<constraints nullable="false"/>
 			</column>
@@ -106,7 +106,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-6">
-		<createTable tableName="appointment" >
+		<createTable tableName="appointment">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -128,7 +128,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-7">
-		<createTable tableName="diagnosis" >
+		<createTable tableName="diagnosis">
 			<column name="id" autoIncrement="true" type="INTEGER">
 				<constraints primaryKey="true"/>
 			</column>
@@ -162,7 +162,7 @@
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-8">
-		<createTable tableName="disability_type" >
+		<createTable tableName="disability_type">
 			<column name="disability_report_id" type="integer">
 				<constraints nullable="false"/>
 			</column>
@@ -176,48 +176,51 @@
 								 baseTableName="user"
 								 baseColumnNames="doctor_id"
 								 referencedTableName="doctor"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-key-2">
 		<addForeignKeyConstraint constraintName="disability_patient_fk"
 								 baseTableName="disability_report"
 								 baseColumnNames="patient_id"
 								 referencedTableName="patient"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-key-3">
 		<addForeignKeyConstraint constraintName="treatment_disability_fk"
 								 baseTableName="treatment"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-key-4">
 		<addForeignKeyConstraint constraintName="appointment_disability_fk"
 								 baseTableName="appointment"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-key-5">
 		<addForeignKeyConstraint constraintName="diagnosis_disability_fk"
 								 baseTableName="diagnosis"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-key-6">
 		<addForeignKeyConstraint constraintName="disability_type_disability_fk"
 								 baseTableName="disability_type"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id" />
+								 referencedColumnNames="id"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="primary-key-1">
 		<addPrimaryKey constraintName="treatment_pk" tableName="treatment" columnNames="disability_report_id,name"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="primary-key-2">
-		<addPrimaryKey constraintName="disability_type_pk" tableName="disability_type" columnNames="disability_report_id,name"/>
+		<addPrimaryKey constraintName="disability_type_pk" tableName="disability_type"
+					   columnNames="disability_report_id,name"/>
 	</changeSet>
-
+	<changeSet author="liutkvai" id="unique-index-1">
+		<addUniqueConstraint constraintName="patient_personal_id_unq" tableName="patient" columnNames="personal_id" />
+	</changeSet>
 </databaseChangeLog>
