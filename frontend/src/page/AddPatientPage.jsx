@@ -1,5 +1,5 @@
 import React from 'react';
-import {AddPatient} from '../component/container/index';
+import {AddPatient, AddReduxPatient} from '../component/container/index';
 import PageTemplate from './PageTemplate.jsx';
 
 const AddPatientPage = () => {
@@ -7,7 +7,7 @@ const AddPatientPage = () => {
     <PageTemplate>
       <div className="page-header">
         <h1>Add Patient</h1>
-        <AddPatient />
+        <AddReduxPatient />
       </div>
     </PageTemplate>
   );

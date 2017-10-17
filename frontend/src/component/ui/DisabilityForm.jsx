@@ -70,7 +70,10 @@ class DisabilityForm extends React.Component {
       delete uiSchema.otherTreatment;
       delete formData.otherTreatment;
       delete schema.properties.otherTreatment;
-      uiSchema["ui:order"].splice(uiSchema["ui:order"].indexOf("otherTreatment"), 1);
+      let otherTreatmentIndex = uiSchema["ui:order"].indexOf("otherTreatment");
+      if (otherTreatmentIndex > -1) {
+        uiSchema["ui:order"].splice(uiSchema["ui:order"].indexOf("otherTreatment"), 1);
+      }
     }
     this.setState({schema, uiSchema, formData});
   }

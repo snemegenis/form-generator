@@ -1,0 +1,113 @@
+import React, {PropTypes} from "react";
+import {Field, SubmissionError} from "redux-form";
+import InputMask from 'react-input-mask';
+import moment from "moment";
+import InputField from "./InputField.jsx";
+
+const PersonalIdInput = ({input, meta}) => {
+  return <div className="input-row">
+    <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask="99999999999" maskChar="_"
+               value={input.value ? input.value : ""} {...input}/>
+    {meta.error ? meta.error : ""}
+  </div>;
+};
+
+const BirthDateInput = ({input, meta}) => {
+  return <div className="input-row">
+  <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask="9999-99-99" maskChar="_"
+                    value={input.value ? input.value : ""} {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
+};
+
+const renderInput = ({input, meta}) => {
+  return <div className="input-row">
+    <input className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
+           {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
+};
+
+const maskedRequired = (val) => val && val.indexOf('_') === -1
+const trimRequired = (val) => val && val.trim().length > 0;
+
+class PatientReduxForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  validate(patient) {
+    let errors = {};
+    let errorExist = false;
+    if (!maskedRequired(patient.personalId)) {
+      errors.personalId = 'Enter a valid personal id.';
+      errorExist = true;
+    }
+    if (!maskedRequired(patient.birthDate) || !moment(patient.birthDate).isValid()
+    || moment().diff(moment(patient.birthDate), 'years') > 100) {
+      errors.birthDate='Enter a valid birth date.';
+      errorExist = true;
+    }
+
+    if (!trimRequired(patient.firstName)) {
+      errors.firstName='Enter a first name.';
+      errorExist = true;
+    }
+    if (!trimRequired(patient.lastName)) {
+      errors.lastName='Enter a last name.';
+      errorExist = true;
+    }
+    if (!trimRequired(patient.occupation)) {
+      errors.occupation='Enter an occupation.';
+      errorExist = true;
+    }
+
+    if (errorExist) {
+      throw new SubmissionError(errors);
+    }
+  }
+
+  handleSubmit(patient) {
+    this.validate(patient);
+    this.props.onSave(patient);
+  }
+
+  render() {
+    const {invalid, handleSubmit} = this.props;
+    return <form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+      <InputField id="patient.personalId" label="Enter personal id:">
+        <Field name="personalId" id="patient.personalId" component={PersonalIdInput}/>
+      </InputField>
+
+      <InputField id="patient.birthDate" label="Enter date of birth:" defaultValue="">
+        <Field name="birthDate" id="patient.birthDate" component={BirthDateInput}/>
+      </InputField>
+
+      <InputField id="patient.firstName" label="First Name:">
+        <Field name="firstName" id="patient.firstName"
+               className="form-control" component={renderInput}/>
+      </InputField>
+
+      <InputField id="patient.lastName" label="Last Name:">
+        <Field name="lastName" id="patient.lastName"
+               className="form-control" component={renderInput}/>
+      </InputField>
+
+      <InputField id="patient.occupation" label="Occupation:">
+        <Field name="occupation" id="patient.occupation"
+               className="form-control" component={renderInput}/>
+      </InputField>
+      <button className="btn" type="submit" disabled={invalid}>Save</button>
+      <button className="btn" type="button" onClick={this.props.onBack}>Back</button>
+    </form>
+  }
+}
+
+PatientReduxForm.propTypes = {
+  onSave: PropTypes.func.isRequired,
+  onBack: PropTypes.func.isRequired
+};
+
+export default PatientReduxForm;
+
