@@ -4,17 +4,9 @@ import InputMask from 'react-input-mask';
 import moment from "moment";
 import InputField from "./InputField.jsx";
 
-const PersonalIdInput = ({input, meta}) => {
+const MaskedInput = ({input, meta, mask}) => {
   return <div className="input-row">
-    <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask="99999999999" maskChar="_"
-               value={input.value ? input.value : ""} {...input}/>
-    {meta.error ? meta.error : ""}
-  </div>;
-};
-
-const BirthDateInput = ({input, meta}) => {
-  return <div className="input-row">
-  <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask="9999-99-99" maskChar="_"
+  <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
                     value={input.value ? input.value : ""} {...input} />
     {meta.error ? meta.error : ""}
   </div>;
@@ -77,11 +69,11 @@ class PatientReduxForm extends React.Component {
     const {invalid, handleSubmit} = this.props;
     return <form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
       <InputField id="patient.personalId" label="Enter personal id:">
-        <Field name="personalId" id="patient.personalId" component={PersonalIdInput}/>
+        <Field name="personalId" id="patient.personalId" component={MaskedInput} mask="99999999999"/>
       </InputField>
 
       <InputField id="patient.birthDate" label="Enter date of birth:" defaultValue="">
-        <Field name="birthDate" id="patient.birthDate" component={BirthDateInput}/>
+        <Field name="birthDate" id="patient.birthDate" component={MaskedInput} mask="9999-99-99"/>
       </InputField>
 
       <InputField id="patient.firstName" label="First Name:">

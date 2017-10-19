@@ -4,9 +4,9 @@ import {printPatientAction, savePatientAction} from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import {actions} from "react-redux-form";
-import DisabilityForm from "../ui/DisabilityForm.jsx";
-import {reduxForm} from "redux-form";
+import {formValueSelector, reduxForm} from "redux-form";
 import PatientReduxForm from "../ui/PatientReduxForm.jsx";
+import DisabilityReduxForm from "../ui/DisabilityReduxForm.jsx";
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
@@ -45,27 +45,32 @@ const AddReduxPatient = connect(null,
       hashHistory.push('/');
     },
     onBack() {
-      dispatch(actions.reset("patients.activePatient"));
       hashHistory.push('/');
     }
   })
-)(reduxForm({form: 'activePatient', fields: ['personalId']})(PatientReduxForm));
+)(reduxForm({form: 'activePatient'})(PatientReduxForm));
+
+const activeDisabilitySelector = formValueSelector('activeDisability');
 
 const AddDisability = connect(
   (state, ownProps) => ({
-    formData: {
-      ...state.patients.activeDisability,
-      patientId: ownProps.patientId
+    initialValues: {
+      patientId: ownProps.patientId,
+      treatments: []
     },
+    otherTreatmentSelected: activeDisabilitySelector(state, 'treatments')
   }),
   dispatch => ({
     onSave(disability) {
       console.log('disability: ', disability);
       hashHistory.push('/');
     },
+    onBack() {
+      hashHistory.push('/');
+    }
 
   })
-)(DisabilityForm);
+)(reduxForm({form: 'activeDisability'})(DisabilityReduxForm));
 
 export {
   VisiblePatients,
