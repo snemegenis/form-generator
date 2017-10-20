@@ -4,7 +4,10 @@ import bean.Patient;
 import lombok.extern.slf4j.Slf4j;
 import mapper.PatientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,14 +24,12 @@ public class PatientController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET, produces =
             "application/json")
-    @CrossOrigin(origins = "http://localhost:8081")
     public List<Patient> getPatientList() {
         return patientMapper.getList();
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST, consumes = "application/json", produces =
             "application/json")
-    @CrossOrigin(origins = "http://localhost:8081")
     public Patient savePatient(@RequestBody Patient patient) {
         if (patient.getId() == null) {
             patientMapper.add(patient);

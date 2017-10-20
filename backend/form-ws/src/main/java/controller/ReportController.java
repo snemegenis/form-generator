@@ -1,6 +1,5 @@
 package controller;
 
-import bean.DisabilityReportParams;
 import bean.Doctor;
 import bean.Patient;
 import constants.ReportConstants;
@@ -43,7 +42,6 @@ public class ReportController extends ControllerBase {
     @RequestMapping(value = "patient/{id}/disability",
             method = RequestMethod.GET,
             produces = "application/pdf")
-    @CrossOrigin(origins = "http://localhost:8081")
     public ResponseEntity<ByteArrayResource> print(@PathVariable("id") Integer patientId,
             @RequestParam(value = "fillDate", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fillDate,
