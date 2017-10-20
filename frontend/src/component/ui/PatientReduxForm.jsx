@@ -3,11 +3,12 @@ import {Field, SubmissionError} from "redux-form";
 import InputMask from 'react-input-mask';
 import moment from "moment";
 import InputField from "./InputField.jsx";
+import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 
 const MaskedInput = ({input, meta, mask}) => {
   return <div className="input-row">
   <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
-                    value={input.value ? input.value : ""} {...input} />
+                    alwaysShoMask="true" value={input.value ? input.value : ""} {...input} />
     {meta.error ? meta.error : ""}
   </div>;
 };
@@ -20,9 +21,6 @@ const renderInput = ({input, meta}) => {
   </div>;
 };
 
-const maskedRequired = (val) => val && val.indexOf('_') === -1
-const trimRequired = (val) => val && val.trim().length > 0;
-
 class PatientReduxForm extends React.Component {
 
   constructor(props) {
@@ -32,25 +30,25 @@ class PatientReduxForm extends React.Component {
   validate(patient) {
     let errors = {};
     let errorExist = false;
-    if (!maskedRequired(patient.personalId)) {
+    if (maskedInvalid(patient.personalId)) {
       errors.personalId = 'Enter a valid personal id.';
       errorExist = true;
     }
-    if (!maskedRequired(patient.birthDate) || !moment(patient.birthDate).isValid()
+    if (maskedInvalid(patient.birthDate) || !moment(patient.birthDate).isValid()
     || moment().diff(moment(patient.birthDate), 'years') > 100) {
       errors.birthDate='Enter a valid birth date.';
       errorExist = true;
     }
 
-    if (!trimRequired(patient.firstName)) {
+    if (trimmedEmpty(patient.firstName)) {
       errors.firstName='Enter a first name.';
       errorExist = true;
     }
-    if (!trimRequired(patient.lastName)) {
+    if (trimmedEmpty(patient.lastName)) {
       errors.lastName='Enter a last name.';
       errorExist = true;
     }
-    if (!trimRequired(patient.occupation)) {
+    if (trimmedEmpty(patient.occupation)) {
       errors.occupation='Enter an occupation.';
       errorExist = true;
     }

@@ -56,9 +56,11 @@ const AddDisability = connect(
   (state, ownProps) => ({
     initialValues: {
       patientId: ownProps.patientId,
-      treatments: []
+      treatments: [],
+      mainDiagnosis: {},
+      otherDiagnosis: []
     },
-    otherTreatmentSelected: activeDisabilitySelector(state, 'treatments')
+    treatmentSelected: activeDisabilitySelector(state, 'treatments')
   }),
   dispatch => ({
     onSave(disability) {
