@@ -41,18 +41,42 @@ const renderCheckboxes = (props) => {
   </div>;
 };
 
-const Diagnosis = ({name, title}) => (
+const Diagnosis = ({name, title, withDetails=false}) => (
   <div>
     {title && <h4>{title}</h4>}
     <InputField id={`disability.${name}.code`} label="Enter code:">
       <Field name={`${name}.code`} id={`disability.${name}.code`}
              component={renderMaskedInput} mask="aaa-9999"/>
     </InputField>
+    <InputField id={`disability.${name}.code`} label="Enter text:">
+      <Field name={`${name}.text`} id={`disability.${name}.text`}
+             component={renderInput}/>
+    </InputField>
+    <InputField id={`disability.${name}.functionalClass`} label="Enter functional class:">
+      <Field name={`${name}.functionalClass`} id={`disability.${name}.functionalClass`}
+             component={renderInput}/>
+    </InputField>
+    <InputField id={`disability.${name}.degree`} label="Enter degree:">
+      <Field name={`${name}.degree`} id={`disability.${name}.degree`}
+             component={renderInput}/>
+    </InputField>
+    <InputField id={`disability.${name}.stage`} label="Enter stage:">
+      <Field name={`${name}.stage`} id={`disability.${name}.stage`}
+             component={renderInput}/>
+    </InputField>
+    <InputField id={`disability.${name}.history`} label="Enter history:">
+      <Field name={`${name}.history`} id={`disability.${name}.history`}
+             component={renderArea}/>
+    </InputField>
+    {withDetails && <InputField id={`disability.${name}.details`} label="Enter details:">
+      <Field name={`${name}.details`} id={`disability.${name}.details`}
+             component={renderArea}/>
+    </InputField>}
   </div>
 );
 Diagnosis.propTypes = {
   name: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  withDetails: PropTypes.bool,
   title: PropTypes.string
 };
 
@@ -63,7 +87,7 @@ const renderDiagnosis = ({fields, meta}) => (
     </li>
     {fields.map((diagnosis, index) =>
       <li key={index}>
-        <Diagnosis name={`${diagnosis}`} />
+        <Diagnosis name={`${diagnosis}`} withDetails={true}/>
         <button
           type="button"
           className="btn"
@@ -124,6 +148,42 @@ class DisabilityReduxForm extends React.Component {
     super(props);
   }
 
+  validateDiagnosis(diagnosis, error, withDetails = false) {
+
+    let errorExist = false;
+    if (maskedInvalid(diagnosis.code)) {
+      error.code = 'Enter valid code';
+      errorExist = true;
+    }
+    if (trimmedEmpty(diagnosis.text)) {
+      error.text = 'Enter text';
+      errorExist = true;
+    }
+    if (trimmedEmpty(diagnosis.functionalClass)) {
+      error.functionalClass = 'Enter functional class';
+      errorExist = true;
+    }
+    if (trimmedEmpty(diagnosis.degree)) {
+      error.degree = 'Enter degree';
+      errorExist = true;
+    }
+    if (trimmedEmpty(diagnosis.stage)) {
+      error.stage = 'Enter stage';
+      errorExist = true;
+    }
+    if (trimmedEmpty(diagnosis.history)) {
+      error.history = 'Enter history';
+      errorExist = true;
+    }
+    if (withDetails && trimmedEmpty(diagnosis.details)) {
+      error.details = 'Enter details';
+      errorExist = true;
+    }
+
+    return errorExist;
+
+  }
+
   validate(disability) {
     let errors = {};
     let errorExist = false;
@@ -178,8 +238,7 @@ class DisabilityReduxForm extends React.Component {
     }
 
     errors.mainDiagnosis = {};
-    if (!disability.mainDiagnosis || maskedInvalid(disability.mainDiagnosis.code)) {
-      errors.mainDiagnosis.code = "Enter valid code";
+    if (this.validateDiagnosis(disability.mainDiagnosis, errors.mainDiagnosis)) {
       errorExist = true;
     }
 
@@ -187,14 +246,18 @@ class DisabilityReduxForm extends React.Component {
       errors.otherDiagnosis = [];
       disability.otherDiagnosis.forEach((diagnosis, index) => {
         errors.otherDiagnosis[index] = {};
-        if (maskedInvalid(diagnosis.code)) {
-          errors.otherDiagnosis[index].code = 'Enter valid code';
+        if (this.validateDiagnosis(diagnosis, errors.otherDiagnosis[index], true)) {
           errorExist = true;
         }
       })
     }
 
-      if (errorExist) {
+    if (!disability.disabilityTypes || disability.disabilityTypes.length === 0) {
+      errors.disabilityTypes = 'Enter one disability at least.';
+      errorExist = true;
+    }
+
+    if (errorExist) {
       throw new SubmissionError(errors);
     }
   }
@@ -213,6 +276,15 @@ class DisabilityReduxForm extends React.Component {
       {label: 'Surgery', value: 'SURGERY'},
       {label: 'Reabilitation', value: 'REABILITATION'},
       {label: 'Other', value: 'OTHER'}
+    ];
+    const disabilityTypes = [
+      {label: 'Working Capacity Level', value: 'WORKING_CAPACITY_LEVEL'},
+      {label: 'First Time', value: 'FIRST_TIME'},
+      {label: 'Disability Level', value: 'DISABILITY_LEVEL'},
+      {label: 'Expired', value: 'EXPIRED'},
+      {label: 'Special Requirement', value: 'SPECIAL_REQUIREMENT'},
+      {label: 'Health Condition Changed', value: 'HEALTH_COND_CHANGED'},
+      {label: 'Ordered By Person', value: 'REQUIRED_BY_PERSON'}
     ];
 
     return <form className="disability-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
@@ -253,13 +325,18 @@ class DisabilityReduxForm extends React.Component {
 
       <div className="form-group">
         <h4>Main diagnosis</h4>
-        <Diagnosis name="mainDiagnosis" />
+        <Diagnosis name="mainDiagnosis"/>
       </div>
 
       <div className="form-group">
         <h4>Other diagnosis</h4>
-        <FieldArray name="otherDiagnosis" component={renderDiagnosis}/>
+        <FieldArray name="otherDiagnosis" component={renderDiagnosis} />
       </div>
+
+      <InputField id="disability.disabilityTypes" label="Enter disability types:">
+        <Field name="disabilityTypes" id="disability.disabilityTypes" component={renderCheckboxes}
+               checkboxes={disabilityTypes}/>
+      </InputField>
 
       <button className="btn" type="submit" disabled={invalid || submitting}>Save</button>
       <button className="btn" type="button" onClick={this.props.onBack}>Back</button>

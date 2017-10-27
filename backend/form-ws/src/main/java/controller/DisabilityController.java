@@ -1,5 +1,7 @@
 package controller;
 
+import bean.DisabilityReport;
+import bean.DisabilityType;
 import bean.Doctor;
 import bean.Patient;
 import constants.ReportConstants;
@@ -22,13 +24,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Report controller
+ * Disability controller
  * Created by liutkvai on 6/27/2016.
  */
 @RestController
 @RequestMapping(value = "report")
 @Slf4j
-public class ReportController extends ControllerBase {
+public class DisabilityController extends ControllerBase {
 
     @Autowired
     private ReportGenerator reportGenerator;
@@ -38,6 +40,14 @@ public class ReportController extends ControllerBase {
 
     @Autowired
     private PatientMapper patientMapper;
+
+    @RequestMapping(value = "patient/{id}/disability",
+            method = RequestMethod.POST,
+            consumes = "application/json",
+            produces = "application/json")
+    public DisabilityReport save(DisabilityReport disabilityReport) {
+        return disabilityReport;
+    }
 
     @RequestMapping(value = "patient/{id}/disability",
             method = RequestMethod.GET,

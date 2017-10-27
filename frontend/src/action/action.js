@@ -91,6 +91,39 @@ export const loadPatientsSuccessAction = (patients) => ({
   loadedAt: Date.now()
 });
 
+const saveDisability = (disability) => ({
+  type: constants.SAVE_DISABILITY,
+  disability
+});
+
+export const saveDisabilityErrorAction = (disability, error) => ({
+  type: constants.SAVE_DISABILITY_ERROR,
+  error,
+  disability
+});
+
+export const saveDisabilitySuccessAction = (disability) => ({
+  type: constants.SAVE_DISABILITY_SUCCESS,
+  disability,
+  updatedAt: Date.now(),
+});
+
+export const saveDisabilityAction = (disability) => dispatch => {
+  dispatch(saveDisability(disability));
+  return PatientApi.save(patient).then(
+    response => {
+      dispatch(actions.reset('patients.activePatient'));
+      dispatch(savePatientSuccessAction(response.body));
+      dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
+    },
+    error => {
+      dispatch(actions.reset('patients.activePatient'));
+      dispatch(savePatientErrorAction(error));
+      dispatch(notify({message: "Patient saving error.", status: 500, position: 'tc'}));
+    });
+
+};
+
 export const loginAction = (username, password) => ({
   type: constants.LOGIN,
   id: 1,
