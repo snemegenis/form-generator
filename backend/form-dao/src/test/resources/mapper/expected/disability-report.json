@@ -45,6 +45,15 @@
     "history": "Some history",
     "details": "Some details"
   },
+  "other_diagnosis": [{
+    "code": "SER-1232",
+    "text": "Rhinitus posiblus vulgaris max",
+    "functional_class": "The first class",
+    "degree": "serious",
+    "stage": "very simple",
+    "history": "Some other history",
+    "details": "Some other details"
+  }],
   "barthel_index": 2,
   "other_treatment": "Some other treatment of Petras",
   "treatment_history": "Some treatment history of Petras",

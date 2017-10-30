@@ -93,7 +93,7 @@
 		<insert tableName="diagnosis">
 			<column name="id">1</column>
 			<column name="disability_report_id">1</column>
-			<column name="primary">TRUE</column>
+			<column name="is_primary">TRUE</column>
 			<column name="code">SER-1231</column>
 			<column name="text">Rhinitus posiblus vulgaris</column>
 			<column name="functional_class">The first class</column>
@@ -101,6 +101,18 @@
 			<column name="stage">simple</column>
 			<column name="history">Some history</column>
 			<column name="details">Some details</column>
+		</insert>
+		<insert tableName="diagnosis">
+			<column name="id">2</column>
+			<column name="disability_report_id">1</column>
+			<column name="is_primary">FALSE</column>
+			<column name="code">SER-1232</column>
+			<column name="text">Rhinitus posiblus vulgaris max</column>
+			<column name="functional_class">The first class</column>
+			<column name="degree">serious</column>
+			<column name="stage">very simple</column>
+			<column name="history">Some other history</column>
+			<column name="details">Some other details</column>
 		</insert>
 	</changeSet>
 	<changeSet author="liutkvai" id="data-9">

@@ -13,6 +13,7 @@ import lombok.*;
 @EqualsAndHashCode(of = {"code"})
 public class Diagnosis {
     private String code;
+    private boolean primary;
     private String text;
     private String functionalClass;
     private String degree;

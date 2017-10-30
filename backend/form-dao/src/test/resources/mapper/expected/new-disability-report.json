@@ -1,0 +1,55 @@
+{
+  "id": 2,
+  "history": "Some history of Jonas",
+  "patient": {
+    "id": 1,
+    "first_name": "Jonas",
+    "last_name": "Jonaitis",
+    "occupation": "Sailor",
+    "mobile_phone": "+37061495801",
+    "address": "Pasvaistes 121-189, Vilnius, Lietuva",
+    "employer": "UAB \"Laisvo vejo kontora 2\"",
+    "birth_date": "1955-02-11",
+    "personal_id": "35502114189",
+    "email": "jonas@jonaitis.com"
+  },
+  "treatments": [
+    "MEDICAMENTS",
+    "REABILITATION"
+  ],
+  "disability_types": [
+    "WORKING_CAPACITY_LEVEL",
+    "EXPIRED"
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2011-02-11",
+      "doctor_type": "Therapist",
+      "observation": "Very serious and dangerous illness",
+      "attachment": "Some attachments"
+    },
+    {
+      "id": 2,
+      "date": "2012-01-16",
+      "doctor_type": "Surgeon",
+      "observation": "Nothing new",
+      "attachment": "Some more attachments"
+    }
+  ],
+  "main_diagnosis": {
+    "code": "SER-1232",
+    "text": "Rhinitus posiblus vulgaris maxus",
+    "functional_class": "The highest class",
+    "degree": "serious",
+    "stage": "very simple",
+    "history": "Some history",
+    "details": "Some details"
+  },
+  "barthel_index": 9,
+  "other_treatment": "Some other treatment of Jonas",
+  "treatment_history": "Some treatment history of Jonas",
+  "active": true,
+  "created": "2017-08-19T21:21:21.000",
+  "modified": "2017-08-20T21:21:21.000"
+}

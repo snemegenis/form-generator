@@ -1,9 +1,6 @@
 package mapper;
 
-import bean.Appointment;
-import bean.DisabilityReport;
-import bean.DisabilityType;
-import bean.Treatment;
+import bean.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -16,7 +13,7 @@ import java.util.Set;
 @Mapper
 public interface ReportMapper {
 
-    @Select("SELECT dr.id AS dr_id, dr.history AS dr_history, dr.other_treatment AS dr_other_treatment, " +
+    @Select({"SELECT dr.id AS dr_id, dr.history AS dr_history, dr.other_treatment AS dr_other_treatment, " +
             "dr.treatment_history AS dr_treatment_history, dr.barthel_index AS dr_barthel_index, " +
             "dr.active as dr_active, " +
             "p.id as p_id, p.personal_id as p_personal_id, p.address as p_address, " +
@@ -25,10 +22,10 @@ public interface ReportMapper {
             "p.first_name as p_first_name, p.last_name as p_last_name, " +
             "dg.code as dg_code, dg.text as dg_text, dg.degree as dg_degree, " +
             "dg.functional_class as dg_functional_class, dg.stage as dg_stage, " +
-            "dg.history as dg_history, dg.details as dg_details " +
+            "dg.history as dg_history, dg.details as dg_details, dg.is_primary as dg_is_primary " +
             "FROM disability_report dr INNER JOIN patient p ON p.id = dr.patient_id " +
-            "INNER JOIN diagnosis dg ON p.id = dg.disability_report_id " +
-            "WHERE patient_id = #{patientId}")
+            "INNER JOIN diagnosis dg ON p.id = dg.disability_report_id and dg.is_primary = 1 " +
+            "WHERE patient_id = #{patientId}"})
     @Results({
             @Result(property = "id", column = "dr_id"),
             @Result(property = "history", column = "dr_history"),
@@ -54,10 +51,13 @@ public interface ReportMapper {
             @Result(property = "mainDiagnosis.stage", column = "dg_stage"),
             @Result(property = "mainDiagnosis.history", column = "dg_history"),
             @Result(property = "mainDiagnosis.details", column = "dg_details"),
+            @Result(property = "mainDiagnosis.primary", column = "dg_primary"),
             @Result(property = "treatments", javaType = Set.class, column = "dr_id",
                     many = @Many(select = "getTreatmentsForReport")),
             @Result(property = "appointments", javaType = List.class, column = "dr_id",
                     many = @Many(select = "getAppointmentsForReport")),
+            @Result(property = "otherDiagnosis", javaType = List.class, column = "dr_id",
+                    many = @Many(select = "getOtherDiagnosisForReport")),
             @Result(property = "disabilityTypes", javaType = Set.class, column = "dr_id",
             many = @Many(select = "getDisabilityTypesForReport"))
     })
@@ -71,5 +71,8 @@ public interface ReportMapper {
 
     @Select("SELECT dt.name FROM disability_type dt WHERE dt.disability_report_id = #{disabilityReportId}")
     List<DisabilityType> getDisabilityTypesForReport(int disabilityReportId);
+
+    @Select("SELECT * FROM diagnosis dg WHERE dg.disability_report_id = #{disabilityReportId} and dg.is_primary = 0 ")
+    List<Diagnosis> getOtherDiagnosisForReport(int disabilityReportId);
 
 }

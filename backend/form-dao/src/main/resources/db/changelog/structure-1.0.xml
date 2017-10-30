@@ -135,7 +135,7 @@
 			<column name="disability_report_id" type="integer">
 				<constraints nullable="false"/>
 			</column>
-			<column name="primary" type="BOOLEAN">
+			<column name="is_primary" type="BOOLEAN">
 				<constraints nullable="false"/>
 			</column>
 			<column name="code" type="VARCHAR(20)">

@@ -6,6 +6,7 @@ import bean.Doctor;
 import bean.Patient;
 import constants.ReportConstants;
 import lombok.extern.slf4j.Slf4j;
+import mapper.DisabilityMapper;
 import mapper.PatientMapper;
 import mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import report.ReportGenerator;
 
@@ -41,11 +43,17 @@ public class DisabilityController extends ControllerBase {
     @Autowired
     private PatientMapper patientMapper;
 
+    @Autowired
+    private DisabilityMapper disabilityMapper;
+
     @RequestMapping(value = "patient/{id}/disability",
             method = RequestMethod.POST,
             consumes = "application/json",
             produces = "application/json")
+    @Transactional
     public DisabilityReport save(DisabilityReport disabilityReport) {
+        disabilityMapper.add(disabilityReport);
+        disabilityMapper.assignTreatments(disabilityReport);
         return disabilityReport;
     }
 

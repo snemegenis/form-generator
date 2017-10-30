@@ -1,5 +1,6 @@
 package mapper;
 
+import bean.Diagnosis;
 import bean.Patient;
 import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,6 +8,7 @@ import sqlbuilder.PatientSQLBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by liutkvai on 9/2/2016.
@@ -14,10 +16,15 @@ import java.util.List;
 @Mapper
 public interface PatientMapper {
 
-    @Select("SELECT p.*, dr.id as disability_report_id FROM patient p " +
-            "LEFT JOIN disability_report dr ON dr.patient_id = p.id")
+    @Select({"SELECT p.id as p_id, p.* FROM patient p "})
+    @Results({
+            @Result(property = "disabilityReportIds", javaType = Set.class, column = "p_id", many = @Many(select =
+                    "getDisabilityReportIdsForPatient"))})
     @Transactional(readOnly = true)
     List<Patient> getList();
+
+    @Select("SELECT dr.id FROM disability_report dr WHERE dr.patient_id = #{patientId} ")
+    List<Integer> getDisabilityReportIdsForPatient(int patientId);
 
     @Select("SELECT * FROM patient WHERE id = #{id}")
     @Transactional(readOnly = true)
