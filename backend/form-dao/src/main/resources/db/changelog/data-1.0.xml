@@ -105,7 +105,7 @@
 			<column name="id">1</column>
 			<column name="disability_report_id">1</column>
 			<column name="is_primary">TRUE</column>
-			<column name="code">SER-1231</column>
+			<column name="code">SER-0000</column>
 			<column name="text">Rhinitus posiblus vulgaris</column>
 			<column name="functional_class">The first class</column>
 			<column name="degree">medium</column>
@@ -115,6 +115,20 @@
 		</insert>
 	</changeSet>
 	<changeSet author="liutkvai" id="data-9">
+		<insert tableName="diagnosis">
+			<column name="id">2</column>
+			<column name="disability_report_id">1</column>
+			<column name="is_primary">FALSE</column>
+			<column name="code">SER-0001</column>
+			<column name="text">Rhinitus posiblus vulgaris 1</column>
+			<column name="functional_class">The first class 1</column>
+			<column name="degree">medium 1</column>
+			<column name="stage">simple 1</column>
+			<column name="history">Some history 1</column>
+			<column name="details">Some details 1</column>
+		</insert>
+	</changeSet>
+	<changeSet author="liutkvai" id="data-10">
 		<insert tableName="disability_type">
 			<column name="disability_report_id">1</column>
 			<column name="name">WORKING_CAPACITY_LEVEL</column>

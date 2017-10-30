@@ -1,6 +1,6 @@
 import PatientList from "../ui/PatientList.jsx";
 import PatientForm from "../ui/PatientForm.jsx";
-import {printPatientAction, savePatientAction} from "../../action/action";
+import {printPatientAction, saveDisabilityAction, savePatientAction} from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import {actions} from "react-redux-form";
@@ -55,9 +55,9 @@ const activeDisabilitySelector = formValueSelector('activeDisability');
 const AddDisability = connect(
   (state, ownProps) => ({
     initialValues: {
-      patientId: ownProps.patientId,
+      patient: {id: ownProps.patientId},
       treatments: [],
-      mainDiagnosis: {},
+      mainDiagnosis: {primary: true},
       otherDiagnosis: []
     },
     treatmentSelected: activeDisabilitySelector(state, 'treatments')
@@ -65,6 +65,7 @@ const AddDisability = connect(
   dispatch => ({
     onSave(disability) {
       console.log('disability: ', disability);
+      dispatch(saveDisabilityAction(disability));
       hashHistory.push('/');
     },
     onBack() {

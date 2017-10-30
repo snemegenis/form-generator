@@ -1,5 +1,6 @@
 import constants from "./constant";
 import PatientApi from "../api/patient-api"
+import DisabilityApi from "../api/disability-api"
 import ReportApi from "../api/report-api"
 import {addNotification as notify} from 'reapop';
 import {actions} from "react-redux-form";
@@ -110,16 +111,16 @@ export const saveDisabilitySuccessAction = (disability) => ({
 
 export const saveDisabilityAction = (disability) => dispatch => {
   dispatch(saveDisability(disability));
-  return PatientApi.save(patient).then(
+  return DisabilityApi.add(disability).then(
     response => {
-      dispatch(actions.reset('patients.activePatient'));
-      dispatch(savePatientSuccessAction(response.body));
-      dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
+      dispatch(actions.reset('forms.activeDisability'));
+      dispatch(saveDisabilitySuccessAction(response.body));
+      dispatch(notify({message: "Disability saved successfully.", status: 200, position: 'tc'}));
     },
     error => {
-      dispatch(actions.reset('patients.activePatient'));
-      dispatch(savePatientErrorAction(error));
-      dispatch(notify({message: "Patient saving error.", status: 500, position: 'tc'}));
+        dispatch(actions.reset('forms.activeDisability'));
+      dispatch(saveDisabilityErrorAction(error));
+      dispatch(notify({message: "Disability saving error.", status: 500, position: 'tc'}));
     });
 
 };

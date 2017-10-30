@@ -44,8 +44,31 @@
     "degree": "serious",
     "stage": "very simple",
     "history": "Some history",
+    "primary": true,
     "details": "Some details"
   },
+  "other_diagnosis": [
+    {
+      "code": "SER-1233",
+      "text": "Rhinitus posiblus vulgaris maxus 2",
+      "functional_class": "The highest class 2",
+      "degree": "serious 2",
+      "stage": "very simple 2",
+      "history": "Some history 2",
+      "primary": false,
+      "details": "Some details 2"
+    },
+    {
+      "code": "SER-1234",
+      "text": "Rhinitus posiblus vulgaris maxus 3",
+      "functional_class": "The highest class 3",
+      "degree": "serious 3",
+      "stage": "very simple 3",
+      "history": "Some history 3",
+      "primary": false,
+      "details": "Some details 3"
+    }
+  ],
   "barthel_index": 9,
   "other_treatment": "Some other treatment of Jonas",
   "treatment_history": "Some treatment history of Jonas",

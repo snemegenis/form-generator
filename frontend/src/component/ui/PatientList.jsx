@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 
 
-const PatientList = ({patients, loading, onDisabilityAdd=f=>f, onPrint=f=>f, onAdd=f=>f}) => {
+const PatientList = ({patients, loading, onDisabilityAdd = f => f, onPrint = f => f, onAdd = f => f}) => {
     if (loading) {
         return <div>Data is loading</div>
     }
@@ -12,17 +12,18 @@ const PatientList = ({patients, loading, onDisabilityAdd=f=>f, onPrint=f=>f, onA
         </div>
     }
     return <div>
-            <ul className="patient-list">
+        <ul className="patient-list">
             {
                 patients.map(patient =>
-                    <li key={patient.id} >
+                    <li key={patient.id}>
                         <Patient id={patient.id} personalId={patient.personalId}
                                  firstName={patient.firstName} lastName={patient.lastName}
-                                 onPrint={onPrint} disabled={!patient.disabilityReportId}
+                                 onPrint={onPrint}
+                                 disabled={!patient.disabilityReportIds || patient.disabilityReportIds.length === 0}
                                  onDisabilityAdd={() => onDisabilityAdd(patient.id)}/>
                     </li>)
             }
-            </ul>
+        </ul>
         <div className="patient-actions">
             <button onClick={() => onAdd()}>Add</button>
         </div>

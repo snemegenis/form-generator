@@ -24,7 +24,7 @@ public interface ReportMapper {
             "dg.functional_class as dg_functional_class, dg.stage as dg_stage, " +
             "dg.history as dg_history, dg.details as dg_details, dg.is_primary as dg_is_primary " +
             "FROM disability_report dr INNER JOIN patient p ON p.id = dr.patient_id " +
-            "INNER JOIN diagnosis dg ON p.id = dg.disability_report_id and dg.is_primary = 1 " +
+            "INNER JOIN diagnosis dg ON p.id = dg.disability_report_id and dg.is_primary = true " +
             "WHERE patient_id = #{patientId}"})
     @Results({
             @Result(property = "id", column = "dr_id"),
@@ -72,7 +72,7 @@ public interface ReportMapper {
     @Select("SELECT dt.name FROM disability_type dt WHERE dt.disability_report_id = #{disabilityReportId}")
     List<DisabilityType> getDisabilityTypesForReport(int disabilityReportId);
 
-    @Select("SELECT * FROM diagnosis dg WHERE dg.disability_report_id = #{disabilityReportId} and dg.is_primary = 0 ")
+    @Select("SELECT * FROM diagnosis dg WHERE dg.disability_report_id = #{disabilityReportId} and dg.is_primary = false ")
     List<Diagnosis> getOtherDiagnosisForReport(int disabilityReportId);
 
 }

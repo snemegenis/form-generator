@@ -102,7 +102,7 @@ const renderDiagnosis = ({fields, meta}) => (
 const renderAppointments = ({fields, meta}) => (
   <ul>
     <li>
-      <button className="btn" type="button" onClick={() => fields.push({})}>Add appointment</button>
+      <button className="btn" type="button" onClick={() => fields.push({primary: false})}>Add appointment</button>
     </li>
     {fields.map((appointment, index) =>
       <li key={index}>
@@ -203,6 +203,10 @@ class DisabilityReduxForm extends React.Component {
     }
     if (trimmedEmpty(disability.treatmentHistory)) {
       errors.treatmentHistory = 'Enter treatment history.';
+      errorExist = true;
+    }
+    if (trimmedEmpty(disability.barthelIndex)) {
+      errors.barthelIndex = 'Enter valid barthel index.';
       errorExist = true;
     }
 
@@ -315,8 +319,8 @@ class DisabilityReduxForm extends React.Component {
         <FieldArray name="appointments" component={renderAppointments}/>
       </div>
 
-      <InputField id="disability.bartelIndex" label="Enter Bartel index:">
-        <Field name="bartelIndex" id="patient.bartelIndex" component={renderMaskedInput} mask="99"/>
+      <InputField id="disability.barthelIndex" label="Enter Barthel index:">
+        <Field name="barthelIndex" id="patient.barthelIndex" component={renderMaskedInput} mask="99"/>
       </InputField>
 
       <InputField id="disability.latestDisabilityDesc" label="Enter latest disability description:">
