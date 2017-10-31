@@ -1,10 +1,7 @@
 package mapper;
 
 import bean.*;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import java.util.Collection;
 
@@ -61,5 +58,11 @@ public interface DisabilityMapper {
             "</script>"})
     void assignDisabilities(@Param("disabilityReportId") int disabilityReportId, @Param("disabilityTypes")
             Collection<DisabilityType> disabilityTypes);
+
+    @Update("UPDATE disability_report dr SET active=#{active} WHERE dr.patient_id=#{patientId}")
+    void resetPatientStatus(@Param("patientId") int patientId, @Param("active") boolean active);
+
+    @Update("UPDATE disability_report dr SET active=#{active} WHERE dr.id=#{id}")
+    void resetStatus(@Param("id") int id, @Param("active") boolean active);
 
 }

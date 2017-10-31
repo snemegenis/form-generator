@@ -15,7 +15,7 @@ public interface ReportMapper {
 
     @Select({"SELECT dr.id AS dr_id, dr.history AS dr_history, dr.other_treatment AS dr_other_treatment, " +
             "dr.treatment_history AS dr_treatment_history, dr.barthel_index AS dr_barthel_index, " +
-            "dr.active as dr_active, " +
+            "dr.active as dr_active, dr.latest_disability_desc as dr_latest_disability_desc, " +
             "p.id as p_id, p.personal_id as p_personal_id, p.address as p_address, " +
             "p.email as p_email, p.birth_date as p_birth_date, p.phone as p_phone, " +
             "p.mobile_phone as p_mobile_phone, p.employer as p_employer, p.occupation as p_occupation, " +
@@ -24,13 +24,14 @@ public interface ReportMapper {
             "dg.functional_class as dg_functional_class, dg.stage as dg_stage, " +
             "dg.history as dg_history, dg.details as dg_details, dg.is_primary as dg_is_primary " +
             "FROM disability_report dr INNER JOIN patient p ON p.id = dr.patient_id " +
-            "INNER JOIN diagnosis dg ON p.id = dg.disability_report_id and dg.is_primary = true " +
-            "WHERE patient_id = #{patientId}"})
+            "INNER JOIN diagnosis dg ON dr.id = dg.disability_report_id and dg.is_primary = true " +
+            "WHERE patient_id = #{patientId} and dr.active = true"})
     @Results({
             @Result(property = "id", column = "dr_id"),
             @Result(property = "history", column = "dr_history"),
             @Result(property = "otherTreatment", column = "dr_other_treatment"),
             @Result(property = "treatmentHistory", column = "dr_treatment_history"),
+            @Result(property = "latestDisabilityDesc", column = "dr_latest_disability_desc"),
             @Result(property = "barthelIndex", column = "dr_barthel_index"),
             @Result(property = "active", column = "dr_active"),
             @Result(property = "patient.id", column = "p_id"),

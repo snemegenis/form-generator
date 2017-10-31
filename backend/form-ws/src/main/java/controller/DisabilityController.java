@@ -53,6 +53,9 @@ public class DisabilityController extends ControllerBase {
             produces = "application/json")
     @Transactional
     public DisabilityReport save(@RequestBody DisabilityReport disabilityReport) {
+        Integer patientId = disabilityReport.getPatient().getId();
+        disabilityMapper.resetPatientStatus(patientId, false);
+
         disabilityReport.setCreated(LocalDateTime.now());
         disabilityReport.setModified(LocalDateTime.now());
         disabilityMapper.add(disabilityReport);
@@ -71,6 +74,8 @@ public class DisabilityController extends ControllerBase {
 
         }
         disabilityMapper.assignDisabilities(disabilityReportId, disabilityReport.getDisabilityTypes());
+        disabilityMapper.resetStatus(disabilityReportId, true);
+
         return disabilityReport;
     }
 
