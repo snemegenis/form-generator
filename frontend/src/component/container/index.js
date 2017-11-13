@@ -21,6 +21,9 @@ const VisiblePatients = connect(state => ({
     },
     onDisabilityAdd(patientId) {
       hashHistory.push(`/patient/${patientId}/disability/add`);
+    },
+    onUpdate(patientId) {
+      hashHistory.push(`/patient/${patientId}/update`);
     }
   })
 )(PatientList);
@@ -39,6 +42,23 @@ const AddPatient = connect(state => state,
 )(PatientForm);
 
 const AddReduxPatient = connect(null,
+  (dispatch) => ({
+    onSave(patient) {
+      dispatch(savePatientAction(patient));
+      hashHistory.push('/');
+    },
+    onBack() {
+      hashHistory.push('/');
+    }
+  })
+)(reduxForm({form: 'activePatient'})(PatientReduxForm));
+
+const UpdateReduxPatient = connect(
+  (state, ownProps)=>({
+    initialValues: {
+      patient: state.patients.data[ownProps.patientId]
+    }
+  }),
   (dispatch) => ({
     onSave(patient) {
       dispatch(savePatientAction(patient));
@@ -71,7 +91,6 @@ const AddDisability = connect(
     onBack() {
       hashHistory.push('/');
     }
-
   })
 )(reduxForm({form: 'activeDisability'})(DisabilityReduxForm));
 
@@ -79,5 +98,6 @@ export {
   VisiblePatients,
   AddPatient,
   AddDisability,
-  AddReduxPatient
+  AddReduxPatient,
+  UpdateReduxPatient
 };

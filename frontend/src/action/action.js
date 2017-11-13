@@ -26,12 +26,12 @@ export const savePatientAction = (patient) => dispatch => {
   dispatch(savePatient(patient));
   return PatientApi.save(patient).then(
     response => {
-      dispatch(actions.reset('patients.activePatient'));
+      dispatch(actions.reset('activePatient'));
       dispatch(savePatientSuccessAction(response.body));
       dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
     },
     error => {
-      dispatch(actions.reset('patients.activePatient'));
+      dispatch(actions.reset('activePatient'));
       dispatch(savePatientErrorAction(error));
       dispatch(notify({message: "Patient saving error.", status: 500, position: 'tc'}));
     });

@@ -2,6 +2,7 @@ import constants from "./constant";
 
 export const patients = (state = {isLoading: false, isLoadingError: false, data: []}, action) => {
   switch (action.type) {
+    case constants.SAVE_DISABILITY:
     case constants.SAVE_PATIENT:
     case constants.LOAD_PATIENT_LIST:
       return {
@@ -15,8 +16,22 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
-        activePatient: {},
         data: [action.patient, ...state.data],
+        error: null
+      };
+    case constants.SAVE_DISABILITY_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isLoadingError: false,
+        savedAt: action.savedAt,
+        data: state.data.map((patient) =>
+          patient.id === action.disability.patient.id ?
+            {
+              ...patient,
+              disabilityReportIds: patient.disabilityReportIds ? [...patient.disabilityReportIds, action.disability.id] :
+                [action.disability.id]
+            } : patient),
         error: null
       };
     case constants.SAVE_PATIENT_ERROR:
@@ -24,8 +39,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         ...state,
         isLoading: false,
         isLoadingError: true,
-        error: action.data,
-        activePatientId: undefined
+        error: action.data
       };
     case constants.LOAD_PATIENT_LIST_SUCCESS:
       return {
