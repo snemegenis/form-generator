@@ -54,11 +54,13 @@ const AddReduxPatient = connect(null,
 )(reduxForm({form: 'activePatient'})(PatientReduxForm));
 
 const UpdateReduxPatient = connect(
-  (state, ownProps)=>({
-    initialValues: {
-      patient: state.patients.data[ownProps.patientId]
+  (state, ownProps) => {
+    return {
+      initialValues: {
+        ...state.patients.data.find(patient => ownProps.patientId == patient.id)
+      }
     }
-  }),
+  },
   (dispatch) => ({
     onSave(patient) {
       dispatch(savePatientAction(patient));
