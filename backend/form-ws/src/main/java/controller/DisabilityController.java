@@ -1,9 +1,6 @@
 package controller;
 
-import bean.DisabilityReport;
-import bean.DisabilityType;
-import bean.Doctor;
-import bean.Patient;
+import bean.*;
 import constants.ReportConstants;
 import lombok.extern.slf4j.Slf4j;
 import mapper.DisabilityMapper;
@@ -19,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import report.ReportGenerator;
+import service.DisabilityService;
+import service.PatientService;
+import service.ReportService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,84 +36,40 @@ import java.util.Map;
 public class DisabilityController extends ControllerBase {
 
     @Autowired
-    private ReportGenerator reportGenerator;
+    private DisabilityService disabilityService;
 
     @Autowired
-    private ReportMapper reportMapper;
+    private PatientService patientService;
 
     @Autowired
-    private PatientMapper patientMapper;
+    private ReportService reportService;
 
-    @Autowired
-    private DisabilityMapper disabilityMapper;
-
-    @RequestMapping(
-            method = RequestMethod.POST,
-            consumes = "application/json",
-            produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @Transactional
     public DisabilityReport save(@RequestBody DisabilityReport disabilityReport) {
-        Integer patientId = disabilityReport.getPatient().getId();
-        disabilityMapper.resetPatientStatus(patientId, false);
-
-        disabilityReport.setCreated(LocalDateTime.now());
-        disabilityReport.setModified(LocalDateTime.now());
-        disabilityMapper.add(disabilityReport);
-
-        Integer disabilityReportId = disabilityReport.getId();
-        disabilityMapper.assignTreatments(disabilityReportId,
-                disabilityReport.getTreatments());
-        disabilityMapper.assignAppointments(disabilityReportId,
-                disabilityReport.getAppointments());
-        disabilityMapper.assignDiagnosis(disabilityReportId,
-                Collections.singleton(disabilityReport.getMainDiagnosis()));
-        if (disabilityReport.getOtherDiagnosis() != null &&
-                disabilityReport.getOtherDiagnosis().size() > 0) {
-            disabilityMapper.assignDiagnosis(disabilityReportId,
-                    disabilityReport.getOtherDiagnosis());
-
-        }
-        disabilityMapper.assignDisabilities(disabilityReportId, disabilityReport.getDisabilityTypes());
-        disabilityMapper.resetStatus(disabilityReportId, true);
-
-        return disabilityReport;
+        return disabilityService.create(disabilityReport);
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
-            produces = "application/pdf")
-    public ResponseEntity<ByteArrayResource> print(@PathVariable("id") Integer patientId,
-                                                   @RequestParam(value = "fillDate", required = false)
-                                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fillDate,
-                                                   @RequestParam(value = "fillNumber", required = false) Integer
-                                                           fillNumber) {
+    @RequestMapping(method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<ByteArrayResource> print(@PathVariable("id") int patientId,
+            @RequestParam(value = "fillDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                    LocalDate fillDate,
+            @RequestParam(value = "fillNumber", required = false) Integer fillNumber) {
         HttpHeaders headers = addHeaders(new HttpHeaders());
-        Patient patient = patientMapper.getById(patientId);
+        Patient patient = patientService.get(patientId);
         final String reportName = patient.getFirstName() + "_" + patient.getLastName();
         headers.add("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put(ReportConstants.PARAM_PRINT_DATE, fillDate != null);
-        parameters.put(ReportConstants.PARAM_DATE, fillDate);
-        parameters.put(ReportConstants.PARAM_PRINT_NBR, fillNumber != null);
-        parameters.put(ReportConstants.PARAM_NBR, fillNumber);
-        parameters.put(ReportConstants.PARAM_USER, Doctor.builder()
-                .code("AKM123").firstName("Vardiene").lastName("Pavardiene").occupation("Seimos gydytoja").build());
+        DisabilityReportParams disabilityReportParams = DisabilityReportParams.builder().fillDate(fillDate != null)
+                .date(fillDate).fillNumber(fillNumber != null).number(fillNumber).patientId(patientId)
+                .build();
 
-        try {
-            byte[] reportData = reportGenerator
-                    .generate("disability-report", parameters, Collections.singletonList(reportMapper
-                            .getDisabilityReport(patientId)));
-            if (reportData == null) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-            }
-            return ResponseEntity.ok().headers(headers).contentLength(reportData.length).contentType(MediaType
-                    .parseMediaType("application/octet-stream"))
-                    .body(new ByteArrayResource(reportData));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        byte[] reportData = reportService.get(disabilityReportParams);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(reportData.length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(reportData));
 
     }
 }

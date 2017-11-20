@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = { "controller", "app", "config" })
+@ComponentScan(basePackages = { "controller", "app", "config", "error", "service" })
 public class Application {
 
     public static void main(String[] args) {
