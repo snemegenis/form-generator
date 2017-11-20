@@ -2,6 +2,8 @@ package bean;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created by vaidelius on 16.6.23.
  */
@@ -11,7 +13,7 @@ import lombok.*;
 @Builder
 @Data
 @EqualsAndHashCode(of = {"code"})
-public class Diagnosis {
+public class Diagnosis implements Serializable{
     private String code;
     private boolean primary;
     private String text;

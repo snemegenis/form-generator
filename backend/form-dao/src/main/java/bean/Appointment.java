@@ -2,6 +2,7 @@ package bean;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @ToString
 @Getter
 @Setter
-public class Appointment {
+public class Appointment implements Serializable{
 	private Integer id;
 
 	private LocalDate date;

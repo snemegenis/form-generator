@@ -2,6 +2,8 @@ package bean;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * Created by vaidelius on 16.6.19.
  */
@@ -10,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public abstract class Person {
+public abstract class Person implements Serializable {
 
     private Integer id;
     private String firstName;

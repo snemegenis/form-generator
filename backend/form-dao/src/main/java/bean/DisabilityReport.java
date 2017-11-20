@@ -3,6 +3,7 @@ package bean;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 @ToString
 @Getter
 @Setter
-public class DisabilityReport {
+public class DisabilityReport implements Serializable {
     private Integer id;
 
     private Patient patient;
