@@ -1,5 +1,6 @@
 package app;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -27,8 +28,11 @@ import java.lang.reflect.Method;
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = { "controller", "app", "config", "error", "service" })
+@ComponentScan(basePackages = { "controller", "app", "config", "handler", "service" })
 public class Application {
+
+    @Value("${rest.base.path}")
+    private String basePath;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -41,11 +45,12 @@ public class Application {
 
     @Bean
     public WebMvcRegistrationsAdapter webMvcRegistrationsHandlerMapping() {
+        final String API_BASE_PATH = basePath;
+
         return new WebMvcRegistrationsAdapter() {
             @Override
             public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
                 return new RequestMappingHandlerMapping() {
-                    private final static String API_BASE_PATH = "rest/v1";
 
                     @Override
                     protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mapping) {

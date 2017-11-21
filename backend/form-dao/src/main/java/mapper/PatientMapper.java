@@ -1,12 +1,9 @@
 package mapper;
 
-import bean.Diagnosis;
 import bean.Patient;
 import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
-import sqlbuilder.PatientSQLBuilder;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 

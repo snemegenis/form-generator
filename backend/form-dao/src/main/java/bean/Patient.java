@@ -2,7 +2,6 @@ package bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.extern.log4j.Log4j;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

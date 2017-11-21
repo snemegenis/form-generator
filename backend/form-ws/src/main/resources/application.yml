@@ -1,5 +1,8 @@
 server:
   contextPath: /form
+rest:
+  base:
+    path: rest/v1
 security:
   basic:
     enabled: false

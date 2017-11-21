@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by liutkvai on 11/20/2017.
  */
-@Service("reportService")
+@Service
 public class ReportServiceImpl implements ReportService {
 
     @Autowired

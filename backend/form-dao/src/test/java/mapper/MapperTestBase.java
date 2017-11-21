@@ -19,9 +19,6 @@ import java.util.List;
 public abstract class MapperTestBase {
 
     @Autowired
-    private SpringLiquibase liquibase;
-
-    @Autowired
     protected ObjectMapper mapper;
 
     protected <T> T readFromClassPath(String classpath, TypeReference<T> type) throws java.io.IOException {

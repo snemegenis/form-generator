@@ -1,13 +1,10 @@
 package mapper;
 
 import bean.DisabilityReport;
-import bean.Doctor;
-import bean.Patient;
 import com.fasterxml.jackson.core.type.TypeReference;
 import config.PersistenceConfig;
 import config.PersistenceConfigForTest;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,6 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by liutkvai on 8/31/2016.

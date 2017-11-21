@@ -1,4 +1,4 @@
-package error;
+package bean;
 
 import lombok.*;
 

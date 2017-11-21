@@ -8,6 +8,7 @@ import liquibase.integration.spring.SpringLiquibase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -21,7 +22,7 @@ import java.sql.Driver;
  * Created by liutkvai on 8/31/2016.
  */
 @Slf4j
-@Configuration
+@TestConfiguration
 public class PersistenceConfigForTest {
 
     @Value("${jdbc.url}")

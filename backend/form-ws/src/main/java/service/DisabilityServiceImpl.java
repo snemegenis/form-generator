@@ -11,7 +11,7 @@ import java.util.Collections;
 /**
  * Created by liutkvai on 11/20/2017.
  */
-@Service("disabilityService")
+@Service
 public class DisabilityServiceImpl implements DisabilityService {
 
     @Autowired

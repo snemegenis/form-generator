@@ -2,10 +2,7 @@ package mapper;
 
 import bean.DisabilityReport;
 import bean.DisabilityReportTmp;
-import bean.Patient;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import config.PersistenceConfig;
 import config.PersistenceConfigForTest;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -21,11 +18,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
 
 /**
  * Created by liutkvai on 8/31/2016.
@@ -46,11 +39,11 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteOutputStream bos = new ByteOutputStream()) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                 oos.writeObject(report);
             }
-            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.getBytes()));
+            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
         }
 
         DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(1);
@@ -63,11 +56,11 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteOutputStream bos = new ByteOutputStream()) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                 oos.writeObject(report);
             }
-            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.getBytes()));
+            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
         }
 
         disabilityTmpMapper.delete(1);
@@ -83,22 +76,22 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteOutputStream bos = new ByteOutputStream()) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                 oos.writeObject(report);
             }
-            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.getBytes()));
+            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
         }
 
         report = readFromClassPath("/mapper/expected/new-disability-report.json",
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteOutputStream bos = new ByteOutputStream()) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
                 oos.writeObject(report);
             }
-            Assert.assertEquals(1, disabilityTmpMapper.update(1, bos.getBytes()));
+            Assert.assertEquals(1, disabilityTmpMapper.update(1, bos.toByteArray()));
         }
 
         DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(1);
@@ -108,8 +101,7 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
     private void assertReport(DisabilityReport report, DisabilityReportTmp disabilityReportTmp)
             throws IOException, ClassNotFoundException {
         if (disabilityReportTmp != null) {
-            try (ByteInputStream bis = new ByteInputStream(disabilityReportTmp.getData(),
-                    disabilityReportTmp.getData().length)) {
+            try (ByteArrayInputStream bis = new ByteArrayInputStream(disabilityReportTmp.getData())) {
                 try (ObjectInputStream ois = new ObjectInputStream(bis)) {
                     DisabilityReport actual = (DisabilityReport) ois.readObject();
                     EqualsBuilder.reflectionEquals(report, actual);
