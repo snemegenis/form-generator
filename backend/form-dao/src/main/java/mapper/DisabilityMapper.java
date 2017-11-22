@@ -45,7 +45,7 @@ public interface DisabilityMapper {
     void assignAppointments(@Param("disabilityReportId") int disabilityReportId, @Param("appointments")
             Collection<Appointment> appointments);
 
-    @Delete("DELETE FROM appointments WHERE disability_report_id=#{disabilityReportId}")
+    @Delete("DELETE FROM appointment WHERE disability_report_id=#{disabilityReportId}")
     void removeAppointments(@Param("disabilityReportId") int disabilityReportId);
 
     @Insert({"<script>" +

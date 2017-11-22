@@ -58,5 +58,7 @@
   "barthel_index": 22,
   "other_treatment": "Some other treatment of Petriukas",
   "treatment_history": "Some treatment history of Petriukas",
-  "active": true
+  "active": true,
+  "created": "2011-01-01T21:01:02.123",
+  "modified": "2011-02-01T20:10:01.113"
 }
