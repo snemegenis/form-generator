@@ -3,6 +3,7 @@ package mapper;
 import bean.DisabilityReport;
 import bean.DisabilityReportTmp;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import config.PersistenceConfig;
 import config.PersistenceConfigForTest;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -33,21 +34,19 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
     @Autowired
     private DisabilityTmpMapper disabilityTmpMapper;
 
+    @Autowired
+    private ObjectMapper mapper;
+
     @Test
     public void testAddDisability() throws Exception {
         DisabilityReport report = readFromClassPath("/mapper/expected/disability-report.json",
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-                oos.writeObject(report);
-            }
-            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
-        }
+        disabilityTmpMapper.add(new DisabilityReportTmp(1, mapper.writeValueAsBytes(report)));
 
         DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(1);
-        assertReport(report, disabilityReportTmp);
+        EqualsBuilder.reflectionEquals(report, disabilityReportTmp);
     }
 
     @Test
@@ -62,52 +61,32 @@ public class DisabilityMapperTmpTest extends MapperTestBase {
             }
             disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
         }
+        Assert.assertTrue(disabilityTmpMapper.exists(1));
 
         disabilityTmpMapper.delete(1);
-
-        Assert.assertNull(disabilityTmpMapper.get(1));
+        Assert.assertFalse(disabilityTmpMapper.exists(1));
     }
 
     @Test
     public void testUpdateDisability() throws Exception {
-        Assert.assertEquals(0, disabilityTmpMapper.update(1, new byte[0]));
+        Assert.assertEquals(0,
+                disabilityTmpMapper.update(DisabilityReportTmp.builder().patientId(1).data(new byte[0]).build()));
 
         DisabilityReport report = readFromClassPath("/mapper/expected/disability-report.json",
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-                oos.writeObject(report);
-            }
-            disabilityTmpMapper.add(new DisabilityReportTmp(1, bos.toByteArray()));
-        }
+        disabilityTmpMapper.add(new DisabilityReportTmp(1, mapper.writeValueAsBytes(report)));
 
         report = readFromClassPath("/mapper/expected/new-disability-report.json",
                 new TypeReference<DisabilityReport>() {
                 });
 
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-                oos.writeObject(report);
-            }
-            Assert.assertEquals(1, disabilityTmpMapper.update(1, bos.toByteArray()));
-        }
+        Assert.assertEquals(1, disabilityTmpMapper.update(
+                DisabilityReportTmp.builder().patientId(1).data(mapper.writeValueAsBytes(report)).build()));
 
         DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(1);
-        assertReport(report, disabilityReportTmp);
-    }
-
-    private void assertReport(DisabilityReport report, DisabilityReportTmp disabilityReportTmp)
-            throws IOException, ClassNotFoundException {
-        if (disabilityReportTmp != null) {
-            try (ByteArrayInputStream bis = new ByteArrayInputStream(disabilityReportTmp.getData())) {
-                try (ObjectInputStream ois = new ObjectInputStream(bis)) {
-                    DisabilityReport actual = (DisabilityReport) ois.readObject();
-                    EqualsBuilder.reflectionEquals(report, actual);
-                }
-            }
-        }
+        EqualsBuilder.reflectionEquals(report, disabilityReportTmp);
     }
 
 }

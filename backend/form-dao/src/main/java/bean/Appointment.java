@@ -24,4 +24,9 @@ public class Appointment implements Serializable{
 	private String observation;
 
 	private String attachment;
+
+	public boolean isValid() {
+		return date != null && doctorType != null && observation != null;
+	}
+
 }

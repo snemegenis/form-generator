@@ -25,6 +25,7 @@ public class Patient extends Person {
     private String address;
     private String employer;
     private Set<Integer> disabilityReportIds;
+    private boolean tempSaved;
 
     @Builder
     public Patient(Integer id, String firstName, String lastName, String occupation,

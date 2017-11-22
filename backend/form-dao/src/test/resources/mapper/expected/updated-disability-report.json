@@ -1,0 +1,62 @@
+{
+  "id": 1,
+  "history": "Some history of Petriukas",
+  "patient": {
+    "id": 1,
+    "first_name": "Petriukas",
+    "last_name": "Petriukaitytis",
+    "occupation": "Carpenter",
+    "mobile_phone": "+37061495801",
+    "address": "Pasvaistes 121-891, Kaunas, Lietuva",
+    "employer": "UAB \"Laisvo vejo kontorele\"",
+    "birth_date": "1985-05-12",
+    "personal_id": "38505144780",
+    "email": "petriukas@petras.com"
+  },
+  "latest_disability_desc": "Some latest disability description of Petriukas",
+  "treatments": [
+    "STATIONARY",
+    "OTHER"
+  ],
+  "disability_types": [
+    "EXPIRED", "SPECIAL_REQUIREMENT"
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "date": "2015-01-12",
+      "doctor_type": "Good Therapist",
+      "observation": "Very dangerous illness",
+      "attachment": "Some attachments updated"
+    },
+    {
+      "id": 2,
+      "date": "2011-01-16",
+      "doctor_type": "Dentist",
+      "observation": "Nothing special",
+      "attachment": "Some more updated attachments"
+    }
+  ],
+  "main_diagnosis": {
+    "code": "SER-2231",
+    "text": "Rhinitus posiblus vulgaris 1",
+    "functional_class": "The second class",
+    "degree": "serious",
+    "stage": "sophisticated",
+    "history": "Some updated history",
+    "details": "Some updated details"
+  },
+  "other_diagnosis": [{
+    "code": "SER-1231",
+    "text": "Idiotikus posiblus vulgaris max",
+    "functional_class": "The third class",
+    "degree": "simple",
+    "stage": "easy",
+    "history": "Some other updated history",
+    "details": "Some other updated details"
+  }],
+  "barthel_index": 22,
+  "other_treatment": "Some other treatment of Petriukas",
+  "treatment_history": "Some treatment history of Petriukas",
+  "active": true
+}

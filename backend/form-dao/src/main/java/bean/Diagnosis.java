@@ -23,4 +23,9 @@ public class Diagnosis implements Serializable{
     private String history;
     private String details;
 
+    public boolean isValid() {
+        return code != null && text != null && functionalClass != null &&
+                degree != null && stage != null && history != null;
+    }
+
 }

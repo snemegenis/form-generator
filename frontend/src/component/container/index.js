@@ -43,6 +43,9 @@ const AddPatient = connect(state => state,
 
 const AddReduxPatient = connect(null,
   (dispatch) => ({
+    onPrint(patient) {
+      dispatch(savePatientAction(patient));
+    },
     onSave(patient) {
       dispatch(savePatientAction(patient));
       hashHistory.push('/');
@@ -62,6 +65,9 @@ const UpdateReduxPatient = connect(
     }
   },
   (dispatch) => ({
+    onPrint(patient) {
+      dispatch(savePatientAction(patient));
+    },
     onSave(patient) {
       dispatch(savePatientAction(patient));
       hashHistory.push('/');

@@ -50,4 +50,28 @@ public class DisabilityMapperTest extends MapperTestBase {
 
     }
 
+    @Test
+    public void testUpdateDisability() throws Exception {
+        DisabilityReport disabilityReport = readFromClassPath("/mapper/expected/updated-disability-report.json",
+                new TypeReference<DisabilityReport>() {
+                });
+        disabilityMapper.update(disabilityReport);
+        disabilityMapper.removeTreatments(disabilityReport.getId());
+        disabilityMapper.assignTreatments(disabilityReport.getId(), disabilityReport.getTreatments());
+        disabilityMapper.removeAppointments(disabilityReport.getId());
+        disabilityMapper.assignAppointments(disabilityReport.getId(), disabilityReport.getAppointments());
+        disabilityMapper.removeDiagnosis(disabilityReport.getId());
+        disabilityMapper.assignDiagnosis(disabilityReport.getId(),
+                Collections.singletonList(disabilityReport.getMainDiagnosis()));
+        disabilityMapper.assignDiagnosis(disabilityReport.getId(), disabilityReport.getOtherDiagnosis());
+        disabilityMapper.removeDisabilities(disabilityReport.getId());
+        disabilityMapper.assignDisabilities(disabilityReport.getId(), disabilityReport.getDisabilityTypes());
+
+        EqualsBuilder.reflectionEquals(readFromClassPath("/mapper/expected/updated-disability-report.json",
+                new TypeReference<DisabilityReport>() {
+                }), disabilityReport);
+
+    }
+
+
 }

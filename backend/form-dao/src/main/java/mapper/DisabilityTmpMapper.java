@@ -15,8 +15,11 @@ public interface DisabilityTmpMapper {
     @Select({"SELECT * FROM disability_report_tmp WHERE patient_id=#{patientId}"})
     DisabilityReportTmp get(@Param("patientId") int patientId);
 
-    @Update({"UPDATE disability_report_tmp set data=#{data} WHERE patient_id=#{patientId}"})
-    int update(@Param("patientId") int patientId, @Param("data") byte[] data);
+    @Select({"SELECT count(*) FROM disability_report_tmp WHERE patient_id=#{patientId}"})
+    boolean exists(@Param("patientId") int patientId);
+
+    @Update({"UPDATE disability_report_tmp set data=#{disabilityTmp.data} WHERE patient_id=#{disabilityTmp.patientId}"})
+    int update(@Param("disabilityTmp") DisabilityReportTmp disabilityReportTmp);
 
     @Delete({"DELETE FROM disability_report_tmp WHERE patient_id=#{patientId}"})
     void delete(@Param("patientId") int patientId);

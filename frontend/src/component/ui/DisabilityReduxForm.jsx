@@ -266,9 +266,18 @@ class DisabilityReduxForm extends React.Component {
     }
   }
 
-  handleSubmit(disability) {
-    this.validate(disability);
-    this.props.onSave(disability);
+  handleSubmit(input) {
+    const {disability, pressed} = input;
+    switch (pressed) {
+      case 'Save':
+        this.props.onSave(disability);
+        break;
+      case 'Print':
+        this.validate(disability);
+        this.props.onPrint(disability);
+        break;
+    }
+
   }
 
   render() {
@@ -291,7 +300,7 @@ class DisabilityReduxForm extends React.Component {
       {label: 'Ordered By Person', value: 'REQUIRED_BY_PERSON'}
     ];
 
-    return <form className="disability-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+    return <form className="disability-form">
 
       <Field component="input" type="hidden" name="patientId"/>
 
@@ -342,13 +351,18 @@ class DisabilityReduxForm extends React.Component {
                checkboxes={disabilityTypes}/>
       </InputField>
 
-      <button className="btn" type="submit" disabled={invalid || submitting}>Save</button>
+      <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
+        disability: {...values}, pressed: 'Save'}]))}>Save</button>
+      <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
+        disability: {...values}, pressed: 'Print'}]))}
+              disabled={invalid || submitting}>Print</button>
       <button className="btn" type="button" onClick={this.props.onBack}>Back</button>
     </form>
   }
 }
 
 DisabilityReduxForm.propTypes = {
+  onPrint: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired
 };
