@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface DisabilityService {
-    DisabilityReport save(DisabilityReport disabilityReport);
+    DisabilityReport create(DisabilityReport disabilityReport);
+    DisabilityReport update(DisabilityReport disabilityReport);
 
 }

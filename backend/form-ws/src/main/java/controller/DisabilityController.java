@@ -49,7 +49,7 @@ public class DisabilityController extends ControllerBase {
         if (!disabilityReport.isValid()) {
             throw new DisabilityException("Disability report should be valid");
         }
-        return disabilityService.save(disabilityReport);
+        return disabilityService.create(disabilityReport);
     }
 
     @RequestMapping(value = "tmp", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces

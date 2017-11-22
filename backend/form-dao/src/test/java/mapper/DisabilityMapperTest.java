@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import config.PersistenceConfig;
 import config.PersistenceConfigForTest;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,14 @@ public class DisabilityMapperTest extends MapperTestBase {
                 new TypeReference<DisabilityReport>() {
                 }), disabilityReport);
 
+    }
+
+
+    @Test
+    public void testGetDisability() throws Exception {
+        Assert.assertNull(disabilityMapper.getByStatusFlag(1, false));
+        Assert.assertNull(disabilityMapper.getByStatusFlag(2, true));
+        Assert.assertNotNull(disabilityMapper.getByStatusFlag(1, true));
     }
 
 

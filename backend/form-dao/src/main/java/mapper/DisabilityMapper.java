@@ -82,4 +82,7 @@ public interface DisabilityMapper {
     @Update("UPDATE disability_report dr SET active=#{active} WHERE dr.id=#{id}")
     void resetStatus(@Param("id") int id, @Param("active") boolean active);
 
+    @Select("SELECT dr.id, dr.created, dr.modified FROM disability_report dr WHERE dr.patient_id=#{patientId} AND dr.active = #{active}")
+    DisabilityReport getByStatusFlag(@Param("patientId") int patientId, @Param("active") boolean active);
+
 }

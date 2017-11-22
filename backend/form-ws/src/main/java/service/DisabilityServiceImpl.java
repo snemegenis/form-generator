@@ -27,17 +27,53 @@ public class DisabilityServiceImpl implements DisabilityService {
     private DisabilityTmpService disabilityTmpService;
 
     @Override
-    public DisabilityReport save(DisabilityReport disabilityReport) {
+    public DisabilityReport create(DisabilityReport disabilityReport) {
         Integer patientId = disabilityReport.getPatientId();
-        if (disabilityTmpService.exists(patientId)) {
-            disabilityTmpService.remove(patientId);
-        }
-        disabilityMapper.resetPatientStatus(patientId, false);
+        removeTmpInstance(patientId);
 
         disabilityReport.setCreated(LocalDateTime.now());
         disabilityReport.setModified(LocalDateTime.now());
-        disabilityMapper.add(disabilityReport);
 
+        disabilityMapper.add(disabilityReport);
+        Integer disabilityReportId = disabilityReport.getId();
+
+        assignRelations(disabilityReport);
+        updateStatus(patientId, disabilityReportId);
+
+        return disabilityReport;
+
+    }
+
+    @Override
+    public DisabilityReport update(DisabilityReport disabilityReport) {
+        Integer patientId = disabilityReport.getPatientId();
+        removeTmpInstance(patientId);
+
+        disabilityReport.setModified(LocalDateTime.now());
+
+        disabilityMapper.update(disabilityReport);
+        Integer disabilityReportId = disabilityReport.getId();
+
+        removeRelations(disabilityReportId);
+        assignRelations(disabilityReport);
+        updateStatus(patientId, disabilityReportId);
+
+        return disabilityReport;
+
+    }
+
+    private void removeTmpInstance(Integer patientId) {
+        if (disabilityTmpService.exists(patientId)) {
+            disabilityTmpService.remove(patientId);
+        }
+    }
+
+    private void updateStatus(Integer patientId, Integer disabilityReportId) {
+        disabilityMapper.resetPatientStatus(patientId, false);
+        disabilityMapper.resetStatus(disabilityReportId, true);
+    }
+
+    private void assignRelations(DisabilityReport disabilityReport) {
         Integer disabilityReportId = disabilityReport.getId();
         disabilityMapper.assignTreatments(disabilityReportId, disabilityReport.getTreatments());
         disabilityMapper.assignAppointments(disabilityReportId, disabilityReport.getAppointments());
@@ -48,8 +84,13 @@ public class DisabilityServiceImpl implements DisabilityService {
 
         }
         disabilityMapper.assignDisabilities(disabilityReportId, disabilityReport.getDisabilityTypes());
-        disabilityMapper.resetStatus(disabilityReportId, true);
-        return disabilityReport;
+    }
+
+    private void removeRelations(Integer disabilityReportId) {
+        disabilityMapper.removeTreatments(disabilityReportId);
+        disabilityMapper.removeAppointments(disabilityReportId);
+        disabilityMapper.removeDiagnosis(disabilityReportId);
+        disabilityMapper.removeDisabilities(disabilityReportId);
     }
 
 }

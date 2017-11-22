@@ -30,7 +30,7 @@ public class Patient extends Person {
     @Builder
     public Patient(Integer id, String firstName, String lastName, String occupation,
                    LocalDate birthDate, String personalId, String email, String phone,
-                   String mobilePhone, String address, String employer, Set<Integer> disabilityReportIds) {
+                   String mobilePhone, String address, String employer, Set<Integer> disabilityReportIds, boolean tempSaved) {
         super(id, firstName, lastName, occupation);
         this.birthDate = birthDate;
         this.personalId = personalId;
@@ -40,6 +40,7 @@ public class Patient extends Person {
         this.address = address;
         this.employer = employer;
         this.disabilityReportIds = disabilityReportIds;
+        this.tempSaved = tempSaved;
     }
 
 }
