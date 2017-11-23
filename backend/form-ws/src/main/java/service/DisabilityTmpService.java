@@ -11,4 +11,5 @@ public interface DisabilityTmpService {
     void save(DisabilityReport disabilityReport);
     void remove(int patientId);
     boolean exists(int patientId);
+    DisabilityReport get(int patientId);
 }

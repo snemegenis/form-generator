@@ -1,6 +1,10 @@
 import PatientList from "../ui/PatientList.jsx";
 import PatientForm from "../ui/PatientForm.jsx";
-import {printPatientAction, saveDisabilityAction, savePatientAction} from "../../action/action";
+import {
+  loadDisabilityTmpAction,
+  printPatientAction, saveDisabilityAction, saveDisabilityTmpAction,
+  savePatientAction
+} from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import {actions} from "react-redux-form";
@@ -19,8 +23,12 @@ const VisiblePatients = connect(state => ({
     onAdd() {
       hashHistory.push('/patient/add');
     },
-    onDisabilityAdd(patientId) {
-      hashHistory.push(`/patient/${patientId}/disability/add`);
+    onDisabilityAdd(patientId, tempSaved) {
+      if (tempSaved) {
+        loadDisabilityTmpAction(patientId);
+      } else {
+        hashHistory.push(`/patient/${patientId}/disability/add`);
+      }
     },
     onUpdate(patientId) {
       hashHistory.push(`/patient/${patientId}/update`);
@@ -48,7 +56,6 @@ const AddReduxPatient = connect(null,
     },
     onSave(patient) {
       dispatch(savePatientAction(patient));
-      hashHistory.push('/');
     },
     onBack() {
       hashHistory.push('/');
@@ -80,21 +87,31 @@ const UpdateReduxPatient = connect(
 
 const activeDisabilitySelector = formValueSelector('activeDisability');
 
-const AddDisability = connect(
-  (state, ownProps) => ({
-    initialValues: {
-      patient: {id: ownProps.patientId},
+const loadAddInitialDisabilityValues = (state, ownProps) => {
+  if (state.patients.activeDisability) {
+    return {...state.patients.activeDisability};
+  } else
+    return {
+      patientId: ownProps.patientId,
       treatments: [],
       mainDiagnosis: {primary: true},
       otherDiagnosis: []
-    },
+    }
+};
+
+const AddDisability = connect(
+  (state, ownProps) => ({
+    initialValues: loadAddInitialDisabilityValues(state, ownProps),
     treatmentSelected: activeDisabilitySelector(state, 'treatments')
   }),
   dispatch => ({
+    onSaveTmp(disability) {
+      console.log('disability: ', disability);
+      dispatch(saveDisabilityTmpAction(disability, true));
+    },
     onSave(disability) {
       console.log('disability: ', disability);
       dispatch(saveDisabilityAction(disability));
-      hashHistory.push('/');
     },
     onBack() {
       hashHistory.push('/');

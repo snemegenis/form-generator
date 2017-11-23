@@ -10,9 +10,7 @@
     "birth_date": "1985-05-14",
     "personal_id": "38505144789",
     "email": "petras@petras.com",
-    "disability_report_ids": [
-      1
-    ]
+    "disability_report_id": 1
   },
   {
     "id": 2,
@@ -23,7 +21,6 @@
     "address": "Smauglio 1-891, Kaunas, Lietuva",
     "employer": "UAB \"Idurtas Pirstas\"",
     "birth_date": "1919-01-12",
-    "personal_id": "31901127891",
-    "disability_report_ids": []
+    "personal_id": "31901127891"
   }
 ]

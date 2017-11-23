@@ -2,6 +2,8 @@
   "patients": {
     "isLoading": false,
     "isLoadingError": false,
+    "isDisabilityLoading": false,
+    "isDisabilityLoadingError": false,
     "activePatient": {},
     "activeDisability": {},
     "data": [

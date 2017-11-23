@@ -4,12 +4,14 @@ import bean.DisabilityReport;
 import bean.DisabilityReportTmp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exception.DisabilityException;
 import mapper.DisabilityMapper;
 import mapper.DisabilityTmpMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -34,7 +36,7 @@ public class DisabilityTmpServiceImpl implements DisabilityTmpService {
         try {
             data = mapper.writeValueAsBytes(disabilityReport);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("JSON serialization failed", e);
+            throw new DisabilityException("Disability report serialization failed", e);
         }
 
         DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(patientId);
@@ -55,6 +57,20 @@ public class DisabilityTmpServiceImpl implements DisabilityTmpService {
     @Override
     public boolean exists(int patientId) {
         return disabilityTmpMapper.exists(patientId);
+    }
+
+    @Override
+    public DisabilityReport get(int patientId) {
+        DisabilityReport disabilityReport = null;
+        DisabilityReportTmp disabilityReportTmp = disabilityTmpMapper.get(patientId);
+        if (disabilityReportTmp != null) {
+            try {
+                disabilityReport = mapper.readValue(disabilityReportTmp.getData(), DisabilityReport.class);
+            } catch (IOException e) {
+                throw new DisabilityException("Disability report deserialization failed", e);
+            }
+        }
+        return disabilityReport;
     }
 
 }

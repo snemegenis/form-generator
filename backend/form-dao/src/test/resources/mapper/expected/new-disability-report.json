@@ -1,6 +1,7 @@
 {
   "id": 2,
   "history": "Some history of Jonas",
+  "patient_id": 1,
   "patient": {
     "id": 1,
     "first_name": "Jonas",

@@ -13,10 +13,9 @@ import java.util.Set;
 @Mapper
 public interface PatientMapper {
 
-    @Select({"SELECT p.id as p_id, p.* FROM patient p "})
-    @Results({
-            @Result(property = "disabilityReportIds", javaType = Set.class, column = "p_id", many = @Many(select =
-                    "getDisabilityReportIdsForPatient"))})
+    @Select({ "SELECT p.*, dr.id as drId FROM patient p LEFT JOIN disability_report dr ON p.id = dr.patient_id" +
+            " AND dr.active = true" })
+    @Results({ @Result(property = "disabilityReportId", column = "drId") })
     @Transactional(readOnly = true)
     List<Patient> getList();
 

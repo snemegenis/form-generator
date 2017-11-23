@@ -270,11 +270,11 @@ class DisabilityReduxForm extends React.Component {
     const {disability, pressed} = input;
     switch (pressed) {
       case 'Save':
+        this.validate(disability);
         this.props.onSave(disability);
         break;
-      case 'Print':
-        this.validate(disability);
-        this.props.onPrint(disability);
+      case 'Close':
+        this.props.onSaveTmp(disability);
         break;
     }
 
@@ -354,15 +354,14 @@ class DisabilityReduxForm extends React.Component {
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
         disability: {...values}, pressed: 'Save'}]))}>Save</button>
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
-        disability: {...values}, pressed: 'Print'}]))}
-              disabled={invalid || submitting}>Print</button>
-      <button className="btn" type="button" onClick={this.props.onBack}>Back</button>
+        disability: {...values}, pressed: 'Close'}]))}
+              disabled={invalid || submitting}>Back</button>
     </form>
   }
 }
 
 DisabilityReduxForm.propTypes = {
-  onPrint: PropTypes.func.isRequired,
+  onSaveTmp: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired
 };

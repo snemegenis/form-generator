@@ -1,6 +1,7 @@
 import React, {PropTypes} from "react";
 
-const Patient = ({id, personalId, firstName, lastName, disabled, onPrint = f => f, onDisabilityAdd = f => f, onUpdate = f => f}) => {
+const Patient = ({id, personalId, firstName, lastName, disabilityReportId, tempSaved,
+  onPrint = f => f, onDisabilityAdd = f => f, onDisabilityUpdate = f => f, onUpdate = f => f}) => {
   return <div className="patient">
     <div className="contents">
             <span>
@@ -17,8 +18,9 @@ const Patient = ({id, personalId, firstName, lastName, disabled, onPrint = f => 
             </span>
       <span className="actions">
                 <button onClick={() => onDisabilityAdd(id)}>Add Disability</button>
+                <button onClick={() => onDisabilityUpdate(id)}>Update Disability</button>
                 <button onClick={() => onUpdate(id)}>Update</button>
-                <button disabled={disabled} onClick={() => onPrint(id, firstName, lastName)}>Print</button>
+                <button disabled={!disabilityReportId} onClick={() => onPrint(id, firstName, lastName)}>Print</button>
             </span>
     </div>
   </div>
@@ -28,9 +30,11 @@ Patient.propTypes = {
   id: PropTypes.number.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabilityReportId: PropTypes.number,
+  tempSaved: PropTypes.bool,
   onPrint: PropTypes.func.isRequired,
   onDisabilityAdd: PropTypes.func.isRequired,
+  onDisabilityUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 

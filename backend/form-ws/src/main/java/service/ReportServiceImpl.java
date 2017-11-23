@@ -1,5 +1,6 @@
 package service;
 
+import bean.DisabilityReport;
 import bean.DisabilityReportParams;
 import bean.Doctor;
 import constants.ReportConstants;
@@ -41,7 +42,8 @@ public class ReportServiceImpl implements ReportService {
 
         try {
             byte[] result = reportGenerator.generate("disability-report", parameters,
-                    Collections.singletonList(reportMapper.getDisabilityReport(disabilityReportParams.getPatientId())));
+                    Collections.singletonList(reportMapper.getDisabilityReport(disabilityReportParams.getPatientId(),
+                            null)));
             if (result == null) {
                 throw new RuntimeException("Report data is empty");
             }
@@ -49,5 +51,10 @@ public class ReportServiceImpl implements ReportService {
         } catch (Exception e) {
             throw new RuntimeException("Error generating report data", e);
         }
+    }
+
+    @Override
+    public DisabilityReport get(Integer disabilityReportId) {
+        return reportMapper.getDisabilityReport(null, disabilityReportId);
     }
 }

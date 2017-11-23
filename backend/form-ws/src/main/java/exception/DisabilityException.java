@@ -8,4 +8,7 @@ public class DisabilityException extends RuntimeException {
         super(message);
     }
 
+    public DisabilityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

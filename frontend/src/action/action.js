@@ -4,6 +4,7 @@ import DisabilityApi from "../api/disability-api"
 import ReportApi from "../api/report-api"
 import {addNotification as notify} from 'reapop';
 import {actions} from "react-redux-form";
+import {hashHistory} from 'react-router'
 
 let fileDownload = require("react-file-download");
 
@@ -29,6 +30,7 @@ export const savePatientAction = (patient) => dispatch => {
       dispatch(actions.reset('activePatient'));
       dispatch(savePatientSuccessAction(response.body));
       dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
+      hashHistory.push('/');
     },
     error => {
       dispatch(actions.reset('activePatient'));
@@ -116,11 +118,79 @@ export const saveDisabilityAction = (disability) => dispatch => {
       dispatch(actions.reset('forms.activeDisability'));
       dispatch(saveDisabilitySuccessAction(response.body));
       dispatch(notify({message: "Disability saved successfully.", status: 200, position: 'tc'}));
+      hashHistory.push('/');
+
     },
     error => {
-        dispatch(actions.reset('forms.activeDisability'));
+      dispatch(actions.reset('forms.activeDisability'));
       dispatch(saveDisabilityErrorAction(error));
       dispatch(notify({message: "Disability saving error.", status: 500, position: 'tc'}));
+    });
+
+};
+
+const saveDisabilityTmp = (disability) => ({
+  type: constants.SAVE_DISABILITY_TMP,
+  disability
+});
+
+export const saveDisabilityTmpErrorAction = (disability, error) => ({
+  type: constants.SAVE_DISABILITY_TMP_ERROR,
+  error,
+  disability
+});
+
+export const saveDisabilityTmpSuccessAction = (disability) => ({
+  type: constants.SAVE_DISABILITY_TMP_SUCCESS,
+  disability,
+  updatedAt: Date.now(),
+});
+
+export const saveDisabilityTmpAction = (disability, closeOnSuccess) => dispatch => {
+  dispatch(saveDisabilityTmp(disability));
+  return DisabilityApi.saveTmp(disability).then(
+    response => {
+      dispatch(saveDisabilityTmpSuccessAction(response.body));
+      dispatch(notify({message: "Disability temporary data saved successfully.", status: 200, position: 'tc'}));
+      if (closeOnSuccess) {
+        hashHistory.push('/');
+      }
+    },
+    error => {
+      dispatch(saveDisabilityTmpErrorAction(error));
+      dispatch(notify({message: "Disability temporary data saving error.", status: 500, position: 'tc'}));
+    });
+
+};
+
+const loadDisabilityTmp = (patientId) => ({
+  type: constants.LOAD_DISABILITY_TMP,
+  patientId
+});
+
+export const loadDisabilityTmpErrorAction = (patientId, error) => ({
+  type: constants.LOAD_DISABILITY_TMP_ERROR,
+  error,
+  patientId
+});
+
+export const loadDisabilityTmpSuccessAction = (disability) => ({
+  type: constants.LOAD_DISABILITY_TMP_SUCCESS,
+  disability,
+  loadedAt: Date.now(),
+});
+
+export const loadDisabilityTmpAction = (patientId) => dispatch => {
+  dispatch(loadDisabilityTmp(patientId));
+  return DisabilityApi.loadTmp(patientId).then(
+    response => {
+      dispatch(loadDisabilityTmpSuccessAction(response.body));
+      dispatch(notify({message: "Disability temporary data loaded successfully.", status: 200, position: 'tc'}));
+      hashHistory.push(`/patient/${patientId}/disability/add`);
+    },
+    error => {
+      dispatch(loadDisabilityTmpErrorAction(patientId, error));
+      dispatch(notify({message: "Disability temporary data loading error.", status: 500, position: 'tc'}));
     });
 
 };

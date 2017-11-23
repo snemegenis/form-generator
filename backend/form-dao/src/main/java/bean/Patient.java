@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 /**
  * Created by vaidelius on 16.7.3.
@@ -24,13 +23,13 @@ public class Patient extends Person {
     private String mobilePhone;
     private String address;
     private String employer;
-    private Set<Integer> disabilityReportIds;
+    private Integer disabilityReportId;
     private boolean tempSaved;
 
     @Builder
     public Patient(Integer id, String firstName, String lastName, String occupation,
                    LocalDate birthDate, String personalId, String email, String phone,
-                   String mobilePhone, String address, String employer, Set<Integer> disabilityReportIds, boolean tempSaved) {
+                   String mobilePhone, String address, String employer, Integer disabilityReportId, boolean tempSaved) {
         super(id, firstName, lastName, occupation);
         this.birthDate = birthDate;
         this.personalId = personalId;
@@ -39,7 +38,7 @@ public class Patient extends Person {
         this.mobilePhone = mobilePhone;
         this.address = address;
         this.employer = employer;
-        this.disabilityReportIds = disabilityReportIds;
+        this.disabilityReportId = disabilityReportId;
         this.tempSaved = tempSaved;
     }
 

@@ -86,4 +86,19 @@ public class DisabilityController extends ControllerBase {
                 .body(new ByteArrayResource(reportData));
 
     }
+
+    @RequestMapping(value = "{disabilityReportId}", method = RequestMethod.GET, produces
+            = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public DisabilityReport getDisabilityReport(@PathVariable("disabilityReportId") Integer disabilityReportId) {
+        return reportService.get(disabilityReportId);
+    }
+
+    @RequestMapping(value = "tmp", method = RequestMethod.GET, produces
+            = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public DisabilityReport getDisabilityReportTmp(@PathVariable("patientId") Integer patientId) {
+        return disabilityTmpService.get(patientId);
+    }
+
 }

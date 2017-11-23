@@ -31,7 +31,9 @@ public class ReportMapperTest extends MapperTestBase{
 
         DisabilityReport expected = readFromClassPath("/mapper/expected/disability-report.json",
                 new TypeReference<DisabilityReport>() {});
-        DisabilityReport actual = reportMapper.getDisabilityReport(1);
+        DisabilityReport actual = reportMapper.getDisabilityReport(1, null);
+        ReflectionAssert.assertReflectionEquals(expected, actual);
+        actual = reportMapper.getDisabilityReport(null, 1);
         ReflectionAssert.assertReflectionEquals(expected, actual);
     }
 

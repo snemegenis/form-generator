@@ -1,5 +1,6 @@
 package service;
 
+import bean.DisabilityReport;
 import bean.DisabilityReportParams;
 
 /**
@@ -7,4 +8,5 @@ import bean.DisabilityReportParams;
  */
 public interface ReportService {
     byte[] get(DisabilityReportParams disabilityReportParams);
+    DisabilityReport get(Integer disabilityReportId);
 }

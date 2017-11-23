@@ -2,9 +2,11 @@ import constants from "./constant";
 
 export const patients = (state = {isLoading: false, isLoadingError: false, data: []}, action) => {
   switch (action.type) {
+    case constants.SAVE_DISABILITY_TMP:
     case constants.SAVE_DISABILITY:
     case constants.SAVE_PATIENT:
     case constants.LOAD_PATIENT_LIST:
+    case constants.LOAD_DISABILITY_TMP:
       return {
         ...state,
         isLoading: true,
@@ -19,6 +21,20 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         data: [action.patient, ...state.data],
         error: null
       };
+    case constants.SAVE_DISABILITY_TMP_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isLoadingError: false,
+        savedAt: action.savedAt,
+        data: state.data.map((patient) =>
+          patient.id === action.disability.patientId ?
+            {
+              ...patient,
+              tempSaved: true
+            } : patient),
+        error: null
+      };
     case constants.SAVE_DISABILITY_SUCCESS:
       return {
         ...state,
@@ -26,14 +42,15 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoadingError: false,
         savedAt: action.savedAt,
         data: state.data.map((patient) =>
-          patient.id === action.disability.patient.id ?
+          patient.id === action.disability.patientId ?
             {
               ...patient,
-              disabilityReportIds: patient.disabilityReportIds ? [...patient.disabilityReportIds, action.disability.id] :
-                [action.disability.id]
+              disabilityReportId: action.disability.id
             } : patient),
         error: null
       };
+    case constants.SAVE_DISABILITY_TMP_ERROR:
+    case constants.SAVE_DISABILITY_ERROR:
     case constants.SAVE_PATIENT_ERROR:
       return {
         ...state,
@@ -54,8 +71,25 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
       return {
         ...state,
         data: [],
-        isLoading: false,
-        isLoadingError: true,
+        isDisabilityLoading: false,
+        isDisabilityLoadingError: true,
+        error: action.data,
+      };
+    case constants.LOAD_DISABILITY_TMP_SUCCESS:
+      return {
+        ...state,
+        isDisabilityLoading: false,
+        isDisabilityLoadingError: false,
+        loadedAt: action.loadedAt,
+        activeDisability: action.disability,
+        error: null
+      };
+    case constants.LOAD_DISABILITY_TMP_ERROR:
+      return {
+        ...state,
+        isDisabilityLoading: false,
+        isDisabilityLoadingError: true,
+        activeDisability: null,
         error: action.data,
       };
     default:
