@@ -7,8 +7,7 @@ import {
 } from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
-import {actions} from "react-redux-form";
-import {formValueSelector, reduxForm} from "redux-form";
+import {formValueSelector, reduxForm, submit, reset} from "redux-form";
 import PatientReduxForm from "../ui/PatientReduxForm.jsx";
 import DisabilityReduxForm from "../ui/DisabilityReduxForm.jsx";
 
@@ -43,7 +42,7 @@ const AddPatient = connect(state => state,
       hashHistory.push('/');
     },
     onBack() {
-      dispatch(actions.reset("patients.activePatient"));
+      dispatch(reset("patients.activePatient"));
       hashHistory.push('/');
     }
   })
@@ -105,6 +104,13 @@ const AddDisability = connect(
     treatmentSelected: activeDisabilitySelector(state, 'treatments')
   }),
   dispatch => ({
+    onAutoSaveTmpTimeout() {
+      dispatch(submit("activeDisability"));
+    },
+    onAutoSaveTmp(disability) {
+      console.log('disability: ', disability);
+      dispatch(saveDisabilityTmpAction(disability, false));
+    },
     onSaveTmp(disability) {
       console.log('disability: ', disability);
       dispatch(saveDisabilityTmpAction(disability, true));

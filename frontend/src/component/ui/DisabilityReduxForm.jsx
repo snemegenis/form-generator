@@ -1,5 +1,5 @@
 import React, {PropTypes} from "react";
-import {Field, FieldArray, Fields, SubmissionError} from "redux-form";
+import {Field, FieldArray, Fields, Form, SubmissionError} from "redux-form";
 import InputField from "./InputField.jsx";
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import InputMask from 'react-input-mask';
@@ -148,6 +148,17 @@ class DisabilityReduxForm extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.autoSaveTimer = setInterval(() => {
+      this.props.onAutoSaveTmpTimeout();
+    }, 10000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.autoSaveTimer);
+    console.log("Stopping auto saving");
+  }
+
   validateDiagnosis(diagnosis, error, withDetails = false) {
 
     let errorExist = false;
@@ -269,14 +280,18 @@ class DisabilityReduxForm extends React.Component {
     }
   }
 
-  handleSubmit(input) {
+  handleAutoSubmit(disability) {
+    this.props.onAutoSaveTmp(disability);
+  }
+
+    handleSubmit(input) {
     const {disability, pressed} = input;
     switch (pressed) {
       case 'Save':
         this.validate(disability);
         this.props.onSave(disability);
         break;
-      case 'Close':
+      default:
         this.props.onSaveTmp(disability);
         break;
     }
@@ -303,7 +318,7 @@ class DisabilityReduxForm extends React.Component {
       {label: 'Ordered By Person', value: 'REQUIRED_BY_PERSON'}
     ];
 
-    return <form className="disability-form">
+    return <Form className="disability-form" onSubmit={handleSubmit(this.handleAutoSubmit.bind(this))}>
 
       <Field component="input" type="hidden" name="patientId"/>
 
@@ -362,11 +377,13 @@ class DisabilityReduxForm extends React.Component {
         disability: {...values}, pressed: 'Close'
       }]))}>Back
       </button>
-    </form>
+    </Form>
   }
 }
 
 DisabilityReduxForm.propTypes = {
+  onAutoSaveTmpTimeout: PropTypes.func.isRequired,
+  onAutoSaveTmp: PropTypes.func.isRequired,
   onSaveTmp: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired
