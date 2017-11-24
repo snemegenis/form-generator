@@ -122,9 +122,7 @@
 			<column name="observation" type="VARCHAR(255)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="attachment" type="VARCHAR(100)">
-				<constraints nullable="false"/>
-			</column>
+			<column name="attachment" type="VARCHAR(100)" />
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-diagnosis">

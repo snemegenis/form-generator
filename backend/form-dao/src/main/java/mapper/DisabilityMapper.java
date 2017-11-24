@@ -11,7 +11,7 @@ import java.util.Collection;
 @Mapper
 public interface DisabilityMapper {
     @Insert({"INSERT INTO disability_report (patient_id, history, other_treatment, treatment_history, barthel_index, " +
-            "latest_disability_desc, active, created, modified) VALUES (#{patient.id}, #{history}, #{otherTreatment}," +
+            "latest_disability_desc, active, created, modified) VALUES (#{patientId}, #{history}, #{otherTreatment}," +
             "#{treatmentHistory}, #{barthelIndex}, #{latestDisabilityDesc}, #{active}, #{created}, #{modified})"})
     @Options(useGeneratedKeys = true, keyColumn = "id")
     void add(DisabilityReport disabilityReport);

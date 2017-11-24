@@ -1,5 +1,6 @@
 package bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class Appointment implements Serializable{
 
 	private String attachment;
 
+	@JsonIgnore
 	public boolean isValid() {
 		return date != null && doctorType != null && observation != null;
 	}

@@ -2,10 +2,7 @@
   "patients": {
     "isLoading": false,
     "isLoadingError": false,
-    "isDisabilityLoading": false,
-    "isDisabilityLoadingError": false,
     "activePatient": {},
-    "activeDisability": {},
     "data": [
       {
         "id": 1,
@@ -20,6 +17,11 @@
         "lastName": "Jonaitis"
       }
     ]
+  },
+  "disability":{
+    "isLoading": false,
+    "isLoadingError": false,
+    "data": null
   },
   "user": {
     "id": 1,

@@ -15,12 +15,12 @@ public interface PatientMapper {
 
     @Select({ "SELECT p.*, dr.id as drId FROM patient p LEFT JOIN disability_report dr ON p.id = dr.patient_id" +
             " AND dr.active = true" })
-    @Results({ @Result(property = "disabilityReportId", column = "drId") })
+    @Results({ @Result(property = "disabilityReportId", column = "drId"),
+            @Result(property = "id", column = "id"),
+            @Result(property = "tempSaved", column = "id", javaType = boolean.class,
+                    one = @One(select = "mapper.DisabilityTmpMapper.exists")) })
     @Transactional(readOnly = true)
     List<Patient> getList();
-
-    @Select("SELECT dr.id FROM disability_report dr WHERE dr.patient_id = #{patientId} ")
-    List<Integer> getDisabilityReportIdsForPatient(int patientId);
 
     @Select("SELECT * FROM patient WHERE id = #{id}")
     @Transactional(readOnly = true)

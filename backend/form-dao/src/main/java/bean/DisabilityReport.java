@@ -1,5 +1,6 @@
 package bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -51,6 +52,7 @@ public class DisabilityReport implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime created;
 
+    @JsonIgnore
     public boolean isValid() {
         return isPatientIdValid() && isHistoryValid() && isTreatmentsValid() && isOtherTreatmentValid() &&
                 isAppointmentsValid() && isMainDiagnosisValid() && isOtherDiagnosisValid() && isBarthelIndexValid() &&

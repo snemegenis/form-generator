@@ -6,7 +6,6 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.SAVE_DISABILITY:
     case constants.SAVE_PATIENT:
     case constants.LOAD_PATIENT_LIST:
-    case constants.LOAD_DISABILITY_TMP:
       return {
         ...state,
         isLoading: true,
@@ -24,6 +23,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.SAVE_DISABILITY_TMP_SUCCESS:
       return {
         ...state,
+        activeDisability: null,
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
@@ -38,6 +38,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.SAVE_DISABILITY_SUCCESS:
       return {
         ...state,
+        activeDisability: null,
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
@@ -49,11 +50,18 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
             } : patient),
         error: null
       };
-    case constants.SAVE_DISABILITY_TMP_ERROR:
-    case constants.SAVE_DISABILITY_ERROR:
     case constants.SAVE_PATIENT_ERROR:
       return {
         ...state,
+        isLoading: false,
+        isLoadingError: true,
+        error: action.data
+      };
+    case constants.SAVE_DISABILITY_TMP_ERROR:
+    case constants.SAVE_DISABILITY_ERROR:
+      return {
+        ...state,
+        activeDisability: null,
         isLoading: false,
         isLoadingError: true,
         error: action.data
@@ -71,15 +79,23 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
       return {
         ...state,
         data: [],
-        isDisabilityLoading: false,
-        isDisabilityLoadingError: true,
+        isLoading: false,
+        isLoadingError: true,
         error: action.data,
       };
+    case constants.LOAD_DISABILITY_TMP:
+      return {
+        ...state,
+        activeDisability: null,
+        isLoading: true,
+        isLoadingError: false
+      };
+
     case constants.LOAD_DISABILITY_TMP_SUCCESS:
       return {
         ...state,
-        isDisabilityLoading: false,
-        isDisabilityLoadingError: false,
+        isLoading: false,
+        isLoadingError: false,
         loadedAt: action.loadedAt,
         activeDisability: action.disability,
         error: null
@@ -87,8 +103,8 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.LOAD_DISABILITY_TMP_ERROR:
       return {
         ...state,
-        isDisabilityLoading: false,
-        isDisabilityLoadingError: true,
+        isLoading: false,
+        isLoadingError: true,
         activeDisability: null,
         error: action.data,
       };

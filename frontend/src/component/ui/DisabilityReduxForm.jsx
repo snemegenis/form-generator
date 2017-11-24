@@ -41,7 +41,7 @@ const renderCheckboxes = (props) => {
   </div>;
 };
 
-const Diagnosis = ({name, title, withDetails=false}) => (
+const Diagnosis = ({name, title, withDetails = false}) => (
   <div>
     {title && <h4>{title}</h4>}
     <InputField id={`disability.${name}.code`} label="Enter code:">
@@ -151,6 +151,9 @@ class DisabilityReduxForm extends React.Component {
   validateDiagnosis(diagnosis, error, withDetails = false) {
 
     let errorExist = false;
+    if (!diagnosis) {
+      diagnosis = {};
+    }
     if (maskedInvalid(diagnosis.code)) {
       error.code = 'Enter valid code';
       errorExist = true;
@@ -205,7 +208,7 @@ class DisabilityReduxForm extends React.Component {
       errors.treatmentHistory = 'Enter treatment history.';
       errorExist = true;
     }
-    if (trimmedEmpty(disability.barthelIndex)) {
+    if (maskedInvalid('' + disability.barthelIndex)) {
       errors.barthelIndex = 'Enter valid barthel index.';
       errorExist = true;
     }
@@ -343,7 +346,7 @@ class DisabilityReduxForm extends React.Component {
 
       <div className="form-group">
         <h4>Other diagnosis</h4>
-        <FieldArray name="otherDiagnosis" component={renderDiagnosis} />
+        <FieldArray name="otherDiagnosis" component={renderDiagnosis}/>
       </div>
 
       <InputField id="disability.disabilityTypes" label="Enter disability types:">
@@ -352,10 +355,13 @@ class DisabilityReduxForm extends React.Component {
       </InputField>
 
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
-        disability: {...values}, pressed: 'Save'}]))}>Save</button>
+        disability: {...values}, pressed: 'Save'
+      }]))} disabled={invalid || submitting}>Save
+      </button>
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
-        disability: {...values}, pressed: 'Close'}]))}
-              disabled={invalid || submitting}>Back</button>
+        disability: {...values}, pressed: 'Close'
+      }]))}>Back
+      </button>
     </form>
   }
 }

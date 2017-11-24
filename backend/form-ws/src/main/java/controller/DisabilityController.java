@@ -16,6 +16,7 @@ import service.DisabilityService;
 import service.DisabilityTmpService;
 import service.PatientService;
 import service.ReportService;
+import util.ValidationHelper;
 
 import java.time.LocalDate;
 
@@ -47,7 +48,7 @@ public class DisabilityController extends ControllerBase {
     @ResponseBody
     public DisabilityReport save(@RequestBody DisabilityReport disabilityReport) {
         if (!disabilityReport.isValid()) {
-            throw new DisabilityException("Disability report should be valid");
+            throw new ValidationException("disabilityReport", "Disability report should be valid");
         }
         return disabilityService.create(disabilityReport);
     }
@@ -55,7 +56,12 @@ public class DisabilityController extends ControllerBase {
     @RequestMapping(value = "tmp", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces
             = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DisabilityReport saveTmp(@RequestBody DisabilityReport disabilityReport) {
+    public DisabilityReport saveTmp(@PathVariable("id") Integer patientId,
+            @RequestBody DisabilityReport disabilityReport) {
+
+        ValidationHelper.validateRequired("disabilityReport", disabilityReport);
+        ValidationHelper.validateEquals("disabilityReport.patientId", disabilityReport.getPatientId(), patientId);
+
         disabilityTmpService.save(disabilityReport);
         return disabilityReport;
     }
@@ -87,17 +93,16 @@ public class DisabilityController extends ControllerBase {
 
     }
 
-    @RequestMapping(value = "{disabilityReportId}", method = RequestMethod.GET, produces
-            = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{disabilityReportId}", method = RequestMethod.GET, produces = MediaType
+            .APPLICATION_JSON_VALUE)
     @ResponseBody
     public DisabilityReport getDisabilityReport(@PathVariable("disabilityReportId") Integer disabilityReportId) {
         return reportService.get(disabilityReportId);
     }
 
-    @RequestMapping(value = "tmp", method = RequestMethod.GET, produces
-            = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "tmp", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public DisabilityReport getDisabilityReportTmp(@PathVariable("patientId") Integer patientId) {
+    public DisabilityReport getDisabilityReportTmp(@PathVariable("id") Integer patientId) {
         return disabilityTmpService.get(patientId);
     }
 

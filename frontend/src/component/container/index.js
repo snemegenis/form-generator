@@ -25,7 +25,7 @@ const VisiblePatients = connect(state => ({
     },
     onDisabilityAdd(patientId, tempSaved) {
       if (tempSaved) {
-        loadDisabilityTmpAction(patientId);
+        dispatch(loadDisabilityTmpAction(patientId));
       } else {
         hashHistory.push(`/patient/${patientId}/disability/add`);
       }

@@ -23,7 +23,7 @@ const PatientList = ({patients, loading, onDisabilityAdd = f => f, onPrint = f =
                                  onUpdate={onUpdate}
                                  disabilityReportId={patient.disabilityReportId}
                                  tempSaved={patient.tempSaved}
-                                 onDisabilityAdd={() => onDisabilityAdd(patient.id)}/>
+                                 onDisabilityAdd={onDisabilityAdd}/>
                     </li>)
             }
         </ul>

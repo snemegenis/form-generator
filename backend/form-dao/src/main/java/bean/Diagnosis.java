@@ -1,5 +1,6 @@
 package bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.io.Serializable;
@@ -23,6 +24,7 @@ public class Diagnosis implements Serializable{
     private String history;
     private String details;
 
+    @JsonIgnore
     public boolean isValid() {
         return code != null && text != null && functionalClass != null &&
                 degree != null && stage != null && history != null;
