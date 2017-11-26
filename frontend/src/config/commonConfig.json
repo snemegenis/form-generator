@@ -1,4 +1,6 @@
 {
   "API_URL": "http://localhost:8090",
-  "API_APP_PREFIX": "/form/rest/v1"
+  "API_APP_PREFIX": "/form/rest/v1",
+  "AUTO_SAVE_INTERVAL": 120000
+
 }

@@ -151,7 +151,7 @@ class DisabilityReduxForm extends React.Component {
   componentDidMount() {
     this.autoSaveTimer = setInterval(() => {
       this.props.onAutoSaveTmpTimeout();
-    }, 10000);
+    }, APP_CONFIG.AUTO_SAVE_INTERVAL);
   }
 
   componentWillUnmount() {
