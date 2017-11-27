@@ -1,6 +1,7 @@
 import PatientList from "../ui/PatientList.jsx";
-import PatientForm from "../ui/PatientForm.jsx";
 import {
+  cancelDisability,
+  loadDisabilityAction,
   loadDisabilityTmpAction,
   printPatientAction, saveDisabilityAction, saveDisabilityTmpAction,
   savePatientAction
@@ -8,8 +9,8 @@ import {
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import {formValueSelector, reduxForm, submit, reset} from "redux-form";
-import PatientReduxForm from "../ui/PatientReduxForm.jsx";
-import DisabilityReduxForm from "../ui/DisabilityReduxForm.jsx";
+import PatientForm from "../ui/PatientForm.jsx";
+import DisabilityForm from "../ui/DisabilityForm.jsx";
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
@@ -22,9 +23,11 @@ const VisiblePatients = connect(state => ({
     onAdd() {
       hashHistory.push('/patient/add');
     },
-    onDisabilityAdd(patientId, tempSaved) {
+    onDisabilityAdd(patientId, disabilityReportId, tempSaved) {
       if (tempSaved) {
         dispatch(loadDisabilityTmpAction(patientId));
+      } else if (disabilityReportId) {
+        dispatch(loadDisabilityAction(patientId, disabilityReportId));
       } else {
         hashHistory.push(`/patient/${patientId}/disability/add`);
       }
@@ -35,54 +38,32 @@ const VisiblePatients = connect(state => ({
   })
 )(PatientList);
 
-const AddPatient = connect(state => state,
-  (dispatch, dispatchProps) => ({
-    onSave(patient) {
-      dispatch(savePatientAction(patient));
-      hashHistory.push('/');
-    },
-    onBack() {
-      dispatch(reset("patients.activePatient"));
-      hashHistory.push('/');
-    }
-  })
-)(PatientForm);
-
-const AddReduxPatient = connect(null,
-  (dispatch) => ({
-    onPrint(patient) {
-      dispatch(savePatientAction(patient));
-    },
-    onSave(patient) {
-      dispatch(savePatientAction(patient));
-    },
-    onBack() {
-      hashHistory.push('/');
-    }
-  })
-)(reduxForm({form: 'activePatient'})(PatientReduxForm));
-
-const UpdateReduxPatient = connect(
-  (state, ownProps) => {
+const loadAddInitialPatientValues = (state, ownProps) => {
+  if (ownProps.patientId) {
     return {
-      initialValues: {
-        ...state.patients.data.find(patient => ownProps.patientId == patient.id)
-      }
+      ...state.patients.data.find(patient => ownProps.patientId == patient.id)
     }
-  },
+  } else {
+    return {};
+  }
+};
+
+const ModifyPatient = connect(
+  (state, ownProps) => ({
+    initialValues: loadAddInitialPatientValues(state, ownProps)
+  }),
   (dispatch) => ({
     onPrint(patient) {
       dispatch(savePatientAction(patient));
     },
     onSave(patient) {
       dispatch(savePatientAction(patient));
-      hashHistory.push('/');
     },
     onBack() {
       hashHistory.push('/');
     }
   })
-)(reduxForm({form: 'activePatient'})(PatientReduxForm));
+)(reduxForm({form: 'activePatient'})(PatientForm));
 
 const activeDisabilitySelector = formValueSelector('activeDisability');
 
@@ -98,7 +79,7 @@ const loadAddInitialDisabilityValues = (state, ownProps) => {
     }
 };
 
-const AddDisability = connect(
+const ModifyDisability = connect(
   (state, ownProps) => ({
     initialValues: loadAddInitialDisabilityValues(state, ownProps),
     treatmentSelected: activeDisabilitySelector(state, 'treatments')
@@ -120,15 +101,14 @@ const AddDisability = connect(
       dispatch(saveDisabilityAction(disability));
     },
     onBack() {
+      dispatch(cancelDisability("activeDisability"));
       hashHistory.push('/');
     }
   })
-)(reduxForm({form: 'activeDisability'})(DisabilityReduxForm));
+)(reduxForm({form: 'activeDisability'})(DisabilityForm));
 
 export {
   VisiblePatients,
-  AddPatient,
-  AddDisability,
-  AddReduxPatient,
-  UpdateReduxPatient
+  ModifyDisability,
+  ModifyPatient
 };

@@ -17,7 +17,7 @@ const Patient = ({id, personalId, firstName, lastName, disabilityReportId, tempS
                 <span>{lastName}</span>
             </span>
       <span className="actions">
-                <button onClick={() => onDisabilityAdd(id, tempSaved)}>Add Disability</button>
+                <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>
                 <button onClick={() => onDisabilityUpdate(id)}>Update Disability</button>
                 <button onClick={() => onUpdate(id)}>Update</button>
                 <button disabled={!disabilityReportId} onClick={() => onPrint(id, firstName, lastName)}>Print</button>

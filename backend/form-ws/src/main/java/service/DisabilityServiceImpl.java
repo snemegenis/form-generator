@@ -1,5 +1,6 @@
 package service;
 
+import bean.Diagnosis;
 import bean.DisabilityReport;
 import bean.DisabilityReportTmp;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by liutkvai on 11/20/2017.
@@ -34,6 +36,7 @@ public class DisabilityServiceImpl implements DisabilityService {
         disabilityReport.setCreated(LocalDateTime.now());
         disabilityReport.setModified(LocalDateTime.now());
 
+        updateDiagnosis(disabilityReport);
         disabilityMapper.add(disabilityReport);
         Integer disabilityReportId = disabilityReport.getId();
 
@@ -51,6 +54,7 @@ public class DisabilityServiceImpl implements DisabilityService {
 
         disabilityReport.setModified(LocalDateTime.now());
 
+        updateDiagnosis(disabilityReport);
         disabilityMapper.update(disabilityReport);
         Integer disabilityReportId = disabilityReport.getId();
 
@@ -65,6 +69,16 @@ public class DisabilityServiceImpl implements DisabilityService {
     private void removeTmpInstance(Integer patientId) {
         if (disabilityTmpService.exists(patientId)) {
             disabilityTmpService.remove(patientId);
+        }
+    }
+
+    private void updateDiagnosis(DisabilityReport disabilityReport) {
+        disabilityReport.getMainDiagnosis().setPrimary(true);
+        List<Diagnosis> otherDiagnosis = disabilityReport.getOtherDiagnosis();
+        if (otherDiagnosis != null) {
+            for (Diagnosis diagnosis : otherDiagnosis) {
+                diagnosis.setPrimary(false);
+            }
         }
     }
 

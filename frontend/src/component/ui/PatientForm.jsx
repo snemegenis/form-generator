@@ -1,21 +1,33 @@
 import React, {PropTypes} from "react";
-import {Form, Control, Errors} from "react-redux-form";
+import {Field, SubmissionError} from "redux-form";
 import InputMask from 'react-input-mask';
-import InputField from "./InputField.jsx";
 import moment from "moment";
+import InputField from "./InputField.jsx";
+import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 
-const PersonalIdInput = (props) => {
-  return <InputMask className="form-control" mask="99999999999" maskChar="_"
-                    value={props.value ? props.value : ""} {...props}/>;
+const MaskedInput = ({input, meta, mask}) => {
+  return <div className="input-row">
+    <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
+               alwaysShoMask="true" value={input.value ? input.value : ""} {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
 };
 
-const BirthDateInput = (props) => {
-  return <InputMask className="form-control" mask="9999-99-99" maskChar="_"
-                    value={props.value ? props.value : ""} {...props} />;
+const renderInput = ({input, meta}) => {
+  return <div className="input-row">
+    <input className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
+           {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
 };
 
-const maskedRequired = (val) => val && val.indexOf('_') === -1
-const trimRequired = (val) => val && val.trim().length > 0;
+const renderArea = ({input, meta}) => {
+  return <div className="input-row">
+    <textarea className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
+           {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
+};
 
 class PatientForm extends React.Component {
 
@@ -23,50 +35,107 @@ class PatientForm extends React.Component {
     super(props);
   }
 
+  validate(patient) {
+    let errors = {};
+    let errorExist = false;
+    if (maskedInvalid(patient.personalId)) {
+      errors.personalId = 'Enter a valid personal id.';
+      errorExist = true;
+    }
+    if (maskedInvalid(patient.birthDate) || !moment(patient.birthDate).isValid()
+      || moment().diff(moment(patient.birthDate), 'years') > 100) {
+      errors.birthDate = 'Enter a valid birth date.';
+      errorExist = true;
+    }
+
+    if (trimmedEmpty(patient.firstName)) {
+      errors.firstName = 'Enter a first name.';
+      errorExist = true;
+    }
+    if (trimmedEmpty(patient.lastName)) {
+      errors.lastName = 'Enter a last name.';
+      errorExist = true;
+    }
+    if (trimmedEmpty(patient.occupation)) {
+      errors.occupation = 'Enter an occupation.';
+      errorExist = true;
+    }
+    if (patient.phone && maskedInvalid(patient.phone)) {
+      errors.phone = 'Enter a valid phone.';
+      errorExist = true;
+    }
+    if (patient.mobilePhone && maskedInvalid(patient.mobilePhone)) {
+      errors.mobilePhone = 'Enter a valid mobile phone.';
+      errorExist = true;
+    }
+    if (trimmedEmpty(patient.address)) {
+      errors.address = 'Enter an address.';
+      errorExist = true;
+    }
+    if (!patient.phone && !patient.mobilePhone) {
+      errors._error = 'Phone/Mobile phone is required';
+      errorExist = true;
+    }
+
+    if (errorExist) {
+      throw new SubmissionError(errors);
+    }
+  }
+
   handleSubmit(patient) {
+    this.validate(patient);
     this.props.onSave(patient);
   }
 
   render() {
-    return <Form className="patient-form" model="patients.activePatient" onSubmit={(patient) =>
-      this.handleSubmit(patient)} >
-      <InputField id="patient.personalId" label="Enter personal id:" >
-        <Control.text model=".personalId" id="patient.personalId" component={PersonalIdInput}/>
-        <Errors className="errors" model=".personalId" messages={{
-          personalId: 'Please enter a valid personal id.',
-        }} />
+    const {error, invalid, handleSubmit} = this.props;
+    return <form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+      <InputField id="patient.personalId" label="Enter personal id:">
+        <Field name="personalId" id="patient.personalId" component={MaskedInput} mask="99999999999"/>
       </InputField>
 
       <InputField id="patient.birthDate" label="Enter date of birth:" defaultValue="">
-        <Control.text model=".birthDate" id="patient.birthDate" component={BirthDateInput}/>
-        <Errors className="errors" model=".birthDate" messages={{
-          valid: 'Please enter a date of birth.',
-        }} />
+        <Field name="birthDate" id="patient.birthDate" component={MaskedInput} mask="9999-99-99"/>
       </InputField>
 
       <InputField id="patient.firstName" label="First Name:">
-        <Control.text model=".firstName" id="patient.firstName" className="form-control"/>
-        <Errors className="errors" model=".firstName" messages={{
-          required: 'Please enter a First Name.',
-        }} />
+        <Field name="firstName" id="patient.firstName"
+               className="form-control" component={renderInput}/>
       </InputField>
 
       <InputField id="patient.lastName" label="Last Name:">
-        <Control.text model=".lastName" id="patient.lastName" className="form-control"/>
-        <Errors className="errors" model=".lastName" messages={{
-          required: 'Please enter a Last Name.',
-        }} />
+        <Field name="lastName" id="patient.lastName"
+               className="form-control" component={renderInput}/>
       </InputField>
-
+      <InputField id="patient.address" label="Address:">
+        <Field name="address" id="patient.address"
+               className="form-control" component={renderArea} />
+      </InputField>
       <InputField id="patient.occupation" label="Occupation:">
-        <Control.text model=".occupation" id="patient.occupation" className="form-control"/>
-        <Errors className="errors" model=".occupation" messages={{
-          required: 'Please enter an Occupation .',
-        }} />
+        <Field name="occupation" id="patient.occupation"
+               className="form-control" component={renderInput}/>
       </InputField>
-      <button className="btn" type="submit" >Save</button>
-      <button className="btn" type="button" onClick={() => this.props.onBack()}>Back</button>
-    </Form>
+      <InputField id="patient.phone" label="Phone:">
+        <Field name="phone" id="patient.phone"
+               className="form-control" component={MaskedInput} mask="+370-999-99999"/>
+      </InputField>
+      <InputField id="patient.mobilePhone" label="Mobile phone:">
+        <Field name="mobilePhone" id="patient.mobilePhone"
+               className="form-control" component={MaskedInput} mask="+370-999-99999"/>
+      </InputField>
+      <InputField id="patient.email" label="Email:">
+        <Field name="email" id="patient.email"
+               className="form-control" component={renderInput} />
+      </InputField>
+      <InputField id="patient.employer" label="Employer:">
+        <Field name="employer" id="patient.employer"
+               className="form-control" component={renderInput} />
+      </InputField>
+      {error && <div>{error}</div>}
+
+      <button className="btn" type="submit" disabled={invalid}>Save</button>
+      <button className="btn" type="button" onClick={this.props.onBack}>Back</button>
+    </form>
   }
 }
 

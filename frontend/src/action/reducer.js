@@ -83,6 +83,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoadingError: true,
         error: action.data,
       };
+    case constants.LOAD_DISABILITY:
     case constants.LOAD_DISABILITY_TMP:
       return {
         ...state,
@@ -91,7 +92,14 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoadingError: false
       };
 
+    case constants.CANCEL_DISABILITY:
+      return {
+        ...state,
+        activeDisability: null,
+      };
+
     case constants.LOAD_DISABILITY_TMP_SUCCESS:
+    case constants.LOAD_DISABILITY_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -101,6 +109,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         error: null
       };
     case constants.LOAD_DISABILITY_TMP_ERROR:
+    case constants.LOAD_DISABILITY_ERROR:
       return {
         ...state,
         isLoading: false,

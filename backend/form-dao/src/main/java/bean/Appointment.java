@@ -1,5 +1,6 @@
 package bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 public class Appointment implements Serializable{
 	private Integer id;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
 	private String doctorType;

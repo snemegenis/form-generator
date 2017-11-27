@@ -192,7 +192,43 @@ export const loadDisabilityTmpAction = (patientId) => dispatch => {
       dispatch(loadDisabilityTmpErrorAction(patientId, error));
       dispatch(notify({message: "Disability temporary data loading error.", status: 500, position: 'tc'}));
     });
+};
 
+export const cancelDisability = () => ({
+  type: constants.CANCEL_DISABILITY
+});
+
+const loadDisability = (patientId, disabilityId) => ({
+  type: constants.LOAD_DISABILITY,
+  patientId,
+  disabilityId
+});
+
+export const loadDisabilityErrorAction = (patientId, disabilityId, error) => ({
+  type: constants.LOAD_DISABILITY_ERROR,
+  error,
+  patientId,
+  disabilityId
+});
+
+export const loadDisabilitySuccessAction = (disability) => ({
+  type: constants.LOAD_DISABILITY_SUCCESS,
+  disability,
+  loadedAt: Date.now(),
+});
+
+export const loadDisabilityAction = (patientId, disabilityId) => dispatch => {
+  dispatch(loadDisability(disabilityId));
+  return DisabilityApi.load(patientId, disabilityId).then(
+    response => {
+      dispatch(loadDisabilitySuccessAction(response.body));
+      dispatch(notify({message: "Disability data loaded successfully.", status: 200, position: 'tc'}));
+      hashHistory.push(`/patient/${patientId}/disability/add`);
+    },
+    error => {
+      dispatch(loadDisabilityErrorAction(patientId, disabilityId, error));
+      dispatch(notify({message: "Disability data loading error.", status: 500, position: 'tc'}));
+    });
 };
 
 export const loginAction = (username, password) => ({
