@@ -180,13 +180,13 @@ export const loadDisabilityTmpSuccessAction = (disability) => ({
   loadedAt: Date.now(),
 });
 
-export const loadDisabilityTmpAction = (patientId) => dispatch => {
+export const loadDisabilityTmpAction = (patientId, nextPageURL) => dispatch => {
   dispatch(loadDisabilityTmp(patientId));
   return DisabilityApi.loadTmp(patientId).then(
     response => {
       dispatch(loadDisabilityTmpSuccessAction(response.body));
       dispatch(notify({message: "Disability temporary data loaded successfully.", status: 200, position: 'tc'}));
-      hashHistory.push(`/patient/${patientId}/disability/add`);
+      hashHistory.push(nextPageURL);
     },
     error => {
       dispatch(loadDisabilityTmpErrorAction(patientId, error));
@@ -217,13 +217,13 @@ export const loadDisabilitySuccessAction = (disability) => ({
   loadedAt: Date.now(),
 });
 
-export const loadDisabilityAction = (patientId, disabilityId) => dispatch => {
+export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => dispatch => {
   dispatch(loadDisability(disabilityId));
   return DisabilityApi.load(patientId, disabilityId).then(
     response => {
       dispatch(loadDisabilitySuccessAction(response.body));
       dispatch(notify({message: "Disability data loaded successfully.", status: 200, position: 'tc'}));
-      hashHistory.push(`/patient/${patientId}/disability/add`);
+      hashHistory.push(nextPageURL);
     },
     error => {
       dispatch(loadDisabilityErrorAction(patientId, disabilityId, error));

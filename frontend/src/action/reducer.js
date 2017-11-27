@@ -46,7 +46,8 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
           patient.id === action.disability.patientId ?
             {
               ...patient,
-              disabilityReportId: action.disability.id
+              disabilityReportId: action.disability.id,
+              tempSaved: false
             } : patient),
         error: null
       };

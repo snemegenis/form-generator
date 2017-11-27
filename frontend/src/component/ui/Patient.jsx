@@ -1,9 +1,11 @@
 import React, {PropTypes} from "react";
 
-const Patient = ({id, personalId, firstName, lastName, disabilityReportId, tempSaved,
-  onPrint = f => f, onDisabilityAdd = f => f, onDisabilityUpdate = f => f, onUpdate = f => f}) => {
+const Patient = ({
+  id, personalId, firstName, lastName, disabilityReportId, tempSaved,
+  onPrint = f => f, onDisabilityAdd = f => f, onDisabilityUpdate = f => f, onUpdate = f => f
+}) => {
   return <div className="patient">
-    <div className="contents">
+    <div className={"contents" + (tempSaved ? " bg-warning" : "")}>
             <span>
                 <strong>Personal id:</strong>
                 <span>{personalId}</span>
@@ -18,9 +20,10 @@ const Patient = ({id, personalId, firstName, lastName, disabilityReportId, tempS
             </span>
       <span className="actions">
                 <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>
-                <button onClick={() => onDisabilityUpdate(id)}>Update Disability</button>
-                <button onClick={() => onUpdate(id)}>Update</button>
-                <button disabled={!disabilityReportId} onClick={() => onPrint(id, firstName, lastName)}>Print</button>
+        {disabilityReportId &&
+        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
+        <button onClick={() => onUpdate(id)}>Update</button>
+        {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>Print</button>}
             </span>
     </div>
   </div>

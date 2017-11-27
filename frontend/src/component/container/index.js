@@ -8,9 +8,20 @@ import {
 } from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
-import {formValueSelector, reduxForm, submit, reset} from "redux-form";
+import {formValueSelector, reduxForm, submit} from "redux-form";
 import PatientForm from "../ui/PatientForm.jsx";
 import DisabilityForm from "../ui/DisabilityForm.jsx";
+
+const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {
+  if (tempSaved) {
+    dispatch(loadDisabilityTmpAction(patientId, nextPageURL));
+  } else if (disabilityReportId) {
+    dispatch(loadDisabilityAction(patientId, disabilityReportId, nextPageURL));
+  } else {
+    hashHistory.push(nextPageURL);
+  }
+
+};
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
@@ -24,13 +35,11 @@ const VisiblePatients = connect(state => ({
       hashHistory.push('/patient/add');
     },
     onDisabilityAdd(patientId, disabilityReportId, tempSaved) {
-      if (tempSaved) {
-        dispatch(loadDisabilityTmpAction(patientId));
-      } else if (disabilityReportId) {
-        dispatch(loadDisabilityAction(patientId, disabilityReportId));
-      } else {
-        hashHistory.push(`/patient/${patientId}/disability/add`);
-      }
+      prepareDisability(dispatch, patientId, disabilityReportId, tempSaved, `/patient/${patientId}/disability/add`);
+    },
+    onDisabilityUpdate(patientId, disabilityReportId, tempSaved) {
+      prepareDisability(dispatch, patientId, disabilityReportId, tempSaved,
+        `/patient/${patientId}/disability/${disabilityReportId}/update`);
     },
     onUpdate(patientId) {
       hashHistory.push(`/patient/${patientId}/update`);
@@ -82,7 +91,8 @@ const loadAddInitialDisabilityValues = (state, ownProps) => {
 const ModifyDisability = connect(
   (state, ownProps) => ({
     initialValues: loadAddInitialDisabilityValues(state, ownProps),
-    treatmentSelected: activeDisabilitySelector(state, 'treatments')
+    treatmentSelected: activeDisabilitySelector(state, 'treatments'),
+    disabilityReportId: ownProps.disabilityReportId
   }),
   dispatch => ({
     onAutoSaveTmpTimeout() {

@@ -289,6 +289,7 @@ class DisabilityForm extends React.Component {
     switch (pressed) {
       case 'Save':
         this.validate(disability);
+        disability.id = this.props.disabilityReportId;
         this.props.onSave(disability);
         break;
       default:
@@ -299,7 +300,8 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {invalid, handleSubmit, submitting, treatmentSelected} = this.props;
+    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId} = this.props;
+    console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
       {label: 'Ambulatoric', value: 'AMBULATORIC'},
       {label: 'Medicaments', value: 'MEDICAMENTS'},

@@ -18,7 +18,7 @@ public interface DisabilityMapper {
 
     @Update({"UPDATE disability_report set history=#{history}, other_treatment=#{otherTreatment}, " +
             "treatment_history=#{treatmentHistory}, barthel_index=#{barthelIndex}, latest_disability_desc=#{latestDisabilityDesc}, " +
-            "active=#{active}, modified=#{modified} WHERE patient_id=#{patient.id}"})
+            "active=#{active}, modified=#{modified} WHERE id=#{id}"})
     int update(DisabilityReport disabilityReport);
 
     @Insert({"<script>" +

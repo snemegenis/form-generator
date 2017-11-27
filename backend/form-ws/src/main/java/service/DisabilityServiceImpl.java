@@ -29,7 +29,15 @@ public class DisabilityServiceImpl implements DisabilityService {
     private DisabilityTmpService disabilityTmpService;
 
     @Override
-    public DisabilityReport create(DisabilityReport disabilityReport) {
+    public DisabilityReport save(DisabilityReport disabilityReport) {
+        if (disabilityReport.getId() == null) {
+            return create(disabilityReport);
+        } else {
+            return update(disabilityReport);
+        }
+    }
+
+    private DisabilityReport create(DisabilityReport disabilityReport) {
         Integer patientId = disabilityReport.getPatientId();
         removeTmpInstance(patientId);
 
@@ -47,8 +55,7 @@ public class DisabilityServiceImpl implements DisabilityService {
 
     }
 
-    @Override
-    public DisabilityReport update(DisabilityReport disabilityReport) {
+    private DisabilityReport update(DisabilityReport disabilityReport) {
         Integer patientId = disabilityReport.getPatientId();
         removeTmpInstance(patientId);
 

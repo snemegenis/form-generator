@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 
 
-const PatientList = ({patients, loading, onDisabilityAdd = f => f, onPrint = f => f,
-  onAdd = f => f, onUpdate = f => f}) => {
+const PatientList = ({patients, loading, onDisabilityAdd = f => f, onDisabilityUpdate = f => f,
+  onPrint = f => f, onAdd = f => f, onUpdate = f => f}) => {
     if (loading) {
         return <div>Data is loading</div>
     }
@@ -23,7 +23,8 @@ const PatientList = ({patients, loading, onDisabilityAdd = f => f, onPrint = f =
                                  onUpdate={onUpdate}
                                  disabilityReportId={patient.disabilityReportId}
                                  tempSaved={patient.tempSaved}
-                                 onDisabilityAdd={onDisabilityAdd}/>
+                                 onDisabilityAdd={onDisabilityAdd}
+                                 onDisabilityUpdate={onDisabilityUpdate}/>
                     </li>)
             }
         </ul>
@@ -37,6 +38,8 @@ PatientList.propTypes = {
     patients: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     onPrint: PropTypes.func.isRequired,
+    onDisabilityAdd: PropTypes.func.isRequired,
+    onDisabilityUpdate: PropTypes.func.isRequired,
     onAdd: PropTypes.func.isRequired,
     onUpdate: PropTypes.func.isRequired
 };
