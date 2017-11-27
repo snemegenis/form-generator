@@ -3,6 +3,7 @@ import {Field, FieldArray, Fields, Form, SubmissionError} from "redux-form";
 import InputField from "./InputField.jsx";
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import InputMask from 'react-input-mask';
+import TextareaAutosize from 'react-autosize-textarea';
 import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 
@@ -16,7 +17,7 @@ const renderMaskedInput = ({input, meta, mask}) => {
 
 const renderArea = ({input, meta}) => {
   return <div className="input-row">
-    <textarea className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
+    <TextareaAutosize className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
               {...input} />
     {meta.error ? meta.error : ""}
   </div>;
@@ -66,7 +67,7 @@ const Diagnosis = ({name, title, withDetails = false}) => (
     </InputField>
     <InputField id={`disability.${name}.history`} label="Enter history:">
       <Field name={`${name}.history`} id={`disability.${name}.history`}
-             component={renderArea}/>
+             component={renderArea} rows="5"/>
     </InputField>
     {withDetails && <InputField id={`disability.${name}.details`} label="Enter details:">
       <Field name={`${name}.details`} id={`disability.${name}.details`}

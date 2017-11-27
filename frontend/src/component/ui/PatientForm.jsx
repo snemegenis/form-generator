@@ -1,9 +1,10 @@
 import React, {PropTypes} from "react";
-import {Field, SubmissionError} from "redux-form";
+import {Field, Form, SubmissionError} from "redux-form";
 import InputMask from 'react-input-mask';
 import moment from "moment";
 import InputField from "./InputField.jsx";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
+import TextareaAutosize from 'react-autosize-textarea';
 
 const MaskedInput = ({input, meta, mask}) => {
   return <div className="input-row">
@@ -21,9 +22,9 @@ const renderInput = ({input, meta}) => {
   </div>;
 };
 
-const renderArea = ({input, meta}) => {
+const renderArea = ({input, meta, rows}) => {
   return <div className="input-row">
-    <textarea className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
+    <TextareaAutosize className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
            {...input} />
     {meta.error ? meta.error : ""}
   </div>;
@@ -89,7 +90,7 @@ class PatientForm extends React.Component {
 
   render() {
     const {error, invalid, handleSubmit} = this.props;
-    return <form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+    return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
       <InputField id="patient.personalId" label="Enter personal id:">
         <Field name="personalId" id="patient.personalId" component={MaskedInput} mask="99999999999"/>
       </InputField>
@@ -109,7 +110,7 @@ class PatientForm extends React.Component {
       </InputField>
       <InputField id="patient.address" label="Address:">
         <Field name="address" id="patient.address"
-               className="form-control" component={renderArea} />
+               className="form-control" component={renderArea} rows="4"/>
       </InputField>
       <InputField id="patient.occupation" label="Occupation:">
         <Field name="occupation" id="patient.occupation"
@@ -135,7 +136,7 @@ class PatientForm extends React.Component {
 
       <button className="btn" type="submit" disabled={invalid}>Save</button>
       <button className="btn" type="button" onClick={this.props.onBack}>Back</button>
-    </form>
+    </Form>
   }
 }
 
