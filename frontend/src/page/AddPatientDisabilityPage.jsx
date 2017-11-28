@@ -6,10 +6,8 @@ import { withRouter } from 'react-router'
 const AddPatientDisabilityPage = (match) => {
   return (
     <PageTemplate>
-      <div className="page-header">
-        <h1>Add Patient disability</h1>
-        <ModifyDisability patientId={match.params.patientId}/>
-      </div>
+      <h1>Add Patient disability</h1>
+      <ModifyDisability patientId={match.params.patientId}/>
     </PageTemplate>
   );
 };

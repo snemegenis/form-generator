@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
+import {translate} from "react-i18next";
 
 
 const PatientList = ({patients, loading, onDisabilityAdd = f => f, onDisabilityUpdate = f => f,
-  onPrint = f => f, onAdd = f => f, onUpdate = f => f}) => {
+  onPrint = f => f, onAdd = f => f, onUpdate = f => f, t}) => {
     if (loading) {
         return <div>Data is loading</div>
     }
@@ -29,7 +30,7 @@ const PatientList = ({patients, loading, onDisabilityAdd = f => f, onDisabilityU
             }
         </ul>
         <div className="patient-actions">
-            <button onClick={() => onAdd()}>Add</button>
+            <button onClick={() => onAdd()}>{t('Add')}</button>
         </div>
     </div>
 };
@@ -44,5 +45,5 @@ PatientList.propTypes = {
     onUpdate: PropTypes.func.isRequired
 };
 
-export default PatientList;
+export default translate()(PatientList);
 

@@ -3,7 +3,6 @@ import PatientApi from "../api/patient-api"
 import DisabilityApi from "../api/disability-api"
 import ReportApi from "../api/report-api"
 import {addNotification as notify} from 'reapop';
-import {actions} from "react-redux-form";
 import {hashHistory} from 'react-router'
 
 let fileDownload = require("react-file-download");
@@ -27,13 +26,11 @@ export const savePatientAction = (patient) => dispatch => {
   dispatch(savePatient(patient));
   return PatientApi.save(patient).then(
     response => {
-      dispatch(actions.reset('activePatient'));
       dispatch(savePatientSuccessAction(response.body));
       dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
       hashHistory.push('/');
     },
     error => {
-      dispatch(actions.reset('activePatient'));
       dispatch(savePatientErrorAction(error));
       dispatch(notify({message: "Patient saving error.", status: 500, position: 'tc'}));
     });

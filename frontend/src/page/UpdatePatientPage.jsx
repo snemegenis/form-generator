@@ -5,10 +5,8 @@ import PageTemplate from './PageTemplate.jsx';
 const UpdatePatientPage = (match) => {
   return (
     <PageTemplate>
-      <div className="page-header">
-        <h1>Update Patient</h1>
-        <ModifyPatient patientId={match.params.patientId}/>
-      </div>
+      <h1>Update Patient</h1>
+      <ModifyPatient patientId={match.params.patientId}/>
     </PageTemplate>
   );
 };

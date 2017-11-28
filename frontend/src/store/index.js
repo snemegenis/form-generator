@@ -5,12 +5,11 @@ import {createLogger} from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import {routerReducer} from 'react-router-redux'
 import {reducer as notificationsReducer} from 'reapop';
-import {combineForms} from 'react-redux-form';
 import { reducer as formReducer } from 'redux-form'
 const logger = createLogger();
 
 const storeFactory = (initialState = initialStateData) =>
-  applyMiddleware(thunkMiddleware, logger)(createStore)(combineForms(
+  applyMiddleware(thunkMiddleware, logger)(createStore)(combineReducers(
     {
       user, patients,
       routing: routerReducer,
