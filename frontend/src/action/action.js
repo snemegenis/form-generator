@@ -112,14 +112,12 @@ export const saveDisabilityAction = (disability) => dispatch => {
   dispatch(saveDisability(disability));
   return DisabilityApi.add(disability).then(
     response => {
-      dispatch(actions.reset('forms.activeDisability'));
       dispatch(saveDisabilitySuccessAction(response.body));
       dispatch(notify({message: "Disability saved successfully.", status: 200, position: 'tc'}));
       hashHistory.push('/');
 
     },
     error => {
-      dispatch(actions.reset('forms.activeDisability'));
       dispatch(saveDisabilityErrorAction(error));
       dispatch(notify({message: "Disability saving error.", status: 500, position: 'tc'}));
     });

@@ -6,6 +6,15 @@ import InputMask from 'react-input-mask';
 import TextareaAutosize from 'react-autosize-textarea';
 import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
+import NumberFormat from 'react-number-format';
+
+const renderNumberInput = ({input, meta, nbrFormat}) => {
+  return <div className="input-row">
+    <NumberFormat className={"form-control " + (meta.error ? "is-invalid" : "")} format={nbrFormat}
+                  value={input.value ? input.value : ""} {...input} />
+    {meta.error ? meta.error : ""}
+  </div>;
+};
 
 const renderMaskedInput = ({input, meta, mask}) => {
   return <div className="input-row">
@@ -350,7 +359,7 @@ class DisabilityForm extends React.Component {
       </div>
 
       <InputField id="disability.barthelIndex" label="Enter Barthel index:">
-        <Field name="barthelIndex" id="patient.barthelIndex" component={renderMaskedInput} mask="99"/>
+        <Field name="barthelIndex" id="patient.barthelIndex" component={renderNumberInput} nbrFormat="##"/>
       </InputField>
 
       <InputField id="disability.latestDisabilityDesc" label="Enter latest disability description:">
