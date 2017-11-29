@@ -1,10 +1,10 @@
 import PatientList from "../ui/PatientList.jsx";
 import {
-  cancelDisability,
+  cancelDisability, filterPatientListAction,
   loadDisabilityAction,
   loadDisabilityTmpAction,
   printPatientAction, saveDisabilityAction, saveDisabilityTmpAction,
-  savePatientAction
+  savePatientAction, shoAllPatientListAction, showAllPatientListAction
 } from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
@@ -25,9 +25,16 @@ const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, n
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
-    loading: state.patients.isLoading
+    loading: state.patients.isLoading,
+    filter: state.patients.filter
   }),
   (dispatch) => ({
+    onShowAll() {
+      dispatch(showAllPatientListAction());
+    },
+    onFilter(filter) {
+      dispatch(filterPatientListAction(filter));
+    },
     onPrint(id, firstName, lastName) {
       dispatch(printPatientAction(id, firstName, lastName));
     },

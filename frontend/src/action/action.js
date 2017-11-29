@@ -22,6 +22,15 @@ const savePatient = (doctorId, patient) => ({
   patient
 });
 
+export const showAllPatientListAction = () => ({
+  type: constants.SHOW_ALL_PATIENT_LIST
+});
+
+export const filterPatientListAction = (filter) => ({
+  type: constants.FILTER_PATIENT_LIST,
+  filter
+});
+
 export const savePatientAction = (patient) => dispatch => {
   dispatch(savePatient(patient));
   return PatientApi.save(patient).then(

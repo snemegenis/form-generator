@@ -9,13 +9,17 @@ i18n
     en: {
       translations: {
         "List of Patients": "List of Patients",
-        "Add": "Add"
+        "Add Patient": "Add Patient",
+        "Show all": "Show all",
+        "Filter": "Filter"
       }
     },
     lt: {
       translations: {
         "List of Patients": "Pacientų sąrašas",
-        "Add": "Pridėti"
+        "Add Patient": "Pridėti Pacientą",
+        "Show all": "Rodyti visus",
+        "Filter": "Filtruoti"
       }
     }
   },
