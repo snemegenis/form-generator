@@ -9,7 +9,7 @@
 			<column name="code">AKM-123</column>
 			<column name="first_name">Jonas</column>
 			<column name="last_name">Jonaitis</column>
-			<column name="occupation">Plumber</column>
+			<column name="occupation">Therapist</column>
 		</insert>
 	</changeSet>
 	<changeSet author="liutkvai" id="data-2">

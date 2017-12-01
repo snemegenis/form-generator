@@ -16,7 +16,7 @@
 		<insert tableName="user">
 			<column name="id">1</column>
 			<column name="username">jonas@gmail.com</column>
-			<column name="password">jonas123</column>
+			<column name="password">$2a$12$QT18CSsYATT8IasOFm5sCulDKFKelFweiSMUlKbzZluEDEOZ2.Mcy</column>
 			<column name="doctor_id">1</column>
 		</insert>
 	</changeSet>

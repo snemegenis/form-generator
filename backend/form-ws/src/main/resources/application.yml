@@ -5,10 +5,7 @@ rest:
     path: rest/v1
 security:
   basic:
-    enabled: false
-  user:
-    name: dev
-    password: dev123
+    enabled: true
 liquibase:
   change-log: "classpath:/db/changelog/change-log-1.0.xml"
 
