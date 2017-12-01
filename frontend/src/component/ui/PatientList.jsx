@@ -13,6 +13,11 @@ const PatientList = ({
 
   let filterInput;
 
+  const onShowAllClick = () => {
+      filterInput.value = '';
+      onShowAll();
+  };
+
   const onChange = () => {
     if (filterInput.value) {
       onFilter(filterInput.value);
@@ -30,6 +35,10 @@ const PatientList = ({
   }
 
   return <div>
+    <div className="patient-filtering">
+      <input ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
+      <button onClick={onShowAllClick} disabled={!filter}>{t('Show all')}</button>
+    </div>
     <ul className="patient-list">
       {(filteredPatients.length === 0) && <span>No patients found</span>}
       {
@@ -46,10 +55,8 @@ const PatientList = ({
           </li>)
       }
     </ul>
-    <div className="patient-actions">
+    <div className="global-patient-actions">
       <button onClick={() => onAdd()}>{t('Add Patient')}</button>
-      <button onClick={() => onFilter(filterInput.value)}>{t('Filter')}</button>
-      <input ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
     </div>
   </div>
 };
