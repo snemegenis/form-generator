@@ -19,9 +19,10 @@ const Patient = ({
                 <span>{lastName}</span>
             </span>
       <span className="actions">
-                <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>
+        {!disabilityReportId &&
+          <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>}
         {disabilityReportId &&
-        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
+          <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
         <button onClick={() => onUpdate(id)}>Update</button>
         {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>Print</button>}
             </span>
