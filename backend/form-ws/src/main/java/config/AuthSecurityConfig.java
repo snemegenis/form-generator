@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableGlobalAuthentication
-public class AuthenticationSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
+public class AuthSecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
     private UserMapper userMapper;

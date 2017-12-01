@@ -28,17 +28,6 @@ public class WebConfig {
     private String basePath;
 
     @Bean
-    @Profile("dev")
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/rest/v1/**").allowedOrigins("http://localhost:8081");
-            }
-        };
-    }
-
-    @Bean
     public HttpMessageConverters customConverters() {
         ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
         return new HttpMessageConverters(arrayHttpMessageConverter);
@@ -72,5 +61,6 @@ public class WebConfig {
             }
         };
     }
+
 
 }
