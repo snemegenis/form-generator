@@ -4,8 +4,15 @@ rest:
   base:
     path: rest/v1
 security:
+  jwt:
+    login:
+      url: "auth/login"
+    session:
+      timeout: 3600000
+    secret:
+      key: SecretKeyToGenJWTs
   basic:
-    enabled: true
+    enabled: false
 liquibase:
   change-log: "classpath:/db/changelog/change-log-1.0.xml"
 
