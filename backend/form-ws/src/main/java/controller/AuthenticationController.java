@@ -3,6 +3,7 @@ package controller;
 import bean.Credentials;
 import bean.DisabilityUserDetails;
 import bean.User;
+import exception.DisabilityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import util.ValidationHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 /**
  * Created by liutkvai on 12/6/2017.
@@ -40,8 +42,13 @@ public class AuthenticationController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        User authenticatedUser = ((DisabilityUserDetails) authentication.getPrincipal()).getUser();
-        User result = User.builder().doctor(authenticatedUser.getDoctor()).id(authenticatedUser.getId()).token(session.getId()).build();
+        User authenticatedUser = Optional.of(((DisabilityUserDetails) authentication.getPrincipal()).getUser())
+                .orElseThrow(() -> new DisabilityException("Authenticated user is empty"));
+        User result = User.builder()
+                .doctor(authenticatedUser.getDoctor())
+                .id(authenticatedUser.getId())
+                .token(session.getId())
+                .build();
         session.setAttribute("user", result);
 
         return result;
