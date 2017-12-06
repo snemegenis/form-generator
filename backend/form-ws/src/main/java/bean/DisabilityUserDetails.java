@@ -17,6 +17,10 @@ public class DisabilityUserDetails implements UserDetails {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(() -> "ADMIN");
@@ -24,12 +28,12 @@ public class DisabilityUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return user.getCredentials().getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getCredentials().getUsername();
     }
 
     @Override

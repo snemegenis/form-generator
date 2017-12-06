@@ -33,7 +33,8 @@ public class UserMapperTest extends MapperTestBase{
     public void testGetByUsername() throws Exception {
         User expected = readFromClassPath("/mapper/expected/user.json", new TypeReference<User>() {});
         User actual = userMapper.getByUsername("jonas@gmail.com");
-        assertTrue(EqualsBuilder.reflectionEquals(expected, actual, new String[]{"doctor"}));
+        assertTrue(EqualsBuilder.reflectionEquals(expected, actual, new String[]{"doctor", "credentials"}));
         assertTrue(EqualsBuilder.reflectionEquals(expected.getDoctor(), actual.getDoctor()));
+        assertTrue(EqualsBuilder.reflectionEquals(expected.getCredentials(), actual.getCredentials()));
     }
 }

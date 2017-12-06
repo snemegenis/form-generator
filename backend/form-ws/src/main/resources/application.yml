@@ -2,7 +2,7 @@ server:
   contextPath: /form
 rest:
   base:
-    path: rest/v1
+    path: /rest/v1
 security:
   basic:
     enabled: true
@@ -10,6 +10,8 @@ liquibase:
   change-log: "classpath:/db/changelog/change-log-1.0.xml"
 
 spring:
+  session:
+    store-type: hash_map
   output:
     ansi:
       enabled: always

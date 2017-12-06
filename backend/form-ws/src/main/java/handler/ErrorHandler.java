@@ -5,6 +5,7 @@ import exception.ValidationException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -14,6 +15,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @ControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(value = { AuthenticationException.class })
+    public ResponseEntity<Error> handleError(AuthenticationException exc) {
+        return error(-100, exc.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 
     @ExceptionHandler(value = { ValidationException.class })
     public ResponseEntity<Error> handleError(ValidationException exc) {

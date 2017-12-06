@@ -1,22 +1,27 @@
 package bean;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Created by vaidelius on 16.7.3.
  */
 @Data
-@EqualsAndHashCode(of = {"username"})
 @ToString
+@NoArgsConstructor
 public class User {
     private Integer id;
 
-    private String username;
-
-    private String password;
+    private Credentials credentials;
 
     private Doctor doctor;
 
+    private String token;
+
+    @Builder
+    public User(Integer id, Credentials credentials, Doctor doctor, String token) {
+        this.id = id;
+        this.credentials = credentials;
+        this.doctor = doctor;
+        this.token = token;
+    }
 }

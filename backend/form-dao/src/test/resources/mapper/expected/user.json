@@ -1,7 +1,9 @@
 {
   "id": 1,
-  "username": "jonas@gmail.com",
-  "password": "jonas123",
+  "credentials": {
+    "username": "jonas@gmail.com",
+    "password": "jonas123"
+  },
   "doctor": {
     "id": 1,
     "code": "AKM-123",

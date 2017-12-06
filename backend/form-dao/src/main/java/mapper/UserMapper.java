@@ -14,6 +14,8 @@ public interface UserMapper {
             "WHERE u.username = #{username}")
     @Transactional(readOnly = true)
     @Results({
+            @Result(column = "username", property = "credentials.username"),
+            @Result(column = "password", property = "credentials.password"),
             @Result(column = "did", property = "doctor.id"),
             @Result(column = "first_name", property = "doctor.firstName"),
             @Result(column = "last_name", property = "doctor.lastName"),
