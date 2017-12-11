@@ -11,7 +11,7 @@ export const setupAxiosInterceptors = onUnauthenticated => {
   };
   const onResponseSuccess = (response) => response;
   const onResponseError = error => {
-    if (error.response.status === 403) {
+    if (error.response && error.response.status === 403) {
       localStorage.removeItem('auth-token');
       onUnauthenticated();
     }
