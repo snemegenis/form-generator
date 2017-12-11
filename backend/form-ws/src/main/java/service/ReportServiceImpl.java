@@ -33,12 +33,7 @@ public class ReportServiceImpl implements ReportService {
         parameters.put(ReportConstants.PARAM_DATE, disabilityReportParams.getDate());
         parameters.put(ReportConstants.PARAM_PRINT_NBR, disabilityReportParams.isFillNumber());
         parameters.put(ReportConstants.PARAM_NBR, disabilityReportParams.getNumber());
-        parameters.put(ReportConstants.PARAM_USER, Doctor.builder()
-                .code("AKM123")
-                .firstName("Vardiene")
-                .lastName("Pavardiene")
-                .occupation("Seimos gydytoja")
-                .build());
+        parameters.put(ReportConstants.PARAM_USER, disabilityReportParams.getDoctor());
 
         try {
             byte[] result = reportGenerator.generate("disability-report", parameters,

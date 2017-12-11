@@ -138,8 +138,49 @@ export const user = (state = {}, action) => {
   switch (action.type) {
     case constants.LOGIN:
       return {
-        id: action.id,
-        username: action.username
+        ...state,
+        isProcessing: true,
+        isProcessingError: false,
+        username: null
+      };
+    case constants.LOGIN_SUCCESS:
+      return {
+        ...state,
+        isProcessing: false,
+        isProcessingError: false,
+        username: action.user.credentials.username,
+        doctor: action.user.doctor,
+        token: action.user.token
+      };
+    case constants.LOGIN_FAILURE:
+      return {
+        ...state,
+        isProcessing: false,
+        isProcessingError: true,
+        username: null,
+        doctor: null,
+        token: null
+      };
+    case constants.LOGOUT:
+      return {
+        ...state,
+        isProcessing: true,
+        isProcessingError: false
+      };
+    case constants.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        isProcessing: false,
+        isProcessingError: false,
+        username: null,
+        doctor: null,
+        token: null
+      };
+    case constants.LOGOUT_FAILURE:
+      return {
+        ...state,
+        isProcessing: false,
+        isProcessingError: true
       };
     default:
       return state;

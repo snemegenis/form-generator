@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +15,7 @@ import org.springframework.session.web.http.HttpSessionStrategy;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import security.CORSFilter;
 
 /**
  * Created by liutkvai on 12/1/2017.
@@ -24,16 +27,17 @@ public class GlobalSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${rest.base.path}")
     private String basePath;
 
-    @Bean
-    @Profile("dev")
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping(basePath).allowedOrigins("http://localhost:8081");
-            }
-        };
-    }
+//    @Bean
+//    @Profile("dev")
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping(basePath)
+//                        .allowedOrigins("http://localhost:8081");
+//            }
+//        };
+//    }
 
     @Bean
     public HttpSessionStrategy httpSessionStrategy() {
@@ -45,7 +49,7 @@ public class GlobalSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(basePath+"/auth/**")
+                .antMatchers(basePath + "/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -53,7 +57,8 @@ public class GlobalSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestCache()
                 .requestCache(new NullRequestCache())
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER);
     }
 
 }

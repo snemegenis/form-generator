@@ -45,6 +45,7 @@ public class AuthenticationController {
         User authenticatedUser = Optional.of(((DisabilityUserDetails) authentication.getPrincipal()).getUser())
                 .orElseThrow(() -> new DisabilityException("Authenticated user is empty"));
         User result = User.builder()
+                .credentials(Credentials.builder().username(authenticatedUser.getCredentials().getUsername()).build())
                 .doctor(authenticatedUser.getDoctor())
                 .id(authenticatedUser.getId())
                 .token(session.getId())
@@ -54,7 +55,7 @@ public class AuthenticationController {
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "logout")
+    @RequestMapping(method = RequestMethod.DELETE, value = "logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {

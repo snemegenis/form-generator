@@ -16,8 +16,10 @@ import service.DisabilityService;
 import service.DisabilityTmpService;
 import service.PatientService;
 import service.ReportService;
+import util.UserHelper;
 import util.ValidationHelper;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 
 import static constants.RequestConstants.*;
@@ -70,11 +72,16 @@ public class DisabilityController extends ControllerBase {
     public ResponseEntity<ByteArrayResource> print(@PathVariable("id") int patientId,
             @RequestParam(value = REQUEST_PARAM_FILL_DATE, required = false) @DateTimeFormat(iso = DateTimeFormat.ISO
                     .DATE) LocalDate fillDate,
-            @RequestParam(value = REQUEST_PARAM_FILL_NUMBER, required = false) Integer fillNumber) {
+            @RequestParam(value = REQUEST_PARAM_FILL_NUMBER, required = false) Integer fillNumber, HttpSession session) {
         HttpHeaders headers = addHeaders(new HttpHeaders());
         Patient patient = patientService.get(patientId);
         final String reportName = patient.getFirstName() + "_" + patient.getLastName();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + reportName + ".pdf");
+
+        Doctor authenticatedDoctor = UserHelper.getAuthenticatedDoctor(session);
+        if (authenticatedDoctor == null) {
+            throw new DisabilityException("Doctor values are missing");
+        }
 
         DisabilityReportParams disabilityReportParams = DisabilityReportParams.builder()
                 .fillDate(fillDate != null)
@@ -82,6 +89,7 @@ public class DisabilityController extends ControllerBase {
                 .fillNumber(fillNumber != null)
                 .number(fillNumber)
                 .patientId(patientId)
+                .doctor(authenticatedDoctor)
                 .build();
 
         byte[] reportData = reportService.get(disabilityReportParams);

@@ -2,6 +2,7 @@ import constants from "./constant";
 import PatientApi from "../api/patient-api"
 import DisabilityApi from "../api/disability-api"
 import ReportApi from "../api/report-api"
+import AuthApi from "../api/auth-api"
 import {addNotification as notify} from 'reapop';
 import {hashHistory} from 'react-router'
 
@@ -35,7 +36,7 @@ export const savePatientAction = (patient) => dispatch => {
   dispatch(savePatient(patient));
   return PatientApi.save(patient).then(
     response => {
-      dispatch(savePatientSuccessAction(response.body));
+      dispatch(savePatientSuccessAction(response.data));
       dispatch(notify({message: "Patient saved successfully.", status: 200, position: 'tc'}));
       hashHistory.push('/');
     },
@@ -63,7 +64,7 @@ export const loadPatientsAction = () => dispatch => {
   return PatientApi.load().then(
     response => {
       dispatch(notify({message: "Patients loaded successfully.", status: 200, position: 'tc'}));
-      dispatch(loadPatientsSuccessAction(response.body))
+      dispatch(loadPatientsSuccessAction(response.data));
     },
     error => {
       console.log(error);
@@ -77,8 +78,8 @@ export const printPatientAction = (patientId, patientFirstName, patientLastName)
   dispatch(printPatient(patientId));
   return ReportApi.print(patientId).then(
     response => {
-      fileDownload(response.body, patientFirstName + "_" + patientLastName + ".pdf");
-      dispatch(printPatientSuccessAction(patientId, response.body));
+      fileDownload(response.data, patientFirstName + "_" + patientLastName + ".pdf");
+      dispatch(printPatientSuccessAction(patientId, response.data));
     }
   );
 };
@@ -121,7 +122,7 @@ export const saveDisabilityAction = (disability) => dispatch => {
   dispatch(saveDisability(disability));
   return DisabilityApi.add(disability).then(
     response => {
-      dispatch(saveDisabilitySuccessAction(response.body));
+      dispatch(saveDisabilitySuccessAction(response.data));
       dispatch(notify({message: "Disability saved successfully.", status: 200, position: 'tc'}));
       hashHistory.push('/');
 
@@ -154,7 +155,7 @@ export const saveDisabilityTmpAction = (disability, closeOnSuccess) => dispatch 
   dispatch(saveDisabilityTmp(disability));
   return DisabilityApi.saveTmp(disability).then(
     response => {
-      dispatch(saveDisabilityTmpSuccessAction(response.body));
+      dispatch(saveDisabilityTmpSuccessAction(response.data));
       dispatch(notify({message: "Disability temporary data saved successfully.", status: 200, position: 'tc'}));
       if (closeOnSuccess) {
         hashHistory.push('/');
@@ -188,7 +189,7 @@ export const loadDisabilityTmpAction = (patientId, nextPageURL) => dispatch => {
   dispatch(loadDisabilityTmp(patientId));
   return DisabilityApi.loadTmp(patientId).then(
     response => {
-      dispatch(loadDisabilityTmpSuccessAction(response.body));
+      dispatch(loadDisabilityTmpSuccessAction(response.data));
       dispatch(notify({message: "Disability temporary data loaded successfully.", status: 200, position: 'tc'}));
       hashHistory.push(nextPageURL);
     },
@@ -225,7 +226,7 @@ export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => di
   dispatch(loadDisability(disabilityId));
   return DisabilityApi.load(patientId, disabilityId).then(
     response => {
-      dispatch(loadDisabilitySuccessAction(response.body));
+      dispatch(loadDisabilitySuccessAction(response.data));
       dispatch(notify({message: "Disability data loaded successfully.", status: 200, position: 'tc'}));
       hashHistory.push(nextPageURL);
     },
@@ -235,9 +236,77 @@ export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => di
     });
 };
 
-export const loginAction = (username, password) => ({
-  type: constants.LOGIN,
-  id: 1,
-  username,
-  password
+const login = () => ({
+  type: constants.LOGIN
 });
+
+export const loginErrorAction = (error) => ({
+  type: constants.LOGIN_FAILURE,
+  error
+});
+
+export const loginSuccessAction = (user) => ({
+  type: constants.LOGIN_SUCCESS,
+  user,
+  loggedInAt: Date.now(),
+});
+
+export const loginAction = (credentials) => (dispatch, getState) => {
+  dispatch(login(credentials));
+  return AuthApi.login(credentials.username, credentials.password).then(
+    response => {
+      let user = response.data;
+      dispatch(loginSuccessAction(user));
+      dispatch(notify({message: `${user.credentials.username} logged in successfully.`, status: 200, position: 'tc'}));
+      localStorage.setItem('auth-token', user.token);
+      const routingState = getState().routing.locationBeforeTransitions.state || {};
+      let nextPath = routingState.nextPathname || '/';
+      if (nextPath === '/') {
+        dispatch(loadPatientsAction());
+      }
+      hashHistory.push(nextPath);
+
+
+    },
+    error => {
+      dispatch(loginErrorAction(error));
+      dispatch(notify({message: "Login error.", status: 500, position: 'tc'}));
+    });
+};
+
+export function redirectToLoginWithMessage(messageKey) {
+  return (dispatch, getState) => {
+    const currentPath = getState().routing.locationBeforeTransitions.pathname;
+    dispatch(notify({message: messageKey, status: 403, position: 'tc'}));
+    hashHistory.replace({pathname: '/login', state: {nextPathname: currentPath}});
+  }
+}
+
+const logout = () => ({
+  type: constants.LOGOUT
+});
+
+export const logoutErrorAction = (error) => ({
+  type: constants.LOGOUT_FAILURE,
+  error
+});
+
+export const logoutSuccessAction = () => ({
+  type: constants.LOGOUT_SUCCESS,
+});
+
+export const logoutAction = () => (dispatch, getState) => {
+  dispatch(logout());
+  return AuthApi.logout().then(
+    () => {
+      let user = getState().user;
+      dispatch(notify({message: `${user.username} logged out successfully.`, status: 200, position: 'tc'}));
+      dispatch(logoutSuccessAction());
+      localStorage.removeItem('auth-token');
+      hashHistory.push('/login');
+    },
+    error => {
+      dispatch(logoutErrorAction(error));
+      dispatch(notify({message: "Logout error.", status: 500, position: 'tc'}));
+    });
+};

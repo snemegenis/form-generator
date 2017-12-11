@@ -2,7 +2,7 @@ import PatientList from "../ui/PatientList.jsx";
 import {
   cancelDisability, filterPatientListAction,
   loadDisabilityAction,
-  loadDisabilityTmpAction,
+  loadDisabilityTmpAction, loginAction, logoutAction,
   printPatientAction, saveDisabilityAction, saveDisabilityTmpAction,
   savePatientAction, shoAllPatientListAction, showAllPatientListAction
 } from "../../action/action";
@@ -11,6 +11,8 @@ import {hashHistory} from 'react-router'
 import {formValueSelector, reduxForm, submit} from "redux-form";
 import PatientForm from "../ui/PatientForm.jsx";
 import DisabilityForm from "../ui/DisabilityForm.jsx";
+import LoginForm from "../ui/LoginForm.jsx";
+import UserInfo from "../ui/UserInfo.jsx";
 
 const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {
   if (tempSaved) {
@@ -20,8 +22,27 @@ const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, n
   } else {
     hashHistory.push(nextPageURL);
   }
-
 };
+
+const Login = connect(state => ({
+    user: state.user
+  }),
+  (dispatch) => ({
+    onLogin(credentials) {
+      dispatch(loginAction(credentials));
+    }
+  })
+)(reduxForm({form: 'login'})(LoginForm));
+
+const UserInfoView = connect(state => ({
+    user: state.user
+  }),
+  (dispatch) => ({
+    onLogout() {
+      dispatch(logoutAction());
+    }
+  })
+)(UserInfo);
 
 const VisiblePatients = connect(state => ({
     patients: state.patients.data,
@@ -127,5 +148,7 @@ const ModifyDisability = connect(
 export {
   VisiblePatients,
   ModifyDisability,
-  ModifyPatient
+  ModifyPatient,
+  Login,
+  UserInfoView
 };

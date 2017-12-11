@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class DisabilityReportParams {
+    private Doctor doctor;
     private Integer patientId;
     private boolean fillDate;
     private boolean fillNumber;

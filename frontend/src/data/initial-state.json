@@ -6,8 +6,11 @@
     "data": []
   },
   "user": {
-    "id": 1,
-    "username": "petrjon"
+    "isProcessing": false,
+    "isProcessingError": false,
+    "id": null,
+    "username": null,
+    "token": null
   }
 }
 
