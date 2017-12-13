@@ -13,20 +13,20 @@ const Patient = (props) => {
                 <span>{personalId}</span>
             </span>
       <span>
-                <strong>First name:</strong>
+                <strong>{t('First name')}:</strong>
                 <span>{firstName}</span>
             </span>
       <span>
-                <strong>Last name:</strong>
+                <strong>{t('Last name')}:</strong>
                 <span>{lastName}</span>
             </span>
       <span className="actions">
         {!disabilityReportId &&
-        <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>}
+        <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</button>}
         {disabilityReportId &&
-        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
-        <button onClick={() => onUpdate(id)}>Update</button>
-        {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>Print</button>}
+        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</button>}
+        <button onClick={() => onUpdate(id)}>{t('Update patient')}</button>
+        {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</button>}
             </span>
     </div>
   </div>

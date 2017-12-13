@@ -11,7 +11,14 @@ i18n
         "List of Patients": "List of Patients",
         "Add Patient": "Add Patient",
         "Show all": "Show all",
-        "Filter": "Filter"
+        "Filter": "Filter",
+        "Personal id": "Personal id",
+        "First name": "First name",
+        "Last name": "Last name",
+        "Add Disability": "Add Disability",
+        "Update Disability": "Update Disability",
+        "Update patient": "Update patient",
+        "Print": "Print"
       }
     },
     lt: {
@@ -19,7 +26,14 @@ i18n
         "List of Patients": "Pacientų sąrašas",
         "Add Patient": "Pridėti Pacientą",
         "Show all": "Rodyti visus",
-        "Filter": "Filtruoti"
+        "Filter": "Filtruoti",
+        "Personal id": "Asmens kodas",
+        "First name": "Vardas",
+        "Last name": "Pavardė",
+        "Add Disability": "Pridėti neįgalumą",
+        "Update Disability": "Atnaujinti neįgalumą",
+        "Update patient": "Atnaujinti pacientą",
+        "Print": "Spausdinti"
       }
     }
   },
