@@ -141,7 +141,10 @@ export const user = (state = {}, action) => {
         ...state,
         isProcessing: true,
         isProcessingError: false,
-        username: null
+        username: null,
+        doctor: null,
+        token: null,
+        isAuthenticated: false
       };
     case constants.LOGIN_SUCCESS:
       return {
@@ -150,6 +153,7 @@ export const user = (state = {}, action) => {
         isProcessingError: false,
         username: action.user.credentials.username,
         doctor: action.user.doctor,
+        isAuthenticated: true,
         token: action.user.token
       };
     case constants.LOGIN_FAILURE:
@@ -172,6 +176,7 @@ export const user = (state = {}, action) => {
         ...state,
         isProcessing: false,
         isProcessingError: false,
+        isAuthenticated: false,
         username: null,
         doctor: null,
         token: null
@@ -181,6 +186,11 @@ export const user = (state = {}, action) => {
         ...state,
         isProcessing: false,
         isProcessingError: true
+      };
+    case constants.AUTHENTICATION_ERROR:
+      return {
+        ...state,
+        isAuthenticated: false,
       };
     default:
       return state;

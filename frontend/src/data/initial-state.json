@@ -6,6 +6,7 @@
     "data": []
   },
   "user": {
+    "isAuthenticated": false,
     "isProcessing": false,
     "isProcessingError": false,
     "id": null,

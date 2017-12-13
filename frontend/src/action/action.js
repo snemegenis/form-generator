@@ -59,7 +59,7 @@ export const savePatientSuccessAction = (patient) => ({
   updatedAt: Date.now(),
 });
 
-export const loadPatientsAction = () => dispatch => {
+export const loadPatientsAction = () => (dispatch, getState) => {
   dispatch(loadPatients());
   return PatientApi.load().then(
     response => {
@@ -67,21 +67,26 @@ export const loadPatientsAction = () => dispatch => {
       dispatch(loadPatientsSuccessAction(response.data));
     },
     error => {
-      console.log(error);
-      dispatch(notify({message: "Patients loading error.", status: 500, position: 'tc'}));
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Patients loading error.", status: 500, position: 'tc'}));
+      }
       dispatch(loadPatientsErrorAction(error));
     });
 
 };
 
-export const printPatientAction = (patientId, patientFirstName, patientLastName) => dispatch => {
+export const printPatientAction = (patientId, patientFirstName, patientLastName) => (dispatch, getState) => {
   dispatch(printPatient(patientId));
   return ReportApi.print(patientId).then(
     response => {
       fileDownload(response.data, patientFirstName + "_" + patientLastName + ".pdf");
       dispatch(printPatientSuccessAction(patientId, response.data));
-    }
-  );
+    },
+    error => {
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Patients report generation error.", status: 500, position: 'tc'}));
+      }
+    });
 };
 
 export const printPatientSuccessAction = (patientId, data) => ({
@@ -118,7 +123,7 @@ export const saveDisabilitySuccessAction = (disability) => ({
   updatedAt: Date.now(),
 });
 
-export const saveDisabilityAction = (disability) => dispatch => {
+export const saveDisabilityAction = (disability) => (dispatch, getState) => {
   dispatch(saveDisability(disability));
   return DisabilityApi.add(disability).then(
     response => {
@@ -129,7 +134,9 @@ export const saveDisabilityAction = (disability) => dispatch => {
     },
     error => {
       dispatch(saveDisabilityErrorAction(error));
-      dispatch(notify({message: "Disability saving error.", status: 500, position: 'tc'}));
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Disability saving error.", status: 500, position: 'tc'}));
+      }
     });
 
 };
@@ -151,7 +158,7 @@ export const saveDisabilityTmpSuccessAction = (disability) => ({
   updatedAt: Date.now(),
 });
 
-export const saveDisabilityTmpAction = (disability, closeOnSuccess) => dispatch => {
+export const saveDisabilityTmpAction = (disability, closeOnSuccess) => (dispatch, getState) => {
   dispatch(saveDisabilityTmp(disability));
   return DisabilityApi.saveTmp(disability).then(
     response => {
@@ -163,7 +170,9 @@ export const saveDisabilityTmpAction = (disability, closeOnSuccess) => dispatch 
     },
     error => {
       dispatch(saveDisabilityTmpErrorAction(error));
-      dispatch(notify({message: "Disability temporary data saving error.", status: 500, position: 'tc'}));
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Disability temporary data saving error.", status: 500, position: 'tc'}));
+      }
     });
 
 };
@@ -185,7 +194,7 @@ export const loadDisabilityTmpSuccessAction = (disability) => ({
   loadedAt: Date.now(),
 });
 
-export const loadDisabilityTmpAction = (patientId, nextPageURL) => dispatch => {
+export const loadDisabilityTmpAction = (patientId, nextPageURL) => (dispatch, getState) => {
   dispatch(loadDisabilityTmp(patientId));
   return DisabilityApi.loadTmp(patientId).then(
     response => {
@@ -195,7 +204,9 @@ export const loadDisabilityTmpAction = (patientId, nextPageURL) => dispatch => {
     },
     error => {
       dispatch(loadDisabilityTmpErrorAction(patientId, error));
-      dispatch(notify({message: "Disability temporary data loading error.", status: 500, position: 'tc'}));
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Disability temporary data loading error.", status: 500, position: 'tc'}));
+      }
     });
 };
 
@@ -222,7 +233,7 @@ export const loadDisabilitySuccessAction = (disability) => ({
   loadedAt: Date.now(),
 });
 
-export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => dispatch => {
+export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => (dispatch, getState) => {
   dispatch(loadDisability(disabilityId));
   return DisabilityApi.load(patientId, disabilityId).then(
     response => {
@@ -232,7 +243,9 @@ export const loadDisabilityAction = (patientId, disabilityId, nextPageURL) => di
     },
     error => {
       dispatch(loadDisabilityErrorAction(patientId, disabilityId, error));
-      dispatch(notify({message: "Disability data loading error.", status: 500, position: 'tc'}));
+      if (getState().user.isAuthenticated) {
+        dispatch(notify({message: "Disability data loading error.", status: 500, position: 'tc'}));
+      }
     });
 };
 
@@ -274,8 +287,13 @@ export const loginAction = (credentials) => (dispatch, getState) => {
     });
 };
 
+const authenticationError = () => ({
+  type: constants.AUTHENTICATION_ERROR,
+});
+
 export function redirectToLoginWithMessage(messageKey) {
   return (dispatch, getState) => {
+    dispatch(authenticationError());
     const currentPath = getState().routing.locationBeforeTransitions.pathname;
     dispatch(notify({message: messageKey, status: 403, position: 'tc'}));
     hashHistory.replace({pathname: '/login', state: {nextPathname: currentPath}});
