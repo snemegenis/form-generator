@@ -55,7 +55,13 @@ i18n
                     "Disability temporary data loaded successfully.": "Disability temporary data loaded successfully.",
                     "Disability temporary data loading error.": "Disability temporary data loading error.",
                     "Disability data loaded successfully.": "Disability data loaded successfully.",
-                    "Disability data loading error.": "Disability data loading error."
+                    "Disability data loading error.": "Disability data loading error.",
+                    "Username": "Username",
+                    "Password": "Password",
+                    "Enter an username": "Enter an username",
+                    "Enter a password": "Enter a password",
+                    "Login form": "Login form",
+                    "Login": "Login"
                 }
             },
             lt: {
@@ -115,6 +121,12 @@ i18n
                     "Disability data loaded successfully.": "Neįgalumo duomenys nuskaityti sėkmingai.",
                     "Disability data loading error.": "Nepavyko nuskaityti neįgalumo duomenų. "+
                     "Pabandykite dar kartą. Jei klaida kartojasi, kreipkitės į sistemos administratorių.",
+                    "Username": "Vartotojo vardas",
+                    "Password": "Slaptažodis",
+                    "Enter an username": "Įveskite vartotojo vardą",
+                    "Enter a password": "Įveskite slaptažodį",
+                    "Login form": "Prisijungimo forma",
+                    "Login": "Prisijungti"
                 }
             }
         },
