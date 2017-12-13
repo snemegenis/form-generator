@@ -13,6 +13,7 @@ import PatientForm from "../ui/PatientForm.jsx";
 import DisabilityForm from "../ui/DisabilityForm.jsx";
 import LoginForm from "../ui/LoginForm.jsx";
 import UserInfo from "../ui/UserInfo.jsx";
+import {translate} from "react-i18next";
 
 const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {
   if (tempSaved) {
@@ -85,7 +86,7 @@ const loadAddInitialPatientValues = (state, ownProps) => {
   }
 };
 
-const ModifyPatient = connect(
+const ModifyPatient = translate()(connect(
   (state, ownProps) => ({
     initialValues: loadAddInitialPatientValues(state, ownProps)
   }),
@@ -100,7 +101,7 @@ const ModifyPatient = connect(
       hashHistory.push('/');
     }
   })
-)(reduxForm({form: 'activePatient'})(PatientForm));
+)(reduxForm({form: 'activePatient'})(PatientForm)));
 
 const activeDisabilitySelector = formValueSelector('activeDisability');
 
