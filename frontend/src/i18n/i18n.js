@@ -36,7 +36,8 @@ i18n
                     "Enter a valid phone.": "Enter a valid phone.",
                     "Enter a valid mobile phone.": "Enter a valid mobile phone.",
                     "Enter an address.": "Enter an address.",
-                    "Phone/Mobile phone is required": "Phone/Mobile phone is required"
+                    "Phone/Mobile phone is required": "Phone/Mobile phone is required",
+                    "Logout": "Logout"
                 }
             },
             lt: {
@@ -69,7 +70,8 @@ i18n
                     "Enter a valid phone.": "Įveskite teisingą telefono numerį",
                     "Enter a valid mobile phone.": "Įveskite teisingą mobilaus telefono numerį",
                     "Enter an address.": "Įveskite adresą",
-                    "Phone/Mobile phone is required": "Reikia įvesti arba mobilaus arba paprasto telefono numerį"
+                    "Phone/Mobile phone is required": "Reikia įvesti arba mobilaus arba paprasto telefono numerį",
+                    "Logout": "Atsijungti"
                 }
             }
         },
