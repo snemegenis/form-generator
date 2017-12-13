@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {hashHistory} from 'react-router'
 import {connect} from "react-redux";
+import {authenticateAction} from "../../action/action";
 
 const RequireAuth = (ComposedComponent) => {
 
@@ -8,13 +9,13 @@ const RequireAuth = (ComposedComponent) => {
 
     componentWillMount() {
       if(!this.props.authenticated) {
-        hashHistory.push('/login');
+        this.props.authenticate();
       }
     }
 
     componentWillUpdate(nextProps) {
       if(!nextProps.authenticated) {
-        hashHistory.push('/login');
+        nextProps.authenticate();
       }
     }
 
@@ -27,7 +28,11 @@ const RequireAuth = (ComposedComponent) => {
     return { authenticated: state.user.isAuthenticated };
   };
 
-  return connect(mapStateToProps)(Authentication);
+  const mapDispatchToProps = (dispatch) => {
+    return { authenticate: () => dispatch(authenticateAction()) };
+  };
+
+  return connect(mapStateToProps, mapDispatchToProps)(Authentication);
 };
 
 export default RequireAuth;

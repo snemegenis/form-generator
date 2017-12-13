@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +66,16 @@ public class AuthenticationController {
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "status", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public User status(HttpSession session) throws AuthenticationException {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new CredentialsExpiredException("User is not found");
+        }
+        return user;
     }
 
 }

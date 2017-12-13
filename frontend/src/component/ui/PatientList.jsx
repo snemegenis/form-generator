@@ -3,10 +3,10 @@ import Patient from "./Patient.jsx";
 import {translate} from "react-i18next";
 
 
-const PatientList = ({
-  patients, filter, loading, onDisabilityAdd = f => f, onDisabilityUpdate = f => f,
-  onPrint = f => f, onAdd = f => f, onUpdate = f => f, onShowAll = f => f, onFilter = f => f, t
-}) => {
+const PatientList = (props) => {
+  const { patients, filter, loading, onDisabilityAdd , onDisabilityUpdate,
+    onPrint, onAdd, onUpdate, onShowAll, onFilter, t } = props;
+
   if (loading) {
     return <div>Data is loading</div>
   }

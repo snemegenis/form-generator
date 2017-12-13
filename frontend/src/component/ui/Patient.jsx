@@ -1,13 +1,15 @@
 import React, {PropTypes} from "react";
+import {translate} from "react-i18next";
 
-const Patient = ({
-  id, personalId, firstName, lastName, disabilityReportId, tempSaved,
-  onPrint = f => f, onDisabilityAdd = f => f, onDisabilityUpdate = f => f, onUpdate = f => f
-}) => {
+const Patient = (props) => {
+  const {
+    id, personalId, firstName, lastName, disabilityReportId, tempSaved,
+    onPrint, onDisabilityAdd, onDisabilityUpdate, onUpdate, t} = props;
+
   return <div className="patient">
     <div className={"contents" + (tempSaved ? " bg-warning" : "")}>
             <span>
-                <strong>Personal id:</strong>
+                <strong>{t('Personal id')}:</strong>
                 <span>{personalId}</span>
             </span>
       <span>
@@ -20,9 +22,9 @@ const Patient = ({
             </span>
       <span className="actions">
         {!disabilityReportId &&
-          <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>}
+        <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>Add Disability</button>}
         {disabilityReportId &&
-          <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
+        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>Update Disability</button>}
         <button onClick={() => onUpdate(id)}>Update</button>
         {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>Print</button>}
             </span>
@@ -42,5 +44,5 @@ Patient.propTypes = {
   onUpdate: PropTypes.func.isRequired
 };
 
-export default Patient;
+export default translate()(Patient);
 

@@ -45,5 +45,3 @@ ReactDOM.render(<I18nextProvider i18n={i18n}>
     </Router>
   </Provider>
 </I18nextProvider>, document.getElementById('app'));
-
-store.dispatch(loadPatientsAction());

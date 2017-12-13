@@ -272,6 +272,7 @@ export const loginAction = (credentials) => dispatch => {
       dispatch(loginSuccessAction(user));
       dispatch(notify({message: `${user.credentials.username} logged in successfully.`, status: 200, position: 'tc'}));
       localStorage.setItem('auth-token', user.token);
+      dispatch(loadPatientsAction());
       hashHistory.push("/");
     },
     error => {
@@ -286,10 +287,10 @@ const authenticationError = () => ({
 
 export function redirectToLoginWithMessage(messageKey) {
   return (dispatch, getState) => {
-    dispatch(authenticationError());
     const currentPath = getState().routing.locationBeforeTransitions.pathname;
     dispatch(notify({message: messageKey, status: 403, position: 'tc'}));
     hashHistory.replace({pathname: '/login', state: {nextPathname: currentPath}});
+    dispatch(authenticationError());
   }
 }
 
@@ -312,12 +313,25 @@ export const logoutAction = () => (dispatch, getState) => {
     () => {
       let user = getState().user;
       dispatch(notify({message: `${user.username} logged out successfully.`, status: 200, position: 'tc'}));
-      dispatch(logoutSuccessAction());
       localStorage.removeItem('auth-token');
       hashHistory.push('/login');
+      dispatch(logoutSuccessAction());
     },
     error => {
       dispatch(logoutErrorAction(error));
       dispatch(notify({message: "Logout error.", status: 500, position: 'tc'}));
+    });
+};
+
+export const authenticateAction = () => dispatch => {
+  return AuthApi.status().then(
+    (response) => {
+      let user = response.data;
+      localStorage.setItem('auth-token', user.token);
+      dispatch(loginSuccessAction(user));
+      dispatch(loadPatientsAction());
+    },
+    () => {
+      dispatch(redirectToLoginWithMessage("User authentication info is missing"));
     });
 };
