@@ -27,7 +27,7 @@ let store = storeFactory();
 const history = syncHistoryWithStore(hashHistory, store);
 const actions = bindActionCreators({redirectToLoginWithMessage}, store.dispatch);
 setupAxiosInterceptors(() => {
-  actions.redirectToLoginWithMessage('User authentication info is missing');
+  actions.redirectToLoginWithMessage(i18n.t('User authentication info is missing'));
 });
 
 ReactDOM.render(<I18nextProvider i18n={i18n}>
