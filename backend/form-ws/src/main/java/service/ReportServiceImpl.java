@@ -4,6 +4,7 @@ import bean.DisabilityReport;
 import bean.DisabilityReportParams;
 import bean.Doctor;
 import constants.ReportConstants;
+import exception.DisabilityException;
 import mapper.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,11 +41,11 @@ public class ReportServiceImpl implements ReportService {
                     Collections.singletonList(reportMapper.getDisabilityReport(disabilityReportParams.getPatientId(),
                             null)));
             if (result == null) {
-                throw new RuntimeException("Report data is empty");
+                throw new DisabilityException("Report data is empty");
             }
             return result;
         } catch (Exception e) {
-            throw new RuntimeException("Error generating report data", e);
+            throw new DisabilityException("Error generating report data", e);
         }
     }
 

@@ -6,6 +6,7 @@ import bean.User;
 import exception.DisabilityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import util.ValidationHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -51,6 +53,7 @@ public class AuthenticationController {
                 .token(session.getId())
                 .build();
         session.setAttribute("user", result);
+        LocaleContextHolder.setLocale(new Locale("lt"));
 
         return result;
     }

@@ -1,6 +1,7 @@
 package handler;
 
 import bean.Error;
+import exception.DisabilityException;
 import exception.ValidationException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = { ValidationException.class })
     public ResponseEntity<Error> handleError(ValidationException exc) {
         return error(-10, exc.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = { DisabilityException.class })
+    public ResponseEntity<Error> handleError(DisabilityException exc) {
+        return error(-2, exc.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = { Exception.class })
