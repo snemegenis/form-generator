@@ -1,6 +1,7 @@
 import React from 'react';
 import {ModifyPatient} from '../component/container/index';
 import PageTemplate from './PageTemplate.jsx';
+import RequireAuth from "../component/container/RequireAuth.jsx";
 
 const UpdatePatientPage = (match) => {
   return (
@@ -11,4 +12,4 @@ const UpdatePatientPage = (match) => {
   );
 };
 
-export default UpdatePatientPage;
+export default RequireAuth(UpdatePatientPage);

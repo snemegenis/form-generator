@@ -264,7 +264,7 @@ export const loginSuccessAction = (user) => ({
   loggedInAt: Date.now(),
 });
 
-export const loginAction = (credentials) => (dispatch, getState) => {
+export const loginAction = (credentials) => dispatch => {
   dispatch(login(credentials));
   return AuthApi.login(credentials.username, credentials.password).then(
     response => {
@@ -272,14 +272,7 @@ export const loginAction = (credentials) => (dispatch, getState) => {
       dispatch(loginSuccessAction(user));
       dispatch(notify({message: `${user.credentials.username} logged in successfully.`, status: 200, position: 'tc'}));
       localStorage.setItem('auth-token', user.token);
-      const routingState = getState().routing.locationBeforeTransitions.state || {};
-      let nextPath = routingState.nextPathname || '/';
-      if (nextPath === '/') {
-        dispatch(loadPatientsAction());
-      }
-      hashHistory.push(nextPath);
-
-
+      hashHistory.push("/");
     },
     error => {
       dispatch(loginErrorAction(error));
