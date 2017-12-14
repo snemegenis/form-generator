@@ -2,7 +2,6 @@ import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import InputField from "./InputField.jsx";
 import {trimmedEmpty} from "../../util/ValidationUtil";
-import {translate} from "react-i18next";
 
 const renderInput = ({input, meta, type}) => {
     return <div className="input-row">
@@ -64,5 +63,5 @@ LoginForm.propTypes = {
     onLogin: PropTypes.func.isRequired
 };
 
-export default translate()(LoginForm);
+export default LoginForm;
 

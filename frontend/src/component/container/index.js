@@ -25,7 +25,7 @@ const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, n
   }
 };
 
-const Login = connect(state => ({
+const Login = translate()(connect(state => ({
     user: state.user
   }),
   (dispatch) => ({
@@ -33,7 +33,7 @@ const Login = connect(state => ({
       dispatch(loginAction(credentials));
     }
   })
-)(reduxForm({form: 'login'})(LoginForm));
+)(reduxForm({form: 'login'})(LoginForm)));
 
 const UserInfoView = connect(state => ({
     user: state.user
@@ -45,7 +45,7 @@ const UserInfoView = connect(state => ({
   })
 )(UserInfo);
 
-const VisiblePatients = connect(state => ({
+const VisiblePatients = translate()(connect(state => ({
     patients: state.patients.data,
     loading: state.patients.isLoading,
     filter: state.patients.filter
@@ -74,7 +74,7 @@ const VisiblePatients = connect(state => ({
       hashHistory.push(`/patient/${patientId}/update`);
     }
   })
-)(PatientList);
+)(PatientList));
 
 const loadAddInitialPatientValues = (state, ownProps) => {
   if (ownProps.patientId) {
@@ -117,7 +117,7 @@ const loadAddInitialDisabilityValues = (state, ownProps) => {
     }
 };
 
-const ModifyDisability = connect(
+const ModifyDisability = translate()(connect(
   (state, ownProps) => ({
     initialValues: loadAddInitialDisabilityValues(state, ownProps),
     treatmentSelected: activeDisabilitySelector(state, 'treatments'),
@@ -144,7 +144,7 @@ const ModifyDisability = connect(
       hashHistory.push('/');
     }
   })
-)(reduxForm({form: 'activeDisability'})(DisabilityForm));
+)(reduxForm({form: 'activeDisability'})(DisabilityForm)));
 
 export {
   VisiblePatients,

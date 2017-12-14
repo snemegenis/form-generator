@@ -51,34 +51,34 @@ const renderCheckboxes = (props) => {
   </div>;
 };
 
-const Diagnosis = ({name, title, withDetails = false}) => (
+const Diagnosis = ({t, name, title, withDetails = false}) => (
   <div>
     {title && <h4>{title}</h4>}
-    <InputField id={`disability.${name}.code`} label="Enter code:">
+    <InputField id={`disability.${name}.code`} label={t("Code")}>
       <Field name={`${name}.code`} id={`disability.${name}.code`}
              component={renderMaskedInput} mask="aaa-9999"/>
     </InputField>
-    <InputField id={`disability.${name}.code`} label="Enter text:">
+    <InputField id={`disability.${name}.code`} label="Text">
       <Field name={`${name}.text`} id={`disability.${name}.text`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.functionalClass`} label="Enter functional class:">
+    <InputField id={`disability.${name}.functionalClass`} label="Functional class">
       <Field name={`${name}.functionalClass`} id={`disability.${name}.functionalClass`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.degree`} label="Enter degree:">
+    <InputField id={`disability.${name}.degree`} label="Degree">
       <Field name={`${name}.degree`} id={`disability.${name}.degree`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.stage`} label="Enter stage:">
+    <InputField id={`disability.${name}.stage`} label="Stage">
       <Field name={`${name}.stage`} id={`disability.${name}.stage`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.history`} label="Enter history:">
+    <InputField id={`disability.${name}.history`} label="Diagnosis history">
       <Field name={`${name}.history`} id={`disability.${name}.history`}
              component={renderArea} rows="5"/>
     </InputField>
-    {withDetails && <InputField id={`disability.${name}.details`} label="Enter details:">
+    {withDetails && <InputField id={`disability.${name}.details`} label="Diagnosis details">
       <Field name={`${name}.details`} id={`disability.${name}.details`}
              component={renderArea}/>
     </InputField>}
@@ -90,14 +90,14 @@ Diagnosis.propTypes = {
   title: PropTypes.string
 };
 
-const renderDiagnosis = ({fields, meta}) => (
+const renderDiagnosis = ({t, fields, meta}) => (
   <ul>
     <li>
       <button className="btn" type="button" onClick={() => fields.push({})}>Add Diagnosis</button>
     </li>
     {fields.map((diagnosis, index) =>
       <li key={index}>
-        <Diagnosis name={`${diagnosis}`} withDetails={true}/>
+        <Diagnosis t={t} name={`${diagnosis}`} withDetails={true}/>
         <button
           type="button"
           className="btn"
@@ -109,31 +109,31 @@ const renderDiagnosis = ({fields, meta}) => (
   </ul>
 );
 
-const renderAppointments = ({fields, meta}) => (
+const renderAppointments = ({t, fields, meta}) => (
   <ul>
     <li>
-      <button className="btn" type="button" onClick={() => fields.push({primary: false})}>Add appointment</button>
+      <button className="btn" type="button" onClick={() => fields.push({primary: false})}>{t('Add appointment')}</button>
     </li>
     {fields.map((appointment, index) =>
       <li key={index}>
-        <h4>Appointment #{index + 1}</h4>
+        <h4>{t("Appointment {{index}}", {index: index + 1})}</h4>
 
-        <InputField id={`disability.appointment${index}.date`} label="Enter date:">
+        <InputField id={`disability.appointment${index}.date`} label={t("Date")}>
           <Field name={`${appointment}.date`} id={`disability.appointment${index}.date`}
                  component={renderMaskedInput} mask="9999-99-99"/>
         </InputField>
 
-        <InputField id={`disability.appointment${index}.doctorType`} label="Enter doctor type:">
+        <InputField id={`disability.appointment${index}.doctorType`} label={t("Doctor type")}>
           <Field name={`${appointment}.doctorType`} id={`disability.appointment${index}.doctorType`}
                  component={renderInput}/>
         </InputField>
 
-        <InputField id={`disability.appointment${index}.observation`} label="Enter observation:">
+        <InputField id={`disability.appointment${index}.observation`} label={t("Observation")}>
           <Field name={`${appointment}.observation`} id={`disability.appointment${index}.observation`}
                  component={renderArea}/>
         </InputField>
 
-        <InputField id={`disability.appointment${index}.attachment`} label="Enter attachment:">
+        <InputField id={`disability.appointment${index}.attachment`} label={t("Attachment")}>
           <Field name={`${appointment}.attachment`} id={`disability.appointment${index}.attachment`}
                  component={renderInput}/>
         </InputField>
@@ -141,7 +141,7 @@ const renderAppointments = ({fields, meta}) => (
         <button
           type="button"
           className="btn"
-          onClick={() => fields.remove(index)}>Remove appointment
+          onClick={() => fields.remove(index)}>{t("Remove appointment")}
         </button>
       </li>
     )}
@@ -208,11 +208,11 @@ class DisabilityForm extends React.Component {
 
   }
 
-  validate(disability) {
+  validate(disability, t) {
     let errors = {};
     let errorExist = false;
     if (trimmedEmpty(disability.history)) {
-      errors.history = 'Enter history.';
+      errors.history = t('Enter history.');
       errorExist = true;
     }
     if (!disability.treatments || disability.treatments.length === 0) {
@@ -295,10 +295,10 @@ class DisabilityForm extends React.Component {
   }
 
   handleSubmit(input) {
-    const {disability, pressed} = input;
+    const {disability, pressed, t} = input;
     switch (pressed) {
       case 'Save':
-        this.validate(disability);
+        this.validate(disability, t);
         disability.id = this.props.disabilityReportId;
         this.props.onSave(disability);
         break;
@@ -310,15 +310,15 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId} = this.props;
+    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t} = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
-      {label: 'Ambulatoric', value: 'AMBULATORIC'},
-      {label: 'Medicaments', value: 'MEDICAMENTS'},
-      {label: 'Stationary', value: 'STATIONARY'},
-      {label: 'Surgery', value: 'SURGERY'},
-      {label: 'Reabilitation', value: 'REABILITATION'},
-      {label: 'Other', value: 'OTHER'}
+      {label: t('Ambulatoric'), value: 'AMBULATORIC'},
+      {label: t('Medicaments'), value: 'MEDICAMENTS'},
+      {label: t('Stationary'), value: 'STATIONARY'},
+      {label: t('Surgery'), value: 'SURGERY'},
+      {label: t('Reabilitation'), value: 'REABILITATION'},
+      {label: t('Other'), value: 'OTHER'}
     ];
     const disabilityTypes = [
       {label: 'Working Capacity Level', value: 'WORKING_CAPACITY_LEVEL'},
@@ -334,46 +334,46 @@ class DisabilityForm extends React.Component {
 
       <Field component="input" type="hidden" name="patientId"/>
 
-      <InputField id="disability.history" label="Enter history:">
+      <InputField id="disability.history" label={t("History")}>
         <Field name="history" id="disability.personalId" component={renderArea}/>
       </InputField>
 
-      <InputField id="disability.treatments" label="Enter treatments:">
+      <InputField id="disability.treatments" label={t("Treatments")}>
         <Field name="treatments" id="disability.treatments" component={renderCheckboxes}
                checkboxes={treatments}/>
       </InputField>
 
       {otherTreatmentSelected(treatmentSelected) &&
-      <InputField id="disability.otherTreatment" label="Enter other treatment:">
+      <InputField id="disability.otherTreatment" label={t("Other treatment")}>
         <Field name="otherTreatment" id="disability.otherTreatment" component={renderInput}/>
       </InputField>
       }
 
-      <InputField id="disability.treatmentHistory" label="Enter treatment history:">
+      <InputField id="disability.treatmentHistory" label={t("Treatment history")}>
         <Field name="treatmentHistory" id="disability.treatmentHistory" component={renderArea}/>
       </InputField>
 
       <div className="form-group">
-        <h4>Appointments</h4>
-        <FieldArray name="appointments" component={renderAppointments}/>
+        <h4>{t("Appointments")}</h4>
+        <FieldArray name="appointments" t={t} component={renderAppointments}/>
       </div>
 
-      <InputField id="disability.barthelIndex" label="Enter Barthel index:">
+      <InputField id="disability.barthelIndex" label={t("Barthel index")}>
         <Field name="barthelIndex" id="patient.barthelIndex" component={renderNumberInput} nbrFormat="##"/>
       </InputField>
 
-      <InputField id="disability.latestDisabilityDesc" label="Enter latest disability description:">
+      <InputField id="disability.latestDisabilityDesc" label={t("Latest disability description")}>
         <Field name="latestDisabilityDesc" id="disability.latestDisabilityDesc" component={renderArea}/>
       </InputField>
 
       <div className="form-group">
-        <h4>Main diagnosis</h4>
-        <Diagnosis name="mainDiagnosis"/>
+        <h4>{t("Main diagnosis")}</h4>
+        <Diagnosis t={t} name="mainDiagnosis"/>
       </div>
 
       <div className="form-group">
-        <h4>Other diagnosis</h4>
-        <FieldArray name="otherDiagnosis" component={renderDiagnosis}/>
+        <h4>{t("Other diagnosis")}</h4>
+        <FieldArray t={t} name="otherDiagnosis" component={renderDiagnosis}/>
       </div>
 
       <InputField id="disability.disabilityTypes" label="Enter disability types:">

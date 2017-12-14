@@ -355,6 +355,7 @@ export const authenticateAction = () => dispatch => {
             localStorage.setItem('auth-token', user.token);
             dispatch(loginSuccessAction(user));
             dispatch(loadPatientsAction());
+          hashHistory.push('/');
         },
         () => {
             dispatch(redirectToLoginWithMessage(i18n.t("User authentication info is missing")));
