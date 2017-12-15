@@ -117,7 +117,10 @@ i18n.use(LanguageDetector).init({
         "Enter diagnosis history": "Enter diagnosis history",
         "Enter valid date": "Enter valid date",
         "Enter doctor type": "Enter doctor type",
-        "Enter observation": "Enter observation"
+        "Enter observation": "Enter observation",
+        "Data has been changed. Do you really want to quit without saving changes?": "Data has been changed. Do you really want to quit without saving changes?",
+        "Yes": "Yes",
+        "No": "No"
       }
     },
     lt: {
@@ -240,8 +243,11 @@ i18n.use(LanguageDetector).init({
         "Enter diagnosis history": "Įveskite eigą/formą",
         "Enter valid date": "Įveskite teisingą datą",
         "Enter doctor type": "Įveskite gydytojo specialybę",
-        "Enter observation": "Įveskite išliekančius organizmo funkciju sutrikimus, tyrimų duomenis, gydytojų specialistų išvadas, patvirtinančias ligos sunkumą ir diagnozę"
-
+        "Enter observation": "Įveskite išliekančius organizmo funkciju sutrikimus, tyrimų duomenis, gydytojų specialistų išvadas, patvirtinančias ligos sunkumą ir diagnozę",
+        "Data has been changed. Do you really want to quit without saving changes?":
+          "Duomenys buvo pakeisti. Ar tikrai norite išeiti neišsaugoję pakeitimų?",
+        "Yes": "Taip",
+        "No": "Ne"
       }
     }
   },

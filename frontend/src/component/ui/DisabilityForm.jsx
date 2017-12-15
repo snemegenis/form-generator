@@ -168,7 +168,7 @@ class DisabilityForm extends React.Component {
     clearInterval(this.autoSaveTimer);
   }
 
-  validateDiagnosis(diagnosis, error, withDetails = false) {
+  validateDiagnosis(diagnosis, error) {
 
     const {t} = this.props;
 
@@ -310,7 +310,7 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t} = this.props;
+    const {pristine, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t} = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
       {label: t('Ambulatoric'), value: 'AMBULATORIC'},
@@ -389,7 +389,7 @@ class DisabilityForm extends React.Component {
         disability: {...values}, pressed: 'Close'
       }]))}>{t("Close")}
       </button>
-      <button className="btn" onClick={this.props.onBack}>{t("Cancel")}
+      <button className="btn" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Cancel")}
       </button>
     </Form>
   }

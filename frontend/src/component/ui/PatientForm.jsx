@@ -91,7 +91,7 @@ class PatientForm extends React.Component {
     }
 
     render() {
-        const {error, invalid, handleSubmit, t} = this.props;
+        const {pristine, error, invalid, handleSubmit, t} = this.props;
         return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
             <InputField id="patient.personalId" label={t("Personal id") + ":"}>
                 <Field name="personalId" id="patient.personalId" component={MaskedInput} mask="99999999999"/>
@@ -137,7 +137,7 @@ class PatientForm extends React.Component {
             {error && <div>{error}</div>}
 
             <button className="btn" type="submit" disabled={invalid}>{t("Save")}</button>
-            <button className="btn" type="button" onClick={this.props.onBack}>{t("Back")}</button>
+            <button className="btn" type="button" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Back")}</button>
         </Form>
     }
 }

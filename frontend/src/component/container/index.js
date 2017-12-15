@@ -14,6 +14,8 @@ import DisabilityForm from "../ui/DisabilityForm.jsx";
 import LoginForm from "../ui/LoginForm.jsx";
 import UserInfo from "../ui/UserInfo.jsx";
 import {translate} from "react-i18next";
+import {addNotification as notify} from 'reapop';
+import i18n from "../../i18n/i18n";
 
 const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {
   if (tempSaved) {
@@ -97,8 +99,29 @@ const ModifyPatient = translate()(connect(
     onSave(patient) {
       dispatch(savePatientAction(patient));
     },
-    onBack() {
-      hashHistory.push('/');
+    onBack(e, changed) {
+      e.preventDefault();
+      if (changed) {
+        dispatch(notify({
+          message: i18n.t("Data has been changed. Do you really want to quit without saving changes?"),
+          status: 'warning',
+          position: 'tc',
+          dismissible: false,
+          dismissAfter: 0,
+          buttons: [{
+            name: i18n.t('Yes'),
+            onClick: () => {
+              hashHistory.push('/');
+            }
+          },
+            {
+              name: i18n.t('No'),
+              primary: true
+            }]
+        }));
+      } else {
+        hashHistory.push('/');
+      }
     }
   })
 )(reduxForm({form: 'activePatient'})(PatientForm)));
@@ -139,9 +162,31 @@ const ModifyDisability = translate()(connect(
       console.log('disability: ', disability);
       dispatch(saveDisabilityAction(disability));
     },
-    onBack() {
-      dispatch(cancelDisability("activeDisability"));
-      hashHistory.push('/');
+    onBack(e, changed) {
+      e.preventDefault();
+      if (changed) {
+        dispatch(notify({
+          message: i18n.t("Data has been changed. Do you really want to quit without saving changes?"),
+          status: 'warning',
+          position: 'tc',
+          dismissible: false,
+          dismissAfter: 0,
+          buttons: [{
+            name: i18n.t('Yes'),
+            onClick: () => {
+              dispatch(cancelDisability("activeDisability"));
+              hashHistory.push('/');
+            }
+          },
+            {
+              name: i18n.t('No'),
+              primary: true
+            }]
+        }));
+      } else {
+        dispatch(cancelDisability("activeDisability"));
+        hashHistory.push('/');
+      }
     }
   })
 )(reduxForm({form: 'activeDisability'})(DisabilityForm)));
