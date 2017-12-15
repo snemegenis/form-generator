@@ -1,5 +1,17 @@
 [
   {
+    "id": 2,
+    "first_name": "Kazys",
+    "last_name": "Kazaitis",
+    "occupation": "Tailor",
+    "phone": "+37061495802",
+    "address": "Smauglio 1-891, Kaunas, Lietuva",
+    "employer": "UAB \"Idurtas Pirstas\"",
+    "birth_date": "1919-01-12",
+    "personal_id": "31901127891",
+    "temp_saved": false
+  },
+  {
     "id": 1,
     "first_name": "Petras",
     "last_name": "Petraitis",
@@ -12,17 +24,5 @@
     "email": "petras@petras.com",
     "temp_saved": false,
     "disability_report_id": 1
-  },
-  {
-    "id": 2,
-    "first_name": "Kazys",
-    "last_name": "Kazaitis",
-    "occupation": "Tailor",
-    "phone": "+37061495802",
-    "address": "Smauglio 1-891, Kaunas, Lietuva",
-    "employer": "UAB \"Idurtas Pirstas\"",
-    "birth_date": "1919-01-12",
-    "personal_id": "31901127891",
-    "temp_saved": false
   }
 ]

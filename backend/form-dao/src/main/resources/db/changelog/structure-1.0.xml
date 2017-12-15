@@ -46,7 +46,6 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="occupation" type="VARCHAR(200)">
-				<constraints nullable="false"/>
 			</column>
 			<column name="birth_date" type="DATE">
 				<constraints nullable="false"/>

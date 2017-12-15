@@ -1,4 +1,5 @@
 import constants from "./constant";
+import {sortByField} from "../util/SortUtil"
 
 export const patients = (state = {isLoading: false, isLoadingError: false, data: []}, action) => {
   switch (action.type) {
@@ -27,8 +28,13 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
-        data: [action.patient, ...state.data],
-        filteredData: [action.patient, ...state.data],
+        data: [action.patient, ...state.data].sort((p1, p2) => {
+          let result = sortByField(p1, p2, "firstName");
+          if (!result) {
+            result = sortByField(p1, p2, "lastName");
+          }
+          return result;
+        }),
         error: null
       };
     case constants.SAVE_DISABILITY_TMP_SUCCESS:

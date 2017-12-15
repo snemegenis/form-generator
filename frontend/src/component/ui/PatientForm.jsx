@@ -9,7 +9,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 const MaskedInput = ({input, meta, mask}) => {
     return <div className="input-row">
         <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
-                   alwaysShoMask="true" value={input.value ? input.value : ""} {...input} />
+                   value={input.value ? input.value : ""} {...input} />
         {meta.error ? meta.error : ""}
     </div>;
 };
@@ -59,10 +59,6 @@ class PatientForm extends React.Component {
             errors.lastName = t('Enter a last name.');
             errorExist = true;
         }
-        if (trimmedEmpty(patient.occupation)) {
-            errors.occupation = t('Enter an occupation.');
-            errorExist = true;
-        }
         if (patient.phone && maskedInvalid(patient.phone)) {
             errors.phone = t('Enter a valid phone.');
             errorExist = true;
@@ -73,10 +69,6 @@ class PatientForm extends React.Component {
         }
         if (trimmedEmpty(patient.address)) {
             errors.address = t('Enter an address.');
-            errorExist = true;
-        }
-        if (!patient.phone && !patient.mobilePhone) {
-            errors._error = t('Phone/Mobile phone is required');
             errorExist = true;
         }
 
