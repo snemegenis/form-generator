@@ -58,27 +58,27 @@ const Diagnosis = ({t, name, title, withDetails = false}) => (
       <Field name={`${name}.code`} id={`disability.${name}.code`}
              component={renderMaskedInput} mask="aaa-9999"/>
     </InputField>
-    <InputField id={`disability.${name}.code`} label="Text">
+    <InputField id={`disability.${name}.code`} label={t("Text")}>
       <Field name={`${name}.text`} id={`disability.${name}.text`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.functionalClass`} label="Functional class">
+    <InputField id={`disability.${name}.functionalClass`} label={t("Functional class")}>
       <Field name={`${name}.functionalClass`} id={`disability.${name}.functionalClass`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.degree`} label="Degree">
+    <InputField id={`disability.${name}.degree`} label={t("Degree")}>
       <Field name={`${name}.degree`} id={`disability.${name}.degree`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.stage`} label="Stage">
+    <InputField id={`disability.${name}.stage`} label={t("Stage")}>
       <Field name={`${name}.stage`} id={`disability.${name}.stage`}
              component={renderInput}/>
     </InputField>
-    <InputField id={`disability.${name}.history`} label="Diagnosis history">
+    <InputField id={`disability.${name}.history`} label={t("Diagnosis history")}>
       <Field name={`${name}.history`} id={`disability.${name}.history`}
              component={renderArea} rows="5"/>
     </InputField>
-    {withDetails && <InputField id={`disability.${name}.details`} label="Diagnosis details">
+    {withDetails && <InputField id={`disability.${name}.details`} label={t("Diagnosis details")}>
       <Field name={`${name}.details`} id={`disability.${name}.details`}
              component={renderArea}/>
     </InputField>}
@@ -93,7 +93,7 @@ Diagnosis.propTypes = {
 const renderDiagnosis = ({t, fields, meta}) => (
   <ul>
     <li>
-      <button className="btn" type="button" onClick={() => fields.push({})}>Add Diagnosis</button>
+      <button className="btn" type="button" onClick={() => fields.push({})}>{t("Add Diagnosis")}</button>
     </li>
     {fields.map((diagnosis, index) =>
       <li key={index}>
@@ -101,7 +101,7 @@ const renderDiagnosis = ({t, fields, meta}) => (
         <button
           type="button"
           className="btn"
-          onClick={() => fields.remove(index)}>Remove Diagnosis
+          onClick={() => fields.remove(index)}>{t("Remove Diagnosis")}
         </button>
       </li>
     )}
@@ -166,41 +166,38 @@ class DisabilityForm extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.autoSaveTimer);
-    console.log("Stopping auto saving");
   }
 
   validateDiagnosis(diagnosis, error, withDetails = false) {
+
+    const {t} = this.props;
 
     let errorExist = false;
     if (!diagnosis) {
       diagnosis = {};
     }
     if (maskedInvalid(diagnosis.code)) {
-      error.code = 'Enter valid code';
+      error.code = t('Enter valid code');
       errorExist = true;
     }
     if (trimmedEmpty(diagnosis.text)) {
-      error.text = 'Enter text';
+      error.text = t('Enter text');
       errorExist = true;
     }
     if (trimmedEmpty(diagnosis.functionalClass)) {
-      error.functionalClass = 'Enter functional class';
+      error.functionalClass = t('Enter functional class');
       errorExist = true;
     }
     if (trimmedEmpty(diagnosis.degree)) {
-      error.degree = 'Enter degree';
+      error.degree = t('Enter degree');
       errorExist = true;
     }
     if (trimmedEmpty(diagnosis.stage)) {
-      error.stage = 'Enter stage';
+      error.stage = t('Enter stage');
       errorExist = true;
     }
     if (trimmedEmpty(diagnosis.history)) {
-      error.history = 'Enter history';
-      errorExist = true;
-    }
-    if (withDetails && trimmedEmpty(diagnosis.details)) {
-      error.details = 'Enter details';
+      error.history = t('Enter diagnosis history');
       errorExist = true;
     }
 
@@ -208,7 +205,9 @@ class DisabilityForm extends React.Component {
 
   }
 
-  validate(disability, t) {
+  validate(disability) {
+    const {t} = this.props;
+
     let errors = {};
     let errorExist = false;
     if (trimmedEmpty(disability.history)) {
@@ -216,21 +215,21 @@ class DisabilityForm extends React.Component {
       errorExist = true;
     }
     if (!disability.treatments || disability.treatments.length === 0) {
-      errors.treatments = 'Enter one treatment at least.';
+      errors.treatments = t('Enter one treatment at least.');
       errorExist = true;
     }
 
     if (otherTreatmentSelected(disability.treatments)
       && trimmedEmpty(disability.otherTreatment)) {
-      errors.otherTreatment = 'Enter other treatment.';
+      errors.otherTreatment = t('Enter other treatment.');
       errorExist = true;
     }
     if (trimmedEmpty(disability.treatmentHistory)) {
-      errors.treatmentHistory = 'Enter treatment history.';
+      errors.treatmentHistory = t('Enter treatment history.');
       errorExist = true;
     }
     if (maskedInvalid('' + disability.barthelIndex)) {
-      errors.barthelIndex = 'Enter valid barthel index.';
+      errors.barthelIndex = t('Enter valid barthel index.');
       errorExist = true;
     }
 
@@ -240,28 +239,28 @@ class DisabilityForm extends React.Component {
         errors.appointments[index] = {};
 
         if (maskedInvalid(appointment.date) || !moment(appointment.date).isValid()) {
-          errors.appointments[index].date = 'Enter valid date';
+          errors.appointments[index].date = t('Enter valid date');
           errorExist = true;
         }
 
         if (trimmedEmpty(appointment.doctorType)) {
-          errors.appointments[index].doctorType = 'Enter doctor type';
+          errors.appointments[index].doctorType = t('Enter doctor type');
           errorExist = true;
         }
 
         if (trimmedEmpty(appointment.observation)) {
-          errors.appointments[index].observation = 'Enter observation';
+          errors.appointments[index].observation = t('Enter observation');
           errorExist = true;
         }
 
       });
     } else {
-      errors.appointments = {_error: "Enter one appointment at least"};
+      errors.appointments = {_error: t("Enter one appointment at least")};
       errorExist = true;
     }
 
     if (trimmedEmpty(disability.latestDisabilityDesc)) {
-      errors.latestDisabilityDesc = 'Enter latest disability description.';
+      errors.latestDisabilityDesc = t('Enter latest disability description.');
       errorExist = true;
     }
 
@@ -281,7 +280,7 @@ class DisabilityForm extends React.Component {
     }
 
     if (!disability.disabilityTypes || disability.disabilityTypes.length === 0) {
-      errors.disabilityTypes = 'Enter one disability at least.';
+      errors.disabilityTypes = t('Enter one disability at least.');
       errorExist = true;
     }
 
@@ -295,10 +294,11 @@ class DisabilityForm extends React.Component {
   }
 
   handleSubmit(input) {
-    const {disability, pressed, t} = input;
+    const {disability, pressed} = input;
+
     switch (pressed) {
       case 'Save':
-        this.validate(disability, t);
+        this.validate(disability);
         disability.id = this.props.disabilityReportId;
         this.props.onSave(disability);
         break;
@@ -321,13 +321,13 @@ class DisabilityForm extends React.Component {
       {label: t('Other'), value: 'OTHER'}
     ];
     const disabilityTypes = [
-      {label: 'Working Capacity Level', value: 'WORKING_CAPACITY_LEVEL'},
-      {label: 'First Time', value: 'FIRST_TIME'},
-      {label: 'Disability Level', value: 'DISABILITY_LEVEL'},
-      {label: 'Expired', value: 'EXPIRED'},
-      {label: 'Special Requirement', value: 'SPECIAL_REQUIREMENT'},
-      {label: 'Health Condition Changed', value: 'HEALTH_COND_CHANGED'},
-      {label: 'Ordered By Person', value: 'REQUIRED_BY_PERSON'}
+      {label: t('Working Capacity Level'), value: 'WORKING_CAPACITY_LEVEL'},
+      {label: t('First Time'), value: 'FIRST_TIME'},
+      {label: t('Disability Level'), value: 'DISABILITY_LEVEL'},
+      {label: t('Expired'), value: 'EXPIRED'},
+      {label: t('Special Requirement'), value: 'SPECIAL_REQUIREMENT'},
+      {label: t('Health Condition Changed'), value: 'HEALTH_COND_CHANGED'},
+      {label: t('Ordered By Person'), value: 'REQUIRED_BY_PERSON'}
     ];
 
     return <Form className="disability-form" onSubmit={handleSubmit(this.handleAutoSubmit.bind(this))}>
@@ -376,20 +376,20 @@ class DisabilityForm extends React.Component {
         <FieldArray t={t} name="otherDiagnosis" component={renderDiagnosis}/>
       </div>
 
-      <InputField id="disability.disabilityTypes" label="Enter disability types:">
+      <InputField id="disability.disabilityTypes" label={t("Disability types")}>
         <Field name="disabilityTypes" id="disability.disabilityTypes" component={renderCheckboxes}
                checkboxes={disabilityTypes}/>
       </InputField>
 
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
         disability: {...values}, pressed: 'Save'
-      }]))} disabled={invalid || submitting}>Save
+      }]))} disabled={invalid || submitting}>{t("Save")}
       </button>
       <button className="btn" onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
         disability: {...values}, pressed: 'Close'
-      }]))}>Close
+      }]))}>{t("Close")}
       </button>
-      <button className="btn" onClick={this.props.onBack}>Cancel
+      <button className="btn" onClick={this.props.onBack}>{t("Cancel")}
       </button>
     </Form>
   }
