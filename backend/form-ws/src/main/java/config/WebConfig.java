@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -15,13 +17,18 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.lang.reflect.Method;
 
 /**
- * Created by liutkvai on 12/1/2017.
+ * Created by liutkvai on 12/18/2017.
  */
 @Configuration
 public class WebConfig {
 
     @Value("${rest.base.path}")
     private String basePath;
+
+    @Bean
+    public HttpSessionStrategy httpSessionStrategy() {
+        return new HeaderHttpSessionStrategy();
+    }
 
     @Bean
     public HttpMessageConverters customConverters() {
@@ -57,6 +64,5 @@ public class WebConfig {
             }
         };
     }
-
 
 }

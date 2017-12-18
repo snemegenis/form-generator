@@ -14,3 +14,14 @@ dependencies {
     testCompile('com.fasterxml.jackson.core:jackson-databind:2.5.3')
     testCompile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1')
 }
+
+evaluationDependsOn(':frontend')
+
+jar {
+    from('../../frontend/build') {
+        into 'static'
+    }
+}
+
+jar.dependsOn(':frontend:webpack_build')
+

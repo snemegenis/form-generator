@@ -83,7 +83,7 @@ switch (process.env.NODE_ENV) {
     console.log('production');
     config = merge(common,
       production.babel({
-        include: [APP_DIR, CMP_DIR],
+        include: [SRC_DIR],
         exclude: /node_modules/
       }));
     break;
