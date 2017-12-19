@@ -6,30 +6,19 @@ const Patient = (props) => {
     id, personalId, firstName, lastName, disabilityReportId, tempSaved,
     onPrint, onDisabilityAdd, onDisabilityUpdate, onUpdate, t} = props;
 
-  return <div className="patient">
-    <div className={"contents" + (tempSaved ? " bg-warning" : "")}>
-            <span>
-                <strong>{t('Personal id')}:</strong>
-                <span>{personalId}</span>
-            </span>
-      <span>
-                <strong>{t('First name')}:</strong>
-                <span>{firstName}</span>
-            </span>
-      <span>
-                <strong>{t('Last name')}:</strong>
-                <span>{lastName}</span>
-            </span>
-      <span className="actions">
+  return <tr className={"contents" + (tempSaved ? " bg-warning" : "")}>
+      <td>{personalId}</td>
+      <td>{firstName}</td>
+      <td>{lastName}</td>
+      <td className="actions">
         {!disabilityReportId &&
         <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</button>}
         {disabilityReportId &&
         <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</button>}
         <button onClick={() => onUpdate(id)}>{t('Update patient')}</button>
         {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</button>}
-            </span>
-    </div>
-  </div>
+      </td>
+  </tr>
 };
 
 Patient.propTypes = {

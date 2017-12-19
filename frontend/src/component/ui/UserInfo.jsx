@@ -5,16 +5,15 @@ const UserInfo = ({user, onLogout = f => f, t = f => f}) => {
     if (!user.doctor) {
         return <span/>;
     }
-    return <span className="user">
-          <span>{user.doctor.firstName}</span>
-          <span>{user.doctor.lastName}</span>
+    return <div className="user float-right">
+          <span className="user-first-name">{user.doctor.firstName}</span>
+          <span className="user-last-name">{user.doctor.lastName}</span>
       <span className="actions">
-        <a onClick={(e) => {
-            e.preventDefault();
+        <button className="btn" onClick={() => {
             onLogout();
-        }}>{t('Logout')}</a>
+        }}>{t('Logout')}</button>
       </span>
-  </span>
+  </div>
 };
 
 UserInfo.propTypes = {

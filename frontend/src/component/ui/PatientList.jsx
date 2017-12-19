@@ -4,8 +4,10 @@ import {translate} from "react-i18next";
 
 
 const PatientList = (props) => {
-  const { patients, filter, loading, onDisabilityAdd , onDisabilityUpdate,
-    onPrint, onAdd, onUpdate, onShowAll, onFilter, t } = props;
+  const {
+    patients, filter, loading, onDisabilityAdd, onDisabilityUpdate,
+    onPrint, onAdd, onUpdate, onShowAll, onFilter, t
+  } = props;
 
   if (loading) {
     return <div>Data is loading</div>
@@ -14,8 +16,8 @@ const PatientList = (props) => {
   let filterInput;
 
   const onShowAllClick = () => {
-      filterInput.value = '';
-      onShowAll();
+    filterInput.value = '';
+    onShowAll();
   };
 
   const onChange = () => {
@@ -36,25 +38,33 @@ const PatientList = (props) => {
 
   return <div>
     <div className="patient-filtering">
-      <input ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
+      <span>{t('Filter by')}:
+        <input ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
+      </span>
       <button onClick={onShowAllClick} disabled={!filter}>{t('Show all')}</button>
     </div>
-    <ul className="patient-list">
-      {(filteredPatients.length === 0) && <span>No patients found</span>}
+    <table className="patient-list table">
+      <thead>
+      <th>{t('Personal id')}</th>
+      <th>{t('First name')}</th>
+      <th>{t('Last name')}</th>
+      <th>&nbsp;</th>
+      </thead>
+      <tbody>
+      {(filteredPatients.length === 0) && <td colSpan={4}>No patients found</td>}
       {
         filteredPatients.map(patient =>
-          <li key={patient.id}>
-            <Patient id={patient.id} personalId={patient.personalId}
-                     firstName={patient.firstName} lastName={patient.lastName}
-                     onPrint={onPrint}
-                     onUpdate={onUpdate}
-                     disabilityReportId={patient.disabilityReportId}
-                     tempSaved={patient.tempSaved}
-                     onDisabilityAdd={onDisabilityAdd}
-                     onDisabilityUpdate={onDisabilityUpdate}/>
-          </li>)
+          <Patient id={patient.id} personalId={patient.personalId}
+                   firstName={patient.firstName} lastName={patient.lastName}
+                   onPrint={onPrint}
+                   onUpdate={onUpdate}
+                   disabilityReportId={patient.disabilityReportId}
+                   tempSaved={patient.tempSaved}
+                   onDisabilityAdd={onDisabilityAdd}
+                   onDisabilityUpdate={onDisabilityUpdate}/>)
       }
-    </ul>
+      </tbody>
+    </table>
     <div className="global-patient-actions">
       <button onClick={() => onAdd()}>{t('Add Patient')}</button>
     </div>
