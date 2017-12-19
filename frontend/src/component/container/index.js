@@ -16,6 +16,7 @@ import UserInfo from "../ui/UserInfo.jsx";
 import {translate} from "react-i18next";
 import {addNotification as notify} from 'reapop';
 import i18n from "../../i18n/i18n";
+import {showConfirmation} from "../../util/ConfirmationUtil";
 
 const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {
   if (tempSaved) {
@@ -102,23 +103,10 @@ const ModifyPatient = translate()(connect(
     onBack(e, changed) {
       e.preventDefault();
       if (changed) {
-        dispatch(notify({
-          message: i18n.t("Data has been changed. Do you really want to quit without saving changes?"),
-          status: 'warning',
-          position: 'tc',
-          dismissible: false,
-          dismissAfter: 0,
-          buttons: [{
-            name: i18n.t('Yes'),
-            onClick: () => {
-              hashHistory.push('/');
-            }
-          },
-            {
-              name: i18n.t('No'),
-              primary: true
-            }]
-        }));
+        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", false,
+          () => {
+            hashHistory.push('/');
+          }, true);
       } else {
         hashHistory.push('/');
       }
@@ -158,6 +146,12 @@ const ModifyDisability = translate()(connect(
       console.log('disability: ', disability);
       dispatch(saveDisabilityTmpAction(disability, true));
     },
+    onRemoveDiagnosis(removeAction) {
+      showConfirmation(dispatch, "Do you want to remove diagnosis?", false, removeAction, true);
+    },
+    onRemoveAppointment(removeAction) {
+      showConfirmation(dispatch, "Do you want to remove appointment?", false, removeAction, true);
+    },
     onSave(disability) {
       console.log('disability: ', disability);
       dispatch(saveDisabilityAction(disability));
@@ -165,24 +159,11 @@ const ModifyDisability = translate()(connect(
     onBack(e, changed) {
       e.preventDefault();
       if (changed) {
-        dispatch(notify({
-          message: i18n.t("Data has been changed. Do you really want to quit without saving changes?"),
-          status: 'warning',
-          position: 'tc',
-          dismissible: false,
-          dismissAfter: 0,
-          buttons: [{
-            name: i18n.t('Yes'),
-            onClick: () => {
-              dispatch(cancelDisability("activeDisability"));
-              hashHistory.push('/');
-            }
-          },
-            {
-              name: i18n.t('No'),
-              primary: true
-            }]
-        }));
+        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", false,
+          () => {
+            dispatch(cancelDisability("activeDisability"));
+            hashHistory.push('/');
+          }, true);
       } else {
         dispatch(cancelDisability("activeDisability"));
         hashHistory.push('/');

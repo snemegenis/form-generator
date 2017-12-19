@@ -106,6 +106,7 @@ i18n.use(LanguageDetector).init({
         "Cancel": "Cancel",
         "Enter history.": "Enter history.",
         "Enter one treatment at least.": "Enter one treatment at least.",
+        "Enter one disability at least": "Enter one disability at least",
         "Enter treatment history.": "Enter treatment history.",
         "Enter one appointment at least": "Enter one appointment at least",
         "Enter latest disability description.": "Enter latest disability description.",
@@ -119,6 +120,8 @@ i18n.use(LanguageDetector).init({
         "Enter doctor type": "Enter doctor type",
         "Enter observation": "Enter observation",
         "Data has been changed. Do you really want to quit without saving changes?": "Data has been changed. Do you really want to quit without saving changes?",
+        "Do you want to remove diagnosis?": "Do you want to remove diagnosis?",
+        "Do you want to remove appointment?": "Do you want to remove appointment?",
         "Yes": "Yes",
         "No": "No"
       }
@@ -234,6 +237,7 @@ i18n.use(LanguageDetector).init({
         "Enter one treatment at least.": "Įveskite bent vieną taikyto gydymo būdą.",
         "Enter treatment history.": "Įveskite būklę ir gydymo eigą.",
         "Enter one appointment at least": "Įveskite bent vieną būklės aprašymą.",
+        "Enter one disability at least.": "Įveskite bent vieną siuntimo į neįgalumo ir darbingumo nustatymo tarnybą priežastį.",
         "Enter latest disability description.": "Įveskite laikinojo nedarbingumo trukmę per paskutinius 12 mėn.",
         "Enter valid code": "Įveskite TLK-10-AM kodą",
         "Enter text": "Įveskite TLK-10-AM kodą žodžiais",
@@ -246,6 +250,8 @@ i18n.use(LanguageDetector).init({
         "Enter observation": "Įveskite išliekančius organizmo funkciju sutrikimus, tyrimų duomenis, gydytojų specialistų išvadas, patvirtinančias ligos sunkumą ir diagnozę",
         "Data has been changed. Do you really want to quit without saving changes?":
           "Duomenys buvo pakeisti. Ar tikrai norite išeiti neišsaugoję pakeitimų?",
+        "Do you want to remove diagnosis?": "Ar tikrai norite pašalinti diagnozę?",
+        "Do you want to remove appointment?": "Ar tikrai norite pašalinti aprašymą?",
         "Yes": "Taip",
         "No": "Ne"
       }

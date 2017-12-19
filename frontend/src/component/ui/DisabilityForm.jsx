@@ -26,8 +26,9 @@ const renderMaskedInput = ({input, meta, mask}) => {
 
 const renderArea = ({input, meta}) => {
   return <div className="input-row">
-    <TextareaAutosize className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
-              {...input} />
+    <TextareaAutosize className={"form-control " + (meta.error ? "is-invalid" : "")}
+                      value={input.value ? input.value : ""}
+                      {...input} />
     {meta.error ? meta.error : ""}
   </div>;
 };
@@ -90,7 +91,7 @@ Diagnosis.propTypes = {
   title: PropTypes.string
 };
 
-const renderDiagnosis = ({t, fields, meta}) => (
+const renderDiagnosis = ({onRemoveDiagnosis, t, fields, meta}) => (
   <ul>
     <li>
       <button className="btn" type="button" onClick={() => fields.push({})}>{t("Add Diagnosis")}</button>
@@ -101,7 +102,7 @@ const renderDiagnosis = ({t, fields, meta}) => (
         <button
           type="button"
           className="btn"
-          onClick={() => fields.remove(index)}>{t("Remove Diagnosis")}
+          onClick={() => onRemoveDiagnosis(() => fields.remove(index))}>{t("Remove Diagnosis")}
         </button>
       </li>
     )}
@@ -109,10 +110,11 @@ const renderDiagnosis = ({t, fields, meta}) => (
   </ul>
 );
 
-const renderAppointments = ({t, fields, meta}) => (
+const renderAppointments = ({onRemoveAppointment, t, fields, meta}) => (
   <ul>
     <li>
-      <button className="btn" type="button" onClick={() => fields.push({primary: false})}>{t('Add appointment')}</button>
+      <button className="btn" type="button"
+              onClick={() => fields.push({primary: false})}>{t('Add appointment')}</button>
     </li>
     {fields.map((appointment, index) =>
       <li key={index}>
@@ -141,7 +143,7 @@ const renderAppointments = ({t, fields, meta}) => (
         <button
           type="button"
           className="btn"
-          onClick={() => fields.remove(index)}>{t("Remove appointment")}
+          onClick={() => onRemoveAppointment(() => fields.remove(index))}>{t("Remove appointment")}
         </button>
       </li>
     )}
@@ -295,7 +297,6 @@ class DisabilityForm extends React.Component {
 
   handleSubmit(input) {
     const {disability, pressed} = input;
-
     switch (pressed) {
       case 'Save':
         this.validate(disability);
@@ -310,7 +311,8 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {pristine, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t} = this.props;
+    const {pristine, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
+      onRemoveAppointment} = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
       {label: t('Ambulatoric'), value: 'AMBULATORIC'},
@@ -355,7 +357,7 @@ class DisabilityForm extends React.Component {
 
       <div className="form-group">
         <h4>{t("Appointments")}</h4>
-        <FieldArray name="appointments" t={t} component={renderAppointments}/>
+        <FieldArray name="appointments" t={t} onRemoveAppointment={onRemoveAppointment} component={renderAppointments}/>
       </div>
 
       <InputField id="disability.barthelIndex" label={t("Barthel index")}>
@@ -373,7 +375,7 @@ class DisabilityForm extends React.Component {
 
       <div className="form-group">
         <h4>{t("Other diagnosis")}</h4>
-        <FieldArray t={t} name="otherDiagnosis" component={renderDiagnosis}/>
+        <FieldArray t={t} onRemoveDiagnosis={onRemoveDiagnosis} name="otherDiagnosis" component={renderDiagnosis}/>
       </div>
 
       <InputField id="disability.disabilityTypes" label={t("Disability types")}>
@@ -400,7 +402,9 @@ DisabilityForm.propTypes = {
   onAutoSaveTmp: PropTypes.func.isRequired,
   onSaveTmp: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  onBack: PropTypes.func.isRequired
+  onBack: PropTypes.func.isRequired,
+  onRemoveDiagnosis: PropTypes.func.isRequired,
+  onRemoveAppointment: PropTypes.func.isRequired
 };
 
 export default DisabilityForm;

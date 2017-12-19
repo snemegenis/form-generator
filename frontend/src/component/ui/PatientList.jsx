@@ -45,16 +45,18 @@ const PatientList = (props) => {
     </div>
     <table className="patient-list table">
       <thead>
-      <th>{t('Personal id')}</th>
-      <th>{t('First name')}</th>
-      <th>{t('Last name')}</th>
-      <th>&nbsp;</th>
+      <tr>
+        <th>{t('Personal id')}</th>
+        <th>{t('First name')}</th>
+        <th>{t('Last name')}</th>
+        <th>&nbsp;</th>
+      </tr>
       </thead>
       <tbody>
-      {(filteredPatients.length === 0) && <td colSpan={4}>No patients found</td>}
+      {(filteredPatients.length === 0) && <tr><td colSpan={4}>No patients found</td></tr>}
       {
         filteredPatients.map(patient =>
-          <Patient id={patient.id} personalId={patient.personalId}
+          <Patient key={patient.id} id={patient.id} personalId={patient.personalId}
                    firstName={patient.firstName} lastName={patient.lastName}
                    onPrint={onPrint}
                    onUpdate={onUpdate}
