@@ -12,11 +12,11 @@ const Patient = (props) => {
       <td>{lastName}</td>
       <td className="actions">
         {!disabilityReportId &&
-        <button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</button>}
+        <button className="btn btn-default" onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</button>}
         {disabilityReportId &&
-        <button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</button>}
-        <button onClick={() => onUpdate(id)}>{t('Update patient')}</button>
-        {disabilityReportId && <button onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</button>}
+        <button className="btn btn-default" onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</button>}
+        <button className="btn btn-default" onClick={() => onUpdate(id)}>{t('Update patient')}</button>
+        {disabilityReportId && <button className="btn btn-default" onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</button>}
       </td>
   </tr>
 };

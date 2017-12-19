@@ -9,7 +9,7 @@ const UserInfo = ({user, onLogout = f => f, t = f => f}) => {
           <span className="user-first-name">{user.doctor.firstName}</span>
           <span className="user-last-name">{user.doctor.lastName}</span>
       <span className="actions">
-        <button className="btn" onClick={() => {
+        <button className="btn btn-default" onClick={() => {
             onLogout();
         }}>{t('Logout')}</button>
       </span>

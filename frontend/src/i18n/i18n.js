@@ -6,6 +6,7 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        "Filter by": "Filter by",
         "List of Patients": "List of Patients",
         "Add Patient": "Add Patient",
         "Show all": "Show all",
@@ -128,6 +129,7 @@ i18n.use(LanguageDetector).init({
     },
     lt: {
       translations: {
+        "Filter by": "Filtruoti",
         "List of Patients": "Pacientų sąrašas",
         "Add Patient": "Pridėti Pacientą",
         "Show all": "Rodyti visus",
