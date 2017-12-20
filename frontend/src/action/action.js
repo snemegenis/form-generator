@@ -170,6 +170,7 @@ export const saveDisabilityTmpAction = (disability, closeOnSuccess) => (dispatch
                 position: 'tc'
             }));
             if (closeOnSuccess) {
+                dispatch(cancelDisability());
                 hashHistory.push('/');
             }
         },

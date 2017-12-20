@@ -40,7 +40,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.SAVE_DISABILITY_TMP_SUCCESS:
       return {
         ...state,
-        activeDisability: null,
+        activeDisability: action.disability,
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,

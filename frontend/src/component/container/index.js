@@ -1,10 +1,17 @@
 import PatientList from "../ui/PatientList.jsx";
 import {
-  cancelDisability, filterPatientListAction,
+  cancelDisability,
+  filterPatientListAction,
   loadDisabilityAction,
-  loadDisabilityTmpAction, loginAction, logoutAction,
-  printPatientAction, saveDisabilityAction, saveDisabilityTmpAction,
-  savePatientAction, shoAllPatientListAction, showAllPatientListAction
+  loadDisabilityTmpAction,
+  loginAction,
+  logoutAction,
+  printPatientAction,
+  saveDisabilityAction,
+  saveDisabilityTmpAction,
+  savePatientAction,
+  shoAllPatientListAction,
+  showAllPatientListAction
 } from "../../action/action";
 import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
@@ -14,8 +21,6 @@ import DisabilityForm from "../ui/DisabilityForm.jsx";
 import LoginForm from "../ui/LoginForm.jsx";
 import UserInfo from "../ui/UserInfo.jsx";
 import {translate} from "react-i18next";
-import {addNotification as notify} from 'reapop';
-import i18n from "../../i18n/i18n";
 import {showConfirmation} from "../../util/ConfirmationUtil";
 
 const prepareDisability = (dispatch, patientId, disabilityReportId, tempSaved, nextPageURL) => {

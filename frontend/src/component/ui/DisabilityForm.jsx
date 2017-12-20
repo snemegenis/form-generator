@@ -311,7 +311,7 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {pristine, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
+    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
       onRemoveAppointment} = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
@@ -391,8 +391,11 @@ class DisabilityForm extends React.Component {
         disability: {...values}, pressed: 'Close'
       }]))}>{t("Close")}
       </button>
-      <button className="btn" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Cancel")}
+      <button className="btn" onClick={(e) => this.props.onBack(e, true)}>{t("Cancel")}
       </button>
+      <button type="submit" className="btn" >{t("Submit")}
+      </button>
+
     </Form>
   }
 }
