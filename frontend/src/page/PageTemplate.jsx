@@ -4,7 +4,7 @@ import NotificationsSystem from 'reapop';
 import {UserInfoView} from "../component/container/index";
 
 const PageTemplate = ({children}) =>
-  <div className="container">
+    <div class="panel panel-default">
     <NotificationsSystem theme={theme}/>
     <UserInfoView />
     {children}

@@ -6,22 +6,25 @@ import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 import TextareaAutosize from 'react-autosize-textarea';
 import InputFieldWithError from "./InputFieldWithError.jsx";
 
-const MaskedInput = ({id, label, input, meta, mask, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error} labelClass={labelClass} inputClass={inputClass}>
+const MaskedInput = ({id, label, input, meta, mask, outerDivClass, labelClass, inputClass}) => {
+  return <InputFieldWithError id={id} label={label} error={meta.error}
+                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
     <InputMask className="form-control" mask={mask} maskChar="_"
                value={input.value ? input.value : ""} {...input} />
   </InputFieldWithError>
 };
 
-const renderInput = ({id, label, input, meta, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error} labelClass={labelClass} inputClass={inputClass}>
+const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass}) => {
+  return <InputFieldWithError id={id} label={label} error={meta.error}
+                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
     <input className="form-control" value={input.value ? input.value : ""}
            {...input} />
   </InputFieldWithError>;
 };
 
-const renderArea = ({id, label, input, meta, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error} labelClass={labelClass} inputClass={inputClass}>
+const renderArea = ({id, label, input, meta, outerDivClass, labelClass, inputClass}) => {
+  return <InputFieldWithError id={id} label={label} error={meta.error}
+                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
     <TextareaAutosize className="form-control " value={input.value ? input.value : ""}
                       {...input} />
   </InputFieldWithError>;
@@ -81,12 +84,13 @@ class PatientForm extends React.Component {
   render() {
     const {pristine, error, invalid, handleSubmit, t} = this.props;
 
-    return <Form className="patient-form form-horizontal" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-
-      <Field id="patient.personalId" label={t("Personal id") + ":"} name="personalId"
-             component={MaskedInput} mask="99999999999" />
-      <Field id="patient.birthDate" label={t("Date of birth") + ":"} name="birthDate"
-             component={MaskedInput} mask="9999-99-99" />
+    return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+      <div className="form-row">
+        <Field id="patient.personalId" label={t("Personal id") + ":"} name="personalId"
+               component={MaskedInput} mask="99999999999" outerDivClass="col-lg-6"/>
+        <Field id="patient.birthDate" label={t("Date of birth") + ":"} name="birthDate"
+               component={MaskedInput} mask="9999-99-99" outerDivClass="col-lg-6"/>
+      </div>
 
       <Field name="firstName" id="patient.firstName" label={t("First name") + ":"}
              className="form-control" component={renderInput} />
