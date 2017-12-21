@@ -2,33 +2,29 @@ import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import InputMask from 'react-input-mask';
 import moment from "moment";
-import InputField from "./InputField.jsx";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 import TextareaAutosize from 'react-autosize-textarea';
+import InputFieldWithError from "./InputFieldWithError.jsx";
 
-const MaskedInput = ({input, meta, mask}) => {
-    return <div className="input-row">
-        <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
-                   value={input.value ? input.value : ""} {...input} />
-        {meta.error ? meta.error : ""}
-    </div>;
+const MaskedInput = ({id, label, input, meta, mask}) => {
+    return <InputFieldWithError id={id} label={label} error={meta.error}>
+        <InputMask className="form-control" mask={mask} maskChar="_" value={input.value ? input.value : ""} {...input} />
+      </InputFieldWithError>
 };
 
-const renderInput = ({input, meta}) => {
-    return <div className="input-row">
+const renderInput = ({id, label, input, meta}) => {
+    return <InputFieldWithError id={id} label={label} error={meta.error}>
         <input className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
                {...input} />
-        {meta.error ? meta.error : ""}
-    </div>;
+    </InputFieldWithError>;
 };
 
-const renderArea = ({input, meta, rows}) => {
-    return <div className="input-row">
+const renderArea = ({id, label, input, meta, rows}) => {
+  return <InputFieldWithError id={id} label={label} error={meta.error}>
         <TextareaAutosize className={"form-control " + (meta.error ? "is-invalid" : "")}
                           value={input.value ? input.value : ""}
                           {...input} />
-        {meta.error ? meta.error : ""}
-    </div>;
+  </InputFieldWithError>;
 };
 
 class PatientForm extends React.Component {
@@ -84,48 +80,39 @@ class PatientForm extends React.Component {
 
     render() {
         const {pristine, error, invalid, handleSubmit, t} = this.props;
+
         return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-            <InputField id="patient.personalId" label={t("Personal id") + ":"}>
-                <Field name="personalId" id="patient.personalId" component={MaskedInput} mask="99999999999"/>
-            </InputField>
 
-            <InputField id="patient.birthDate" label={t("Date of birth") + ":"} defaultValue="">
-                <Field name="birthDate" id="patient.birthDate" component={MaskedInput} mask="9999-99-99"/>
-            </InputField>
+            <Field id="patient.personalId" label={t("Personal id") + ":"} name="personalId"
+                     component={MaskedInput} mask="99999999999" />
 
-            <InputField id="patient.firstName" label={t("First name") + ":"}>
-                <Field name="firstName" id="patient.firstName"
-                       className="form-control" component={renderInput}/>
-            </InputField>
+            <Field id="patient.birthDate" label={t("Date of birth") + ":"} name="birthDate"
+                   component={MaskedInput} mask="9999-99-99" />
 
-            <InputField id="patient.lastName" label={t("Last name") + ":"}>
-                <Field name="lastName" id="patient.lastName"
-                       className="form-control" component={renderInput}/>
-            </InputField>
-            <InputField id="patient.address" label={t("Address") + ":"}>
-                <Field name="address" id="patient.address"
-                       className="form-control" component={renderArea} rows="4"/>
-            </InputField>
-            <InputField id="patient.occupation" label={t("Occupation") + ":"}>
-                <Field name="occupation" id="patient.occupation"
-                       className="form-control" component={renderInput}/>
-            </InputField>
-            <InputField id="patient.phone" label={t("Phone") + ":"}>
-                <Field name="phone" id="patient.phone"
-                       className="form-control" component={MaskedInput} mask="+370-999-99999"/>
-            </InputField>
-            <InputField id="patient.mobilePhone" label={t("Mobile phone") + ":"}>
-                <Field name="mobilePhone" id="patient.mobilePhone"
-                       className="form-control" component={MaskedInput} mask="+370-999-99999"/>
-            </InputField>
-            <InputField id="patient.email" label={t("Email") + ":"}>
-                <Field name="email" id="patient.email"
-                       className="form-control" component={renderInput}/>
-            </InputField>
-            <InputField id="patient.employer" label={t("Employer") + ":"}>
-                <Field name="employer" id="patient.employer"
-                       className="form-control" component={renderInput}/>
-            </InputField>
+            <Field name="firstName" id="patient.firstName" label={t("First name") + ":"}
+                   className="form-control" component={renderInput} />
+
+            <Field name="lastName" id="patient.lastName" label={t("Last name") + ":"}
+                    className="form-control" component={renderInput} />
+
+            <Field name="address" id="patient.address" label={t("Address") + ":"}
+                   className="form-control" component={renderArea} rows="4" />
+
+            <Field name="occupation" id="patient.occupation" label={t("Occupation") + ":"}
+                   className="form-control" component={renderInput} />
+
+            <Field name="phone" className="form-control" component={MaskedInput} mask="+370-999-99999"
+                   id="patient.phone" label={t("Phone") + ":"} />
+
+            <Field id="patient.mobilePhone" label={t("Mobile phone") + ":"} name="mobilePhone"
+                   className="form-control" component={MaskedInput} mask="+370-999-99999" />
+
+            <Field name="email" id="patient.email" label={t("Email") + ":"} className="form-control"
+                   component={renderInput} />
+
+            <Field id="patient.employer" label={t("Employer") + ":"}
+                   className="form-control" component={renderInput}/>
+
             {error && <div>{error}</div>}
 
             <button className="btn" type="submit" disabled={invalid}>{t("Save")}</button>
