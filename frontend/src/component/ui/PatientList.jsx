@@ -37,11 +37,19 @@ const PatientList = (props) => {
   }
 
   return <div>
-    <div className="panel patient-filtering">
-      <span>{t('Filter by')}:
-        <input ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange} className=".col-sm-3"/>
-      </span>
-      {filter && <button className="btn btn-default" onClick={onShowAllClick} >{t('Show all')}</button>}
+    <div className="panel">
+      <div className="form-inline">
+        <div className="form-group">
+          <label className="control-panel" for="input-filter">{t('Filter by')}:</label>
+          <div className="input-group">
+          <input id="input-filter" type="text" className="form-control"
+                 ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange} />
+            {filter && <span className="input-group-btn">
+          <button className="btn btn-default" onClick={onShowAllClick} >{t('Show all')}</button>
+        </span>}
+          </div>
+        </div>
+      </div>
     </div>
     <table className="patient-list table">
       <thead>
