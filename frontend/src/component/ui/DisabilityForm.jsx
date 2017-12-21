@@ -292,7 +292,10 @@ class DisabilityForm extends React.Component {
   }
 
   handleAutoSubmit(disability) {
-    this.props.onAutoSaveTmp(disability);
+    const {dirty} = this.props;
+    if (dirty) {
+      this.props.onAutoSaveTmp(disability);
+    }
   }
 
   handleSubmit(input) {
@@ -311,7 +314,7 @@ class DisabilityForm extends React.Component {
   }
 
   render() {
-    const {invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
+    const {dirty, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
       onRemoveAppointment} = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
     const treatments = [
@@ -391,9 +394,7 @@ class DisabilityForm extends React.Component {
         disability: {...values}, pressed: 'Close'
       }]))}>{t("Close")}
       </button>
-      <button className="btn" onClick={(e) => this.props.onBack(e, true)}>{t("Cancel")}
-      </button>
-      <button type="submit" className="btn" >{t("Submit")}
+      <button className="btn" onClick={(e) => this.props.onBack(e, dirty)}>{t("Cancel")}
       </button>
 
     </Form>

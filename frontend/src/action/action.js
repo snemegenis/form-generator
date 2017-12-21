@@ -6,6 +6,7 @@ import AuthApi from "../api/auth-api"
 import {addNotification as notify} from 'reapop';
 import {hashHistory} from 'react-router'
 import i18n from "../i18n/i18n";
+import {initialize} from "redux-form"
 
 let fileDownload = require("react-file-download");
 
@@ -172,6 +173,8 @@ export const saveDisabilityTmpAction = (disability, closeOnSuccess) => (dispatch
             if (closeOnSuccess) {
                 dispatch(cancelDisability());
                 hashHistory.push('/');
+            } else {
+              dispatch(initialize("activeDisability", disability));
             }
         },
         error => {
