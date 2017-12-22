@@ -1,5 +1,6 @@
 import React, {PropTypes} from "react";
 import {translate} from "react-i18next";
+import {Button, ButtonToolbar} from "react-bootstrap";
 
 const Patient = (props) => {
   const {
@@ -11,12 +12,14 @@ const Patient = (props) => {
       <td>{firstName}</td>
       <td>{lastName}</td>
       <td className="actions">
-        {!disabilityReportId &&
-        <button className="btn btn-default" onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</button>}
-        {disabilityReportId &&
-        <button className="btn btn-default" onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</button>}
-        <button className="btn btn-default" onClick={() => onUpdate(id)}>{t('Update patient')}</button>
-        {disabilityReportId && <button className="btn btn-default" onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</button>}
+          <ButtonToolbar>
+            {!disabilityReportId &&
+            <Button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</Button>}
+            {disabilityReportId &&
+            <Button  onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</Button>}
+            <Button  onClick={() => onUpdate(id)}>{t('Update patient')}</Button>
+            {disabilityReportId && <Button onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</Button>}
+          </ButtonToolbar>
       </td>
   </tr>
 };

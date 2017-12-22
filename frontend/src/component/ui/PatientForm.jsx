@@ -102,7 +102,7 @@ class PatientForm extends React.Component {
 
       <Row>
           <Field name="address" id="patient.address" label={t("Address") + ":"}
-                 className="form-control" component={renderArea} rows="4" outerDivClass="col-lg-12"/>
+                 className="form-control" component={renderArea} rows={4} outerDivClass="col-lg-12"/>
       </Row>
       <Row>
         <Field name="phone" className="form-control" component={MaskedInput} mask="+370-999-99999"
@@ -118,7 +118,7 @@ class PatientForm extends React.Component {
              className="form-control" component={renderInput}/>
 
 
-      <Field id="patient.employer" label={t("Employer") + ":"}
+      <Field id="patient.employer" label={t("Employer") + ":"} name="employer"
              className="form-control" component={renderInput}/>
 
       <ButtonToolbar>

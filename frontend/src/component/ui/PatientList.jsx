@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 import {translate} from "react-i18next";
-import {Button, FormGroup, InputGroup, Label} from "react-bootstrap";
+import {Button, FormGroup, InputGroup} from "react-bootstrap";
 
 
 const PatientList = (props) => {
@@ -78,9 +78,7 @@ const PatientList = (props) => {
       }
       </tbody>
     </table>
-    <div className="global-patient-actions">
-      <button className="btn btn-default" onClick={() => onAdd()}>{t('Add Patient')}</button>
-    </div>
+      <Button  onClick={() => onAdd()}>{t('Add Patient')}</Button>
   </div>
 };
 

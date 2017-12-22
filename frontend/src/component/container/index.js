@@ -10,7 +10,6 @@ import {
   saveDisabilityAction,
   saveDisabilityTmpAction,
   savePatientAction,
-  shoAllPatientListAction,
   showAllPatientListAction
 } from "../../action/action";
 import {connect} from 'react-redux'
