@@ -2,9 +2,10 @@ import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import InputMask from 'react-input-mask';
 import moment from "moment";
-import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
+import {maskedInvalid, trimmedEmpty} from "../../util/ValidationUtil";
 import TextareaAutosize from 'react-autosize-textarea';
 import InputFieldWithError from "./InputFieldWithError.jsx";
+import {Button, ButtonToolbar, Row} from "react-bootstrap";
 
 const MaskedInput = ({id, label, input, meta, mask, outerDivClass, labelClass, inputClass}) => {
   return <InputFieldWithError id={id} label={label} error={meta.error}
@@ -22,10 +23,10 @@ const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputCl
   </InputFieldWithError>;
 };
 
-const renderArea = ({id, label, input, meta, outerDivClass, labelClass, inputClass}) => {
+const renderArea = ({id, label, input, meta, outerDivClass, labelClass, inputClass, rows}) => {
   return <InputFieldWithError id={id} label={label} error={meta.error}
                               outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <TextareaAutosize className="form-control " value={input.value ? input.value : ""}
+    <TextareaAutosize rows={rows} className="form-control " value={input.value ? input.value : ""}
                       {...input} />
   </InputFieldWithError>;
 };
@@ -85,40 +86,45 @@ class PatientForm extends React.Component {
     const {pristine, error, invalid, handleSubmit, t} = this.props;
 
     return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-      <div className="form-row">
+      <Row>
         <Field id="patient.personalId" label={t("Personal id") + ":"} name="personalId"
                component={MaskedInput} mask="99999999999" outerDivClass="col-lg-6"/>
         <Field id="patient.birthDate" label={t("Date of birth") + ":"} name="birthDate"
                component={MaskedInput} mask="9999-99-99" outerDivClass="col-lg-6"/>
-      </div>
+      </Row>
 
-      <Field name="firstName" id="patient.firstName" label={t("First name") + ":"}
-             className="form-control" component={renderInput} />
-      <Field name="lastName" id="patient.lastName" label={t("Last name") + ":"}
-             className="form-control" component={renderInput} />
+      <Row>
+        <Field name="firstName" id="patient.firstName" label={t("First name") + ":"}
+               className="form-control" component={renderInput} outerDivClass="col-lg-6"/>
+        <Field name="lastName" id="patient.lastName" label={t("Last name") + ":"}
+               className="form-control" component={renderInput} outerDivClass="col-lg-6"/>
+      </Row>
 
+      <Row>
           <Field name="address" id="patient.address" label={t("Address") + ":"}
-                 className="form-control" component={renderArea} rows="4" />
+                 className="form-control" component={renderArea} rows="4" outerDivClass="col-lg-12"/>
+      </Row>
+      <Row>
+        <Field name="phone" className="form-control" component={MaskedInput} mask="+370-999-99999"
+               id="patient.phone" label={t("Phone") + ":"} outerDivClass="col-lg-3"/>
 
+        <Field id="patient.mobilePhone" label={t("Mobile phone") + ":"} name="mobilePhone"
+               className="form-control" component={MaskedInput} mask="+370-999-99999" outerDivClass="col-lg-3"/>
+
+        <Field name="email" id="patient.email" label={t("Email") + ":"} className="form-control"
+               component={renderInput} outerDivClass="col-lg-6"/>
+      </Row>
       <Field name="occupation" id="patient.occupation" label={t("Occupation") + ":"}
              className="form-control" component={renderInput}/>
 
-      <Field name="phone" className="form-control" component={MaskedInput} mask="+370-999-99999"
-             id="patient.phone" label={t("Phone") + ":"}/>
-
-      <Field id="patient.mobilePhone" label={t("Mobile phone") + ":"} name="mobilePhone"
-             className="form-control" component={MaskedInput} mask="+370-999-99999"/>
-
-      <Field name="email" id="patient.email" label={t("Email") + ":"} className="form-control"
-             component={renderInput}/>
 
       <Field id="patient.employer" label={t("Employer") + ":"}
              className="form-control" component={renderInput}/>
 
-      {error && <div>{error}</div>}
-
-      <button className="btn btn-default" type="submit" disabled={invalid}>{t("Save")}</button>
-      <button className="btn btn-default" type="button" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Back")}</button>
+      <ButtonToolbar>
+        <Button type="submit" disabled={invalid}>{t("Save")}</Button>
+        <Button type="button" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Back")}</Button>
+      </ButtonToolbar>
     </Form>
   }
 }

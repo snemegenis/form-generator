@@ -7,8 +7,7 @@ import {translate} from "react-i18next";
 const AddPatientPage = (props) => {
     const {t} = props;
   return (
-    <PageTemplate>
-      <h1>{t('Add Patient')}</h1>
+    <PageTemplate header={t('Add Patient')}>
       <ModifyPatient />
     </PageTemplate>
   );

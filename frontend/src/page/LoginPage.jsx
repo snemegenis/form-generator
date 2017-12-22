@@ -6,8 +6,7 @@ import {translate} from "react-i18next";
 const LoginPage = (props) => {
     const {t} = props;
   return (
-    <PageTemplate>
-      <h1>{t("Login form")}</h1>
+    <PageTemplate header={t("Login form")}>
         <Login />
     </PageTemplate>
   );

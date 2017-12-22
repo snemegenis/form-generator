@@ -7,8 +7,7 @@ import i18n from "../i18n/i18n"
 
 const AddPatientDisabilityPage = (match) => {
   return (
-    <PageTemplate>
-      <h1>{i18n.t("Add patient disability")}</h1>
+    <PageTemplate header={i18n.t("Add patient disability")}>
       <ModifyDisability patientId={match.params.patientId}/>
     </PageTemplate>
   );

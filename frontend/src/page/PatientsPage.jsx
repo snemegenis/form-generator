@@ -7,8 +7,7 @@ import RequireAuth from "../component/container/RequireAuth.jsx";
 const PatientsPage = (props) => {
   const { t } = props;
   return (
-    <PageTemplate>
-      <h1>{t('List of Patients')}</h1>
+    <PageTemplate header={t('List of Patients')}>
       <VisiblePatients />
     </PageTemplate>
   );

@@ -1,19 +1,19 @@
 import React, {PropTypes} from "react";
 import {translate} from "react-i18next";
+import {MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 const UserInfo = ({user, onLogout = f => f, t = f => f}) => {
     if (!user.doctor) {
         return <span/>;
     }
-    return <div className="user float-right">
-          <span className="user-first-name">{user.doctor.firstName}</span>
-          <span className="user-last-name">{user.doctor.lastName}</span>
-      <span className="actions">
-        <button className="btn btn-default" onClick={() => {
-            onLogout();
-        }}>{t('Logout')}</button>
-      </span>
-  </div>
+
+  return <Navbar.Collapse>
+    <Nav pullRight>
+      <NavDropdown eventKey={1} title={user.doctor.firstName+" "+user.doctor.lastName} id="basic-nav-dropdown">
+        <MenuItem eventKey={1.1} onClick={onLogout}>{t('Logout')}</MenuItem>
+      </NavDropdown>
+    </Nav>
+  </Navbar.Collapse>;
 };
 
 UserInfo.propTypes = {

@@ -40,7 +40,7 @@ const PatientList = (props) => {
     <div className="panel">
       <div className="form-inline">
         <div className="form-group">
-          <label className="control-panel" for="input-filter">{t('Filter by')}:</label>
+          <label className="control-panel" htmlFor="input-filter">{t('Filter by')}:</label>
           <div className="input-group">
           <input id="input-filter" type="text" className="form-control"
                  ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange} />
@@ -61,7 +61,7 @@ const PatientList = (props) => {
       </tr>
       </thead>
       <tbody>
-      {(filteredPatients.length === 0) && <tr><td colSpan={4}>No patients found</td></tr>}
+      {(filteredPatients.length === 0) && <tr><td colSpan={4}>{t("No patients found")}</td></tr>}
       {
         filteredPatients.map(patient =>
           <Patient key={patient.id} id={patient.id} personalId={patient.personalId}

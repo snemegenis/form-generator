@@ -6,10 +6,12 @@ i18n.use(LanguageDetector).init({
   resources: {
     en: {
       translations: {
+        "Patient disability manager": "Patient disability manager",
         "Filter by": "Filter by",
         "List of Patients": "List of Patients",
         "Add Patient": "Add Patient",
         "Show all": "Show all",
+        "No patients found": "No patients found",
         "Filter": "Filter",
         "Personal id": "Personal id",
         "First name": "First name",
@@ -129,10 +131,12 @@ i18n.use(LanguageDetector).init({
     },
     lt: {
       translations: {
+        "Patient disability manager": "Pacientų neįgalumo tvarkyklė",
         "Filter by": "Filtruoti",
         "List of Patients": "Pacientų sąrašas",
         "Add Patient": "Pridėti Pacientą",
         "Show all": "Rodyti visus",
+        "No patients found": "Pacientų sąrašas tuščias",
         "Filter": "Filtruoti",
         "Personal id": "Asmens kodas",
         "First name": "Vardas",
