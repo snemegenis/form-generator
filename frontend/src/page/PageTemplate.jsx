@@ -10,15 +10,13 @@ const PageTemplate = ({header, children}) =>
     <Navbar collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>{i18n.t('Patient disability manager')}</Navbar.Brand>
-        <Navbar.Toggle />
+        <Navbar.Toggle/>
       </Navbar.Header>
       <UserInfoView/>
     </Navbar>
-    <div className="container">
-      <PageHeader>{header}</PageHeader>
-      <NotificationsSystem theme={theme}/>
-      {children}
-    </div>
+    <PageHeader>{header}</PageHeader>
+    <NotificationsSystem theme={theme}/>
+    {children}
   </div>;
 
 export default PageTemplate;

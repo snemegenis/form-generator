@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 import {translate} from "react-i18next";
+import {Button, FormGroup, InputGroup, Label} from "react-bootstrap";
 
 
 const PatientList = (props) => {
@@ -39,16 +40,16 @@ const PatientList = (props) => {
   return <div>
     <div className="panel">
       <div className="form-inline">
-        <div className="form-group">
+        <FormGroup>
           <label className="control-panel" htmlFor="input-filter">{t('Filter by')}:</label>
-          <div className="input-group">
-          <input id="input-filter" type="text" className="form-control"
-                 ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange} />
+          <InputGroup>
+            <input id="input-filter" type="text" className="form-control"
+                   ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
             {filter && <span className="input-group-btn">
-          <button className="btn btn-default" onClick={onShowAllClick} >{t('Show all')}</button>
+          <Button onClick={onShowAllClick}>{t('Show all')}</Button>
         </span>}
-          </div>
-        </div>
+          </InputGroup>
+        </FormGroup>
       </div>
     </div>
     <table className="patient-list table">
@@ -61,7 +62,9 @@ const PatientList = (props) => {
       </tr>
       </thead>
       <tbody>
-      {(filteredPatients.length === 0) && <tr><td colSpan={4}>{t("No patients found")}</td></tr>}
+      {(filteredPatients.length === 0) && <tr>
+        <td colSpan={4}>{t("No patients found")}</td>
+      </tr>}
       {
         filteredPatients.map(patient =>
           <Patient key={patient.id} id={patient.id} personalId={patient.personalId}
