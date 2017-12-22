@@ -1,66 +1,63 @@
 import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
-import InputField from "./InputField.jsx";
 import {trimmedEmpty} from "../../util/ValidationUtil";
+import InputFieldWithError from "./InputFieldWithError.jsx";
+import {Button} from "react-bootstrap";
 
-const renderInput = ({input, meta, type}) => {
-    return <div className="input-row">
-        <input className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
-               type={type} {...input} />
-        {meta.error ? meta.error : ""}
-    </div>;
+const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass, type}) => {
+  return <InputFieldWithError id={id} label={label} error={meta.error}
+                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
+    <input className="form-control" value={input.value ? input.value : ""}
+           type={type} {...input} />
+  </InputFieldWithError>;
 };
 
 class LoginForm extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+  }
+
+  validate(credentials) {
+    const {t} = this.props;
+    let errors = {};
+    let errorExist = false;
+
+    if (trimmedEmpty(credentials.username)) {
+      errors.username = t('Enter an username.');
+      errorExist = true;
+    }
+    if (trimmedEmpty(credentials.password)) {
+      errors.password = t('Enter a password.');
+      errorExist = true;
     }
 
-    validate(credentials) {
-        const {t} = this.props;
-        let errors = {};
-        let errorExist = false;
-
-        if (trimmedEmpty(credentials.username)) {
-            errors.username = t('Enter an username.');
-            errorExist = true;
-        }
-        if (trimmedEmpty(credentials.password)) {
-            errors.password = t('Enter a password.');
-            errorExist = true;
-        }
-
-        if (errorExist) {
-            throw new SubmissionError(errors);
-        }
+    if (errorExist) {
+      throw new SubmissionError(errors);
     }
+  }
 
-    handleSubmit(credentials) {
-        this.validate(credentials);
-        this.props.onLogin(credentials);
-    }
+  handleSubmit(credentials) {
+    this.validate(credentials);
+    this.props.onLogin(credentials);
+  }
 
-    render() {
-        const {error, invalid, handleSubmit, t} = this.props;
-        return <Form className="login-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-            <InputField id="credentials.username" label={t("Username") + ":"}>
-                <Field name="username" id="credentials.username" type="text" component={renderInput}/>
-            </InputField>
+  render() {
+    const {invalid, handleSubmit, t} = this.props;
+    return <Form className="login-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
+      <Field name="username" id="credentials.username" label={t("Username") + ":"}
+             type="text" component={renderInput}/>
 
-            <InputField id="credentials.password" label={t("Password") + ":"}>
-                <Field name="password" id="credentials.password" type="password" component={renderInput}/>
-            </InputField>
+      <Field name="password" id="credentials.password" label={t("Password") + ":"}
+             type="password" component={renderInput}/>
 
-            {error && <div>{error}</div>}
-
-            <button className="btn" type="submit" disabled={invalid}>{t("Login")}</button>
-        </Form>
-    }
+      <Button type="submit" disabled={invalid}>{t("Login")}</Button>
+    </Form>
+  }
 }
 
 LoginForm.propTypes = {
-    onLogin: PropTypes.func.isRequired
+  onLogin: PropTypes.func.isRequired
 };
 
 export default LoginForm;
