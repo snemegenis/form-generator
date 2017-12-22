@@ -83,7 +83,7 @@ class PatientForm extends React.Component {
   }
 
   render() {
-    const {pristine, error, invalid, handleSubmit, t} = this.props;
+    const {pristine, invalid, handleSubmit, t} = this.props;
 
     return <Form className="patient-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
       <Row>
