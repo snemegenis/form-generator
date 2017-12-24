@@ -1,3 +1,3 @@
-rootProject.name = 'form-generator'
+rootProject.name = 'patient-disability-manager'
 
 include 'frontend', 'backend', 'backend:form-dao', 'backend:form-ws'
