@@ -15,3 +15,15 @@
 .borderless-but-last-body > tbody > tr:not(:last-child) > td {
     border-top: none;
 }
+
+.diagnosis > h4 {
+    font-weight: bold;
+}
+.section-header {
+    margin: 10px 0 10px 0;
+}
+
+.section-header > span.section-header-text {
+    font-size: 16px;
+    font-weight: bold;
+}
