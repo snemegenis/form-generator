@@ -352,7 +352,7 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
                 paragraphPhoneAndEmail.add(mobilePhone);
                 paragraphPhoneAndEmail.add(spacing);
                 Chunk emailLabel = new Chunk(getBundleMessage("email") + SPACING_BEFORE, fontNormal);
-                Chunk email = new Chunk(StringHelper.valueOrDefault(patient.getEmail(), "-"), fontNormalUnderLine);
+                Chunk email = new Chunk(getMessageOrEmpty(patient.getEmail()), fontNormalUnderLine);
                 paragraphPhoneAndEmail.add(emailLabel);
                 paragraphPhoneAndEmail.add(email);
                 document.add(paragraphPhoneAndEmail);
@@ -690,7 +690,7 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
 
                 } else {
                     Paragraph paragraphOtherDiagnosisEmptyLabel = new Paragraph(12,
-                            getMessageOrEmpty("common.empty" + ".text"), fontNormal);
+                            getBundleMessage("common.empty.text"), fontNormal);
                     paragraphOtherDiagnosisEmptyLabel.setSpacingBefore(4);
                     document.add(paragraphOtherDiagnosisEmptyLabel);
                 }

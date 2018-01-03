@@ -21,6 +21,8 @@ import util.ValidationHelper;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static constants.RequestConstants.*;
 
@@ -75,7 +77,9 @@ public class DisabilityController extends ControllerBase {
             @RequestParam(value = REQUEST_PARAM_FILL_NUMBER, required = false) Integer fillNumber, HttpSession session) {
         HttpHeaders headers = addHeaders(new HttpHeaders());
         Patient patient = patientService.get(patientId);
-        final String reportName = patient.getFirstName() + "_" + patient.getLastName();
+        LocalDateTime currentDate = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddhhmm");
+        final String reportName = patient.getFirstName() + "_" + patient.getLastName() + "_" + dateTimeFormatter.format(currentDate);
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + reportName + ".pdf");
 
         Doctor authenticatedDoctor = UserHelper.getAuthenticatedDoctor(session);
