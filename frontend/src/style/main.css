@@ -8,6 +8,10 @@
     float: right;
 }
 
+.float-left {
+    float: left;
+}
+
 .user-first-name,.user-last-name {
     padding-right: 2px;
 }
@@ -19,6 +23,7 @@
 .diagnosis > h4 {
     font-weight: bold;
 }
+
 .section-header {
     margin: 10px 0 10px 0;
 }
@@ -27,3 +32,4 @@
     font-size: 16px;
     font-weight: bold;
 }
+

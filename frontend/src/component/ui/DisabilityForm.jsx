@@ -7,7 +7,7 @@ import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 import NumberFormat from 'react-number-format';
 import InputFieldWithError from "./InputFieldWithError.jsx";
-import {Button, ButtonToolbar, Col, FormControl, Glyphicon, Row, Table} from "react-bootstrap";
+import {Button, ButtonToolbar, Clearfix, Col, Collapse, Glyphicon, Row, Table} from "react-bootstrap";
 
 const renderNumberInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass, nbrFormat}) => {
   return <InputFieldWithError id={id} label={label} error={meta.error}
@@ -42,13 +42,26 @@ const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputCl
 };
 
 const renderCheckboxes = (props) => {
-  const {id, name, label, input, meta, checkboxes, outerDivClass, labelClass, inputClass} = props;
+  const {id, columns, name, label, input, meta, checkboxes, outerDivClass, labelClass, inputClass} = props;
+  let rows = [];
+  let row = [];
+  checkboxes.forEach((checkbox, index) => {
+    let element =  <Col lg={12/columns}> <label className="checkbox-inline" key={"label" + index}>
+      <Checkbox key={"checkbox" + index} value={checkbox.value}/>{checkbox.label}</label> </Col>;
+    if (index % columns === 0) {
+      row = [];
+      rows.push(row)
+    }
+    row.push(element);
+  });
+
   return <InputFieldWithError id={id} label={label} error={meta.error}
                               outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
     <CheckboxGroup name={name} value={input.value ? input.value : []}
                    onChange={input.onChange}>
-      {checkboxes.map((checkbox, index) => <label className="checkbox-inline" key={"label" + index}>
-        <Checkbox key={"checkbox" + index} value={checkbox.value}/>{checkbox.label}</label>)}
+      {rows.map((row) => {
+        return <Row>{row.map(element => element)}</Row>;
+      })}
     </CheckboxGroup>
   </InputFieldWithError>;
 };
@@ -77,21 +90,27 @@ const Diagnosis = ({t, name, withDetails = false}) => (
 );
 
 Diagnosis.propTypes = {
+  t: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   withDetails: PropTypes.bool,
   title: PropTypes.string
 };
 
-const renderDiagnosis = ({onRemoveDiagnosis, t, fields, meta}) => (
+const otherDiagnosisCodeIsValid = (selector, index) =>
+  selector && selector.length > index && !maskedInvalid(selector[index].code);
+
+const renderDiagnosis = ({onRemoveDiagnosis, selector, t, fields, meta}) => (
   <div className="other-diagnosis">
     {fields.map((diagnosis, index) =>
       <div key={index}>
         <div className="section-header">
-          <span className="section-header-text">{t('Other diagnosis #{{number}}', {'number': index + 1})}</span>
+          <span className="section-header-text">{t('Other diagnosis {{code}}',
+            {'code': otherDiagnosisCodeIsValid(selector, index) ? selector[index].code : ('#'.concat(index + 1))})}</span>
           <Button className="float-right"
                   onClick={() => onRemoveDiagnosis(() => fields.remove(index))}>
             <Glyphicon glyph="minus"/>
           </Button>
+          <Clearfix />
         </div>
         <div>
           <Diagnosis t={t} name={`${diagnosis}`} withDetails={true}/>
@@ -171,6 +190,7 @@ class DisabilityForm extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {mainDiagnosisOpen: false};
   }
 
   componentDidMount() {
@@ -183,7 +203,7 @@ class DisabilityForm extends React.Component {
     clearInterval(this.autoSaveTimer);
   }
 
-  validateDiagnosis(diagnosis, error) {
+  isDiagnosisInvalid(diagnosis, error) {
 
     const {t} = this.props;
 
@@ -243,7 +263,7 @@ class DisabilityForm extends React.Component {
       errors.treatmentHistory = t('Enter treatment history.');
       errorExist = true;
     }
-    if (trimmedEmpty(disability.barthelIndex)) {
+    if (isNaN(disability.barthelIndex)) {
       errors.barthelIndex = t('Enter valid barthel index.');
       errorExist = true;
     }
@@ -280,7 +300,7 @@ class DisabilityForm extends React.Component {
     }
 
     errors.mainDiagnosis = {};
-    if (this.validateDiagnosis(disability.mainDiagnosis, errors.mainDiagnosis)) {
+    if (this.isDiagnosisInvalid(disability.mainDiagnosis, errors.mainDiagnosis)) {
       errorExist = true;
     }
 
@@ -288,7 +308,7 @@ class DisabilityForm extends React.Component {
       errors.otherDiagnosis = [];
       disability.otherDiagnosis.forEach((diagnosis, index) => {
         errors.otherDiagnosis[index] = {};
-        if (this.validateDiagnosis(diagnosis, errors.otherDiagnosis[index], true)) {
+        if (this.isDiagnosisInvalid(diagnosis, errors.otherDiagnosis[index], true)) {
           errorExist = true;
         }
       })
@@ -340,7 +360,7 @@ class DisabilityForm extends React.Component {
 
   render() {
     const {
-      dirty, invalid, handleSubmit, submitting, treatmentSelected, disabilityReportId, t, onRemoveDiagnosis,
+      dirty, invalid, handleSubmit, submitting, treatmentSelected, otherDiagnosisAssigned, disabilityReportId, t, onRemoveDiagnosis,
       onRemoveAppointment
     } = this.props;
     console.log(`disabilityReportId=${disabilityReportId}`);
@@ -374,7 +394,7 @@ class DisabilityForm extends React.Component {
       <Row>
         <Field name="treatments" component={renderCheckboxes}
                outerDivClass="col-lg-12"
-               checkboxes={treatments} id="disability.treatments" label={t("Treatments")}/>
+               checkboxes={treatments} id="disability.treatments" label={t("Treatments")} columns={4}/>
       </Row>
 
       {otherTreatmentSelected(treatmentSelected) &&
@@ -406,17 +426,17 @@ class DisabilityForm extends React.Component {
 
       <div className="diagnosis form-group">
         <h4>{t("Main diagnosis")}</h4>
-        <Diagnosis t={t} name="mainDiagnosis"/>
+        <Diagnosis t={t} name="mainDiagnosis" />
       </div>
 
       <div className="diagnosis form-group">
         <h4>{t("Other diagnosis")}</h4>
         <FieldArray t={t} onRemoveDiagnosis={onRemoveDiagnosis} name="otherDiagnosis"
-                    component={renderDiagnosis}/>
+                    component={renderDiagnosis} selector={otherDiagnosisAssigned}/>
       </div>
 
       <Field name="disabilityTypes" component={renderCheckboxes}
-             id="disability.disabilityTypes" label={t("Disability types")}
+             id="disability.disabilityTypes" label={t("Disability types")} columns={4}
              checkboxes={disabilityTypes}/>
 
       <ButtonToolbar>

@@ -7,6 +7,7 @@ import {addNotification as notify} from 'reapop';
 import {hashHistory} from 'react-router'
 import i18n from "../i18n/i18n";
 import {initialize} from "redux-form"
+import moment from "moment";
 
 let fileDownload = require("react-file-download");
 
@@ -81,7 +82,8 @@ export const printPatientAction = (patientId, patientFirstName, patientLastName)
     dispatch(printPatient(patientId));
     return ReportApi.print(patientId).then(
         response => {
-            fileDownload(response.data, patientFirstName + "_" + patientLastName + ".pdf");
+            fileDownload(response.data, patientFirstName + "_" + patientLastName + "_"+
+              moment().format("YYYYMMDDhhmm")+".pdf");
             dispatch(printPatientSuccessAction(patientId, response.data));
         },
         error => {

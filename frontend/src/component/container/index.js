@@ -136,6 +136,7 @@ const ModifyDisability = translate()(connect(
   (state, ownProps) => ({
     initialValues: loadAddInitialDisabilityValues(state, ownProps),
     treatmentSelected: activeDisabilitySelector(state, 'treatments'),
+    otherDiagnosisAssigned: activeDisabilitySelector(state, 'otherDiagnosis'),
     disabilityReportId: ownProps.disabilityReportId
   }),
   dispatch => ({
