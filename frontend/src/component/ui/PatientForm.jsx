@@ -1,35 +1,11 @@
 import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
-import InputMask from 'react-input-mask';
 import moment from "moment";
 import {maskedInvalid, trimmedEmpty} from "../../util/ValidationUtil";
-import TextareaAutosize from 'react-autosize-textarea';
-import InputFieldWithError from "./InputFieldWithError.jsx";
 import {Button, ButtonToolbar, Row} from "react-bootstrap";
-
-const MaskedInput = ({id, label, input, meta, mask, outerDivClass, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <InputMask className="form-control" mask={mask} maskChar="_"
-               value={input.value ? input.value : ""} {...input} />
-  </InputFieldWithError>
-};
-
-const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <input className="form-control" value={input.value ? input.value : ""}
-           {...input} />
-  </InputFieldWithError>;
-};
-
-const renderArea = ({id, label, input, meta, outerDivClass, labelClass, inputClass, rows}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <TextareaAutosize rows={rows} className="form-control " value={input.value ? input.value : ""}
-                      {...input} />
-  </InputFieldWithError>;
-};
+import Input from "./form/Input.jsx";
+import MaskedInput from "./form/MaskedInput.jsx";
+import InputArea from "./form/InputArea.jsx";
 
 class PatientForm extends React.Component {
 
@@ -95,14 +71,14 @@ class PatientForm extends React.Component {
 
       <Row>
         <Field name="firstName" id="patient.firstName" label={t("First name") + ":"}
-               className="form-control" component={renderInput} outerDivClass="col-lg-6"/>
+               className="form-control" component={Input} outerDivClass="col-lg-6"/>
         <Field name="lastName" id="patient.lastName" label={t("Last name") + ":"}
-               className="form-control" component={renderInput} outerDivClass="col-lg-6"/>
+               className="form-control" component={Input} outerDivClass="col-lg-6"/>
       </Row>
 
       <Row>
           <Field name="address" id="patient.address" label={t("Address") + ":"}
-                 className="form-control" component={renderArea} rows={4} outerDivClass="col-lg-12"/>
+                 className="form-control" component={InputArea} rows={4} outerDivClass="col-lg-12"/>
       </Row>
       <Row>
         <Field name="phone" className="form-control" component={MaskedInput} mask="+370-999-99999"
@@ -112,14 +88,14 @@ class PatientForm extends React.Component {
                className="form-control" component={MaskedInput} mask="+370-999-99999" outerDivClass="col-lg-3"/>
 
         <Field name="email" id="patient.email" label={t("Email") + ":"} className="form-control"
-               component={renderInput} outerDivClass="col-lg-6"/>
+               component={Input} outerDivClass="col-lg-6"/>
       </Row>
       <Field name="occupation" id="patient.occupation" label={t("Occupation") + ":"}
-             className="form-control" component={renderInput}/>
+             className="form-control" component={Input}/>
 
 
       <Field id="patient.employer" label={t("Employer") + ":"} name="employer"
-             className="form-control" component={renderInput}/>
+             className="form-control" component={Input}/>
 
       <ButtonToolbar>
         <Button type="submit" disabled={invalid}>{t("Save")}</Button>

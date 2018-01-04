@@ -1,187 +1,16 @@
 import React, {PropTypes} from "react";
 import {Field, FieldArray, Form, SubmissionError} from "redux-form";
-import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
-import InputMask from 'react-input-mask';
-import TextareaAutosize from 'react-autosize-textarea';
 import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
-import NumberFormat from 'react-number-format';
-import InputFieldWithError from "./InputFieldWithError.jsx";
-import {Button, ButtonToolbar, Clearfix, Col, Collapse, Glyphicon, Row, Table} from "react-bootstrap";
-
-const renderNumberInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass, nbrFormat}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <NumberFormat className={"form-control " + (meta.error ? "is-invalid" : "")} format={nbrFormat}
-                  value={input.value ? input.value : ""} {...input} />
-  </InputFieldWithError>;
-};
-
-const renderMaskedInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass, mask}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <InputMask className={"form-control " + (meta.error ? "is-invalid" : "")} mask={mask} maskChar="_"
-               alwaysShowMask="true" value={input.value ? input.value : ""} {...input} />
-  </InputFieldWithError>;
-};
-
-const renderArea = ({id, label, input, meta, outerDivClass, labelClass, inputClass, rows}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <TextareaAutosize className="form-control" rows={rows} value={input.value ? input.value : ""}
-                      {...input} />
-  </InputFieldWithError>;
-};
-
-const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <input className={"form-control " + (meta.error ? "is-invalid" : "")} value={input.value ? input.value : ""}
-           {...input} />
-  </InputFieldWithError>;
-};
-
-const renderCheckboxes = (props) => {
-  const {id, columns, name, label, input, meta, checkboxes, outerDivClass, labelClass, inputClass} = props;
-  let rows = [];
-  let row = [];
-  checkboxes.forEach((checkbox, index) => {
-    let element =  <Col lg={12/columns}> <label className="checkbox-inline" key={"label" + index}>
-      <Checkbox key={"checkbox" + index} value={checkbox.value}/>{checkbox.label}</label> </Col>;
-    if (index % columns === 0) {
-      row = [];
-      rows.push(row)
-    }
-    row.push(element);
-  });
-
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <CheckboxGroup name={name} value={input.value ? input.value : []}
-                   onChange={input.onChange}>
-      {rows.map((row) => {
-        return <Row>{row.map(element => element)}</Row>;
-      })}
-    </CheckboxGroup>
-  </InputFieldWithError>;
-};
-
-const Diagnosis = ({t, name, withDetails = false}) => (
-  <div className="form-group">
-    <Row>
-      <Field name={`${name}.code`} id={`disability.${name}.code`} label={t("Code")}
-             component={renderMaskedInput} mask="aaa-9999" outerDivClass="col-lg-2"/>
-      <Field name={`${name}.text`} id={`disability.${name}.code`} label={t("Text")}
-             component={renderInput} outerDivClass="col-lg-10"/>
-    </Row>
-    <Row>
-      <Field name={`${name}.functionalClass`} id={`disability.${name}.functionalClass`} label={t("Functional class")}
-             component={renderInput} outerDivClass="col-lg-4"/>
-      <Field name={`${name}.degree`} id={`disability.${name}.degree`} label={t("Degree")}
-             component={renderInput} outerDivClass="col-lg-4"/>
-      <Field name={`${name}.stage`} id={`disability.${name}.stage`} label={t("Stage")}
-             component={renderInput} outerDivClass="col-lg-4"/>
-    </Row>
-    <Field name={`${name}.history`} id={`disability.${name}.history`} label={t("Diagnosis history")}
-           component={renderArea} rows={4}/>
-    {withDetails && <Field name={`${name}.details`} id={`disability.${name}.details`} label={t("Diagnosis details")}
-                           component={renderArea} rows={4}/>}
-  </div>
-);
-
-Diagnosis.propTypes = {
-  t: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  withDetails: PropTypes.bool,
-  title: PropTypes.string
-};
-
-const otherDiagnosisCodeIsValid = (selector, index) =>
-  selector && selector.length > index && !maskedInvalid(selector[index].code);
-
-const renderDiagnosis = ({onRemoveDiagnosis, selector, t, fields, meta}) => (
-  <div className="other-diagnosis">
-    {fields.map((diagnosis, index) =>
-      <div key={index}>
-        <div className="section-header">
-          <span className="section-header-text">{t('Other diagnosis {{code}}',
-            {'code': otherDiagnosisCodeIsValid(selector, index) ? selector[index].code : ('#'.concat(index + 1))})}</span>
-          <Button className="float-right"
-                  onClick={() => onRemoveDiagnosis(() => fields.remove(index))}>
-            <Glyphicon glyph="minus"/>
-          </Button>
-          <Clearfix />
-        </div>
-        <div>
-          <Diagnosis t={t} name={`${diagnosis}`} withDetails={true}/>
-        </div>
-      </div>
-    )}
-    {meta.error ? meta.error : ""}
-    <ButtonToolbar>
-      <Button onClick={() => fields.push({})}>{t("Add Diagnosis")}</Button>
-    </ButtonToolbar>
-  </div>
-);
-
-const renderAppointments = ({onRemoveAppointment, t, fields, meta, label}) => (
-  <div className={"form-group " + (meta.error ? "has-error " : "")}>
-    <label htmlFor="appointmentsTable" className="control-label">{label}</label>
-    <Table id="appointmentsTable" className="appointments borderless-but-last-body">
-      <thead>
-      <tr>
-        <th>{t("Date")}</th>
-        <th>{t("Doctor type")}</th>
-        <th>{t("Observation")}</th>
-        <th>{t("Attachment")}</th>
-        <th>&nbsp;</th>
-      </tr>
-      </thead>
-      <tbody>
-      {fields.map((appointment, index) =>
-        <tr>
-          <td>
-            <Field name={`${appointment}.date`}
-                   component={renderMaskedInput} mask="9999-99-99"
-                   id={`disability.appointment${index}.date`} size={10}/>
-          </td>
-
-          <td className="col-lg-2">
-            <Field name={`${appointment}.doctorType`}
-                   component={renderInput}
-                   id={`disability.appointment${index}.doctorType`}/>
-          </td>
-
-          <td>
-            <Field name={`${appointment}.observation`}
-                   id={`disability.appointment${index}.observation`}
-                   component={renderArea}/>
-          </td>
-
-          <td className="col-lg-2">
-            <Field name={`${appointment}.attachment`}
-                   id={`disability.appointment${index}.attachment`}
-                   component={renderArea}/>
-          </td>
-
-          <td>
-            <div className="form-group ">
-              <Button onClick={() => onRemoveAppointment(() => fields.remove(index))}>
-                <Glyphicon glyph="minus"/></Button>
-            </div>
-          </td>
-        </tr>
-      )}
-
-      <tr>
-        <td colSpan={5}><Button onClick={() => fields.push({primary: false})}>{t('Add appointment')}</Button>
-        </td>
-      </tr>
-      </tbody>
-    </Table>
-    {meta.error ? <div className="help-block with-errors">{meta.error}</div> : ""}
-  </div>
-);
+import {Button, ButtonToolbar, Col, Row} from "react-bootstrap";
+import {DISABILITY_TYPES, TREATMENTS} from "../../constants/disability";
+import Input from "./form/Input.jsx";
+import Appointments from "./Appointments.jsx";
+import NumberInput from "./form/NumberInput.jsx";
+import InputArea from "./form/InputArea.jsx";
+import Diagnosis from "./Diagnosis.jsx";
+import OtherDiagnosis from "./OtherDiagnosis.jsx";
+import InputCheckboxGroup from "./form/InputCheckboxGroup.jsx";
 
 const otherTreatmentSelected = (treatmentSelected) =>
   treatmentSelected && treatmentSelected.indexOf('OTHER') > -1;
@@ -360,84 +189,65 @@ class DisabilityForm extends React.Component {
 
   render() {
     const {
-      dirty, invalid, handleSubmit, submitting, treatmentSelected, otherDiagnosisAssigned, disabilityReportId, t, onRemoveDiagnosis,
-      onRemoveAppointment
-    } = this.props;
-    console.log(`disabilityReportId=${disabilityReportId}`);
-    const treatments = [
-      {label: t('Ambulatoric'), value: 'AMBULATORIC'},
-      {label: t('Medicaments'), value: 'MEDICAMENTS'},
-      {label: t('Stationary'), value: 'STATIONARY'},
-      {label: t('Surgery'), value: 'SURGERY'},
-      {label: t('Reabilitation'), value: 'REABILITATION'},
-      {label: t('Other'), value: 'OTHER'}
-    ];
-    const disabilityTypes = [
-      {label: t('Working Capacity Level'), value: 'WORKING_CAPACITY_LEVEL'},
-      {label: t('First Time'), value: 'FIRST_TIME'},
-      {label: t('Disability Level'), value: 'DISABILITY_LEVEL'},
-      {label: t('Expired'), value: 'EXPIRED'},
-      {label: t('Special Requirement'), value: 'SPECIAL_REQUIREMENT'},
-      {label: t('Health Condition Changed'), value: 'HEALTH_COND_CHANGED'},
-      {label: t('Ordered By Person'), value: 'REQUIRED_BY_PERSON'}
-    ];
+      dirty, invalid, handleSubmit, submitting, treatmentSelected, otherDiagnosisAssigned, t, onRemoveDiagnosis,
+      onRemoveAppointment} = this.props;
 
     return <Form className="disability-form" onSubmit={handleSubmit(this.handleAutoSubmit.bind(this))}>
 
       <Field component="input" type="hidden" name="patientId"/>
 
       <Row>
-        <Field name="history" component={renderArea}
+        <Field name="history" component={InputArea}
                id="disability.history" label={t("History")} outerDivClass="col-lg-12" rows={4}/>
       </Row>
 
       <Row>
-        <Field name="treatments" component={renderCheckboxes}
+        <Field name="treatments" component={InputCheckboxGroup}
                outerDivClass="col-lg-12"
-               checkboxes={treatments} id="disability.treatments" label={t("Treatments")} columns={4}/>
+               checkboxes={TREATMENTS} id="disability.treatments" label={t("Treatments")} columns={4}/>
       </Row>
 
       {otherTreatmentSelected(treatmentSelected) &&
       <Row>
         <Field id="disability.otherTreatment" label={t("Other treatment")}
-               name="otherTreatment" component={renderInput}
+               name="otherTreatment" component={Input}
                outerDivClass="col-lg-12"/>
       </Row>
       }
 
       <Row>
-        <Field name="treatmentHistory" component={renderArea} rows={4}
+        <Field name="treatmentHistory" component={InputArea} rows={4}
                id="disability.treatmentHistory" label={t("Treatment history")} outerDivClass="col-lg-12"/>
       </Row>
 
       <Row>
         <Col lg={12}>
           <FieldArray name="appointments" t={t} onRemoveAppointment={onRemoveAppointment}
-                      component={renderAppointments} label={t("Appointments")}/>
+                      component={Appointments} label={t("Appointments")}/>
         </Col>
       </Row>
 
       <Field name="barthelIndex"
-             id="disability.barthelIndex" label={t("Barthel index")} component={renderNumberInput} nbrFormat="##"/>
+             id="disability.barthelIndex" label={t("Barthel index")} component={NumberInput} nbrFormat="##"/>
 
-      <Field name="latestDisabilityDesc" component={renderArea}
+      <Field name="latestDisabilityDesc" component={InputArea}
              id="disability.latestDisabilityDesc" label={t("Latest disability description")}
              rows={4}/>
 
       <div className="diagnosis form-group">
         <h4>{t("Main diagnosis")}</h4>
-        <Diagnosis t={t} name="mainDiagnosis" />
+        <Diagnosis t={t} name="mainDiagnosis"/>
       </div>
 
       <div className="diagnosis form-group">
         <h4>{t("Other diagnosis")}</h4>
         <FieldArray t={t} onRemoveDiagnosis={onRemoveDiagnosis} name="otherDiagnosis"
-                    component={renderDiagnosis} selector={otherDiagnosisAssigned}/>
+                    component={OtherDiagnosis} selector={otherDiagnosisAssigned}/>
       </div>
 
-      <Field name="disabilityTypes" component={renderCheckboxes}
+      <Field name="disabilityTypes" component={InputCheckboxGroup}
              id="disability.disabilityTypes" label={t("Disability types")} columns={4}
-             checkboxes={disabilityTypes}/>
+             checkboxes={DISABILITY_TYPES}/>
 
       <ButtonToolbar>
         <Button onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
@@ -451,7 +261,6 @@ class DisabilityForm extends React.Component {
         <Button onClick={(e) => this.props.onBack(e, dirty)}>{t("Cancel")}
         </Button>
       </ButtonToolbar>
-
     </Form>
   }
 }

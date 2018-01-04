@@ -1,16 +1,8 @@
 import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import {trimmedEmpty} from "../../util/ValidationUtil";
-import InputFieldWithError from "./InputFieldWithError.jsx";
 import {Button} from "react-bootstrap";
-
-const renderInput = ({id, label, input, meta, outerDivClass, labelClass, inputClass, type}) => {
-  return <InputFieldWithError id={id} label={label} error={meta.error}
-                              outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
-    <input className="form-control" value={input.value ? input.value : ""}
-           type={type} {...input} />
-  </InputFieldWithError>;
-};
+import Input from "./form/Input.jsx";
 
 class LoginForm extends React.Component {
 
@@ -46,10 +38,10 @@ class LoginForm extends React.Component {
     const {invalid, handleSubmit, t} = this.props;
     return <Form className="login-form" onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
       <Field name="username" id="credentials.username" label={t("Username") + ":"}
-             type="text" component={renderInput}/>
+             type="text" component={Input}/>
 
       <Field name="password" id="credentials.password" label={t("Password") + ":"}
-             type="password" component={renderInput}/>
+             type="password" component={Input}/>
 
       <Button type="submit" disabled={invalid}>{t("Login")}</Button>
     </Form>
