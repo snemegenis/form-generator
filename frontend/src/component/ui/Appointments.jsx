@@ -48,7 +48,7 @@ const Appointments = ({onRemoveAppointment, t, fields, meta, label}) => (
           <td>
             <div className="form-group ">
               <Button onClick={() => onRemoveAppointment(() => fields.remove(index))}>
-                <Glyphicon glyph="minus"/></Button>
+                <Glyphicon glyph="remove"/></Button>
             </div>
           </td>
         </tr>

@@ -17,7 +17,7 @@ const OtherDiagnosis = ({onRemoveDiagnosis, selector, t, fields, meta}) => (
             })}</span>
           <Button className="float-right"
                   onClick={() => onRemoveDiagnosis(() => fields.remove(index))}>
-            <Glyphicon glyph="minus"/>
+            <Glyphicon glyph="remove"/>
           </Button>
           <Clearfix/>
         </div>
