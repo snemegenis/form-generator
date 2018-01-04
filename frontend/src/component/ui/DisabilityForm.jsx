@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import {Field, FieldArray, Form, SubmissionError} from "redux-form";
 import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
-import {Button, ButtonToolbar, Col, Row} from "react-bootstrap";
+import {Button, ButtonToolbar, Col, Glyphicon, Row} from "react-bootstrap";
 import {DISABILITY_TYPES, TREATMENTS} from "../../constants/disability";
 import Input from "./form/Input.jsx";
 import Appointments from "./Appointments.jsx";
@@ -252,13 +252,13 @@ class DisabilityForm extends React.Component {
       <ButtonToolbar>
         <Button onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
           disability: {...values}, pressed: 'Save'
-        }]))} disabled={invalid || submitting}>{t("Save")}
+        }]))} disabled={invalid || submitting}><Glyphicon glyph="save"/> {t("Save")}
         </Button>
         <Button onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
           disability: {...values}, pressed: 'Close'
-        }]))}>{t("Close")}
+        }]))}><Glyphicon glyph="level-up"/> {t("Close")}
         </Button>
-        <Button onClick={(e) => this.props.onBack(e, dirty)}>{t("Cancel")}
+        <Button onClick={(e) => this.props.onBack(e, dirty)}><Glyphicon glyph="level-up"/> {t("Cancel")}
         </Button>
       </ButtonToolbar>
     </Form>

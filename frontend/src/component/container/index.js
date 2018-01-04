@@ -6,7 +6,7 @@ import {
   loadDisabilityTmpAction,
   loginAction,
   logoutAction,
-  printPatientAction,
+  printPatientAction, removePatientAction,
   saveDisabilityAction,
   saveDisabilityTmpAction,
   savePatientAction,
@@ -79,6 +79,13 @@ const VisiblePatients = translate()(connect(state => ({
     },
     onUpdate(patientId) {
       hashHistory.push(`/patient/${patientId}/update`);
+    },
+    onRemove(patientId) {
+      showConfirmation(dispatch, "Do you really want to delete patient and it's data?", false,
+        () => {
+          dispatch(removePatientAction(patientId));
+        }, true);
+
     }
   })
 )(PatientList));

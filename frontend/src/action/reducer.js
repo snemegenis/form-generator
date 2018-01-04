@@ -17,10 +17,19 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
     case constants.SAVE_DISABILITY:
     case constants.SAVE_PATIENT:
     case constants.LOAD_PATIENT_LIST:
+    case constants.REMOVE_PATIENT:
       return {
         ...state,
         isLoading: true,
         isLoadingError: false
+      };
+    case constants.REMOVE_PATIENT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isLoadingError: false,
+        data: [...state.data].filter(patient => patient.id !== action.patientId),
+        error: null
       };
     case constants.SAVE_PATIENT_SUCCESS:
       return {
@@ -68,6 +77,7 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
             } : patient),
         error: null
       };
+    case constants.REMOVE_PATIENT_ERROR:
     case constants.SAVE_PATIENT_ERROR:
       return {
         ...state,

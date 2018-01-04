@@ -1,11 +1,11 @@
 import React, {PropTypes} from "react";
 import {translate} from "react-i18next";
-import {Button, ButtonToolbar} from "react-bootstrap";
+import {Button, ButtonToolbar, Glyphicon} from "react-bootstrap";
 
 const Patient = (props) => {
   const {
     id, personalId, firstName, lastName, disabilityReportId, tempSaved,
-    onPrint, onDisabilityAdd, onDisabilityUpdate, onUpdate, t} = props;
+    onPrint, onDisabilityAdd, onDisabilityUpdate, onUpdate, onRemove, t} = props;
 
   return <tr className={"contents" + (tempSaved ? " bg-warning" : "")}>
       <td>{personalId}</td>
@@ -13,13 +13,19 @@ const Patient = (props) => {
       <td>{lastName}</td>
       <td className="actions">
           <ButtonToolbar>
+            <Button onClick={() => onUpdate(id)}><Glyphicon glyph="edit"/> {t('Update Patient')}</Button>
             {!disabilityReportId &&
-            <Button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>{t('Add Disability')}</Button>}
+            <Button onClick={() => onDisabilityAdd(id, disabilityReportId, tempSaved)}>
+              <Glyphicon glyph="plus"/> {t('Add Disability')}</Button>}
             {disabilityReportId &&
-            <Button  onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>{t('Update Disability')}</Button>}
-            <Button  onClick={() => onUpdate(id)}>{t('Update patient')}</Button>
-            {disabilityReportId && <Button onClick={() => onPrint(id, firstName, lastName)}>{t('Print')}</Button>}
+            <Button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>
+              <Glyphicon glyph="edit"/> {t('Update Disability')}</Button>}
+            {disabilityReportId && <Button onClick={() => onPrint(id, firstName, lastName)}>
+              <Glyphicon glyph="print"/> {t('Print')}</Button>}
           </ButtonToolbar>
+      </td>
+      <td className="delete-action">
+        <Button onClick={() => onRemove(id)}><Glyphicon glyph="remove"/> {t('Remove Patient')}</Button>
       </td>
   </tr>
 };
@@ -33,7 +39,8 @@ Patient.propTypes = {
   onPrint: PropTypes.func.isRequired,
   onDisabilityAdd: PropTypes.func.isRequired,
   onDisabilityUpdate: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired
 };
 
 export default translate()(Patient);

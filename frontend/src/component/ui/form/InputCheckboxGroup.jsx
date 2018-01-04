@@ -8,7 +8,7 @@ const InputCheckboxGroup = (props) => {
   let rows = [];
   let row = [];
   checkboxes.forEach((checkbox, index) => {
-    let element = <Col lg={12 / columns}> <label className="checkbox-inline" key={"label" + index}>
+    let element = <Col key={index} lg={12 / columns}> <label className="checkbox-inline" key={"label" + index}>
       <Checkbox key={"checkbox" + index} value={checkbox.value}/>{checkbox.label}</label> </Col>;
     if (index % columns === 0) {
       row = [];
@@ -21,8 +21,8 @@ const InputCheckboxGroup = (props) => {
                               outerDivClass={outerDivClass} labelClass={labelClass} inputClass={inputClass}>
     <CheckboxGroup name={name} value={input.value ? input.value : []}
                         onChange={input.onChange}>
-      {rows.map((row) => {
-        return <Row>{row.map(element => element)}</Row>;
+      {rows.map((row, index) => {
+        return <Row key={index}>{row.map(element => element)}</Row>;
       })}
     </CheckboxGroup>
   </InputFieldWithError>;
@@ -31,7 +31,7 @@ const InputCheckboxGroup = (props) => {
 InputCheckboxGroup.propTypes = {
   id: PropTypes.string.isRequired,
   columns: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   label: PropTypes.string,
   input: PropTypes.object,
   meta: PropTypes.object,

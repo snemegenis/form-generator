@@ -40,4 +40,9 @@ public class PatientServiceImpl implements PatientService {
         }
         return patient;
     }
+
+    @Override
+    public void delete(Integer patientId) {
+        patientMapper.delete(patientId);
+    }
 }

@@ -35,4 +35,10 @@ public class PatientController extends ControllerBase{
         return patientService.save(patient);
     }
 
+    @RequestMapping(value = "{patientId}", method = RequestMethod.DELETE)
+    public void removePatient(@PathVariable("patientId") Integer patientId) {
+        ValidationHelper.validateRequired("patientId", patientId);
+        patientService.delete(patientId);
+    }
+
 }

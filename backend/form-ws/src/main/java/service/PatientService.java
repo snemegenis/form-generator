@@ -13,4 +13,6 @@ public interface PatientService {
     Patient get(int patientId);
 
     Patient save(Patient patient);
+
+    void delete(Integer patientId);
 }

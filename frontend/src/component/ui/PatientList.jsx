@@ -1,13 +1,13 @@
 import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 import {translate} from "react-i18next";
-import {Button, FormGroup, InputGroup} from "react-bootstrap";
+import {Button, FormGroup, Glyphicon, InputGroup} from "react-bootstrap";
 
 
 const PatientList = (props) => {
   const {
     patients, filter, loading, onDisabilityAdd, onDisabilityUpdate,
-    onPrint, onAdd, onUpdate, onShowAll, onFilter, t
+    onPrint, onAdd, onUpdate, onRemove, onShowAll, onFilter, t
   } = props;
 
   if (loading) {
@@ -46,7 +46,7 @@ const PatientList = (props) => {
             <input id="input-filter" type="text" className="form-control"
                    ref={input => filterInput = input} defaultValue={filter ? filter : ''} onChange={onChange}/>
             {filter && <span className="input-group-btn">
-          <Button onClick={onShowAllClick}>{t('Show all')}</Button>
+          <Button onClick={onShowAllClick}><Glyphicon glyph="filter"/> {t('Show all')}</Button>
         </span>}
           </InputGroup>
         </FormGroup>
@@ -58,12 +58,12 @@ const PatientList = (props) => {
         <th>{t('Personal id')}</th>
         <th>{t('First name')}</th>
         <th>{t('Last name')}</th>
-        <th>&nbsp;</th>
+        <th colSpan={2}>&nbsp;</th>
       </tr>
       </thead>
       <tbody>
       {(filteredPatients.length === 0) && <tr>
-        <td colSpan={4}>{t("No patients found")}</td>
+        <td colSpan={5}>{t("No patients found")}</td>
       </tr>}
       {
         filteredPatients.map(patient =>
@@ -71,6 +71,7 @@ const PatientList = (props) => {
                    firstName={patient.firstName} lastName={patient.lastName}
                    onPrint={onPrint}
                    onUpdate={onUpdate}
+                   onRemove={onRemove}
                    disabilityReportId={patient.disabilityReportId}
                    tempSaved={patient.tempSaved}
                    onDisabilityAdd={onDisabilityAdd}
@@ -78,7 +79,7 @@ const PatientList = (props) => {
       }
       </tbody>
     </table>
-      <Button  onClick={() => onAdd()}>{t('Add Patient')}</Button>
+      <Button  onClick={() => onAdd()}><Glyphicon glyph="plus"/> {t('Add Patient')}</Button>
   </div>
 };
 
@@ -90,6 +91,7 @@ PatientList.propTypes = {
   onDisabilityUpdate: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   onShowAll: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired
 };

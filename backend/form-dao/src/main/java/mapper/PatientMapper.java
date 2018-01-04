@@ -37,4 +37,7 @@ public interface PatientMapper {
             "mobile_phone=#{mobilePhone}, address=#{address}, employer=#{employer} WHERE id=#{id}" })
     int update(Patient patient);
 
+    @Delete("DELETE FROM patient p WHERE p.id = #{patientId}")
+    int delete(Integer patientId);
+
 }

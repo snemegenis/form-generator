@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import moment from "moment";
 import {maskedInvalid, trimmedEmpty} from "../../util/ValidationUtil";
-import {Button, ButtonToolbar, Row} from "react-bootstrap";
+import {Button, ButtonToolbar, Glyphicon, Row} from "react-bootstrap";
 import Input from "./form/Input.jsx";
 import MaskedInput from "./form/MaskedInput.jsx";
 import InputArea from "./form/InputArea.jsx";
@@ -98,8 +98,9 @@ class PatientForm extends React.Component {
              className="form-control" component={Input}/>
 
       <ButtonToolbar>
-        <Button type="submit" disabled={invalid}>{t("Save")}</Button>
-        <Button type="button" onClick={(e) => this.props.onBack(e, !pristine)}>{t("Back")}</Button>
+        <Button type="submit" disabled={invalid}><Glyphicon glyph="save"/> {t("Save")}</Button>
+        <Button type="button" onClick={(e) => this.props.onBack(e, !pristine)}>
+          <Glyphicon glyph="level-up"/> {t("Back")}</Button>
       </ButtonToolbar>
     </Form>
   }

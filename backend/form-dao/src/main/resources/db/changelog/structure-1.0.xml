@@ -1,8 +1,8 @@
 <databaseChangeLog
-		xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
-    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 	<changeSet author="liutkvai" id="table-doctor">
 		<createTable tableName="doctor">
 			<column name="id" autoIncrement="true" type="INTEGER">
@@ -73,15 +73,15 @@
 			<column name="patient_id" type="integer">
 				<constraints nullable="false"/>
 			</column>
-			<column name="history" type="VARCHAR(500)">
+			<column name="history" type="VARCHAR(5000)">
 			</column>
-			<column name="other_treatment" type="VARCHAR(500)">
+			<column name="other_treatment" type="VARCHAR(1000)">
 			</column>
-			<column name="treatment_history" type="VARCHAR(500)">
+			<column name="treatment_history" type="VARCHAR(5000)">
 			</column>
 			<column name="barthel_index" type="INTEGER">
 			</column>
-			<column name="latest_disability_desc" type="VARCHAR(500)">
+			<column name="latest_disability_desc" type="VARCHAR(5000)">
 			</column>
 			<column name="active" type="BOOLEAN">
 				<constraints nullable="false"/>
@@ -118,10 +118,10 @@
 			<column name="doctor_type" type="VARCHAR(50)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="observation" type="VARCHAR(255)">
+			<column name="observation" type="VARCHAR(1000)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="attachment" type="VARCHAR(100)" />
+			<column name="attachment" type="VARCHAR(200)" />
 		</createTable>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-diagnosis">
@@ -138,22 +138,22 @@
 			<column name="code" type="VARCHAR(20)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="text" type="VARCHAR(100)">
+			<column name="text" type="VARCHAR(255)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="functional_class" type="VARCHAR(50)">
+			<column name="functional_class" type="VARCHAR(100)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="degree" type="VARCHAR(30)">
+			<column name="degree" type="VARCHAR(100)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="stage" type="VARCHAR(30)">
+			<column name="stage" type="VARCHAR(100)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="history" type="VARCHAR(100)">
+			<column name="history" type="VARCHAR(3000)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="details" type="VARCHAR(255)">
+			<column name="details" type="VARCHAR(3000)">
 				<constraints nullable="true"/>
 			</column>
 		</createTable>
@@ -183,37 +183,44 @@
 								 baseTableName="user"
 								 baseColumnNames="doctor_id"
 								 referencedTableName="doctor"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="disability_patient_fk"
 								 baseTableName="disability_report"
 								 baseColumnNames="patient_id"
 								 referencedTableName="patient"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="treatment_disability_fk"
 								 baseTableName="treatment"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="appointment_disability_fk"
 								 baseTableName="appointment"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="diagnosis_disability_fk"
 								 baseTableName="diagnosis"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="disability_type_disability_fk"
 								 baseTableName="disability_type"
 								 baseColumnNames="disability_report_id"
 								 referencedTableName="disability_report"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 		<addForeignKeyConstraint constraintName="disability_report_tmp_fk"
 								 baseTableName="disability_report_tmp"
 								 baseColumnNames="patient_id"
 								 referencedTableName="patient"
-								 referencedColumnNames="id"/>
+								 referencedColumnNames="id"
+								 onDelete="CASCADE"/>
 	</changeSet>
 	<changeSet author="liutkvai" id="primary-keys">
 		<addPrimaryKey constraintName="treatment_pk" tableName="treatment" columnNames="disability_report_id,name"/>

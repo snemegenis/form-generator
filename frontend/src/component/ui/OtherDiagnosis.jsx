@@ -28,14 +28,14 @@ const OtherDiagnosis = ({onRemoveDiagnosis, selector, t, fields, meta}) => (
     )}
     {meta.error ? meta.error : ""}
     <ButtonToolbar>
-      <Button onClick={() => fields.push({})}>{t("Add Diagnosis")}</Button>
+      <Button onClick={() => fields.push({})}><Glyphicon glyph="plus"/> {t("Add Diagnosis")}</Button>
     </ButtonToolbar>
   </div>
 );
 
 OtherDiagnosis.propTypes = {
   onRemoveDiagnosis: PropTypes.func.isRequired,
-  selector: PropTypes.func.isRequired,
+  selector: PropTypes.array,
   t: PropTypes.func.isRequired,
   fields: PropTypes.object,
   meta: PropTypes.object

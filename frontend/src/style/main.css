@@ -33,3 +33,9 @@
     font-weight: bold;
 }
 
+.actions button {
+    width: 170px !important;
+}
+.delete-action {
+    text-align: right;
+}

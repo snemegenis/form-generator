@@ -55,7 +55,8 @@ const Appointments = ({onRemoveAppointment, t, fields, meta, label}) => (
       )}
 
       <tr>
-        <td colSpan={5}><Button onClick={() => fields.push({primary: false})}>{t('Add appointment')}</Button>
+        <td colSpan={5}><Button onClick={() => fields.push({primary: false})}>
+          <Glyphicon glyph="plus"/> {t('Add appointment')}</Button>
         </td>
       </tr>
       </tbody>

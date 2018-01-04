@@ -71,4 +71,16 @@ public class PatientMapperTest extends MapperTestBase {
 
     }
 
+    @Test
+    public void testDeletePatient() throws Exception {
+        List<Patient> expected = readFromClassPath("/mapper/expected/deleted-patients.json",
+                new TypeReference<List<Patient>>() {
+                });
+
+        patientMapper.delete(1);
+        List<Patient> actual = patientMapper.getList();
+        assertListEquals(expected, actual);
+
+    }
+
 }

@@ -26,6 +26,11 @@ const savePatient = (doctorId, patient) => ({
     patient
 });
 
+const removePatient = (patientId) => ({
+  type: constants.REMOVE_PATIENT,
+  patientId
+});
+
 export const showAllPatientListAction = () => ({
     type: constants.SHOW_ALL_PATIENT_LIST
 });
@@ -47,8 +52,32 @@ export const savePatientAction = (patient) => dispatch => {
             dispatch(savePatientErrorAction(error));
             dispatch(notify({message: i18n.t("Patient saving error."), status: 500, position: 'tc'}));
         });
+};
+
+export const removePatientAction = (patientId) => dispatch => {
+  dispatch(removePatient(patientId));
+  return PatientApi.remove(patientId).then(
+    () => {
+      dispatch(removePatientSuccessAction(patientId));
+      dispatch(notify({message: i18n.t("Patient removed successfully."), status: 200, position: 'tc'}));
+    },
+    error => {
+      dispatch(removePatientErrorAction(patientId, error));
+      dispatch(notify({message: i18n.t("Patient removal error."), status: 500, position: 'tc'}));
+    });
 
 };
+
+export const removePatientErrorAction = (patientId, error) => ({
+  type: constants.REMOVE_PATIENT_ERROR,
+  error,
+  patientId
+});
+
+export const removePatientSuccessAction = (patientId) => ({
+  type: constants.REMOVE_PATIENT_SUCCESS,
+  patientId
+});
 
 export const savePatientErrorAction = (patient, error) => ({
     type: constants.SAVE_PATIENT_ERROR,

@@ -1,7 +1,7 @@
 import React, {PropTypes} from "react";
 import {Field, Form, SubmissionError} from "redux-form";
 import {trimmedEmpty} from "../../util/ValidationUtil";
-import {Button} from "react-bootstrap";
+import {Button, Glyphicon} from "react-bootstrap";
 import Input from "./form/Input.jsx";
 
 class LoginForm extends React.Component {
@@ -43,7 +43,7 @@ class LoginForm extends React.Component {
       <Field name="password" id="credentials.password" label={t("Password") + ":"}
              type="password" component={Input}/>
 
-      <Button type="submit" disabled={invalid}>{t("Login")}</Button>
+      <Button type="submit" disabled={invalid}><Glyphicon glyph="log-in"/> {t("Login")}</Button>
     </Form>
   }
 }

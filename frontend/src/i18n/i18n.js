@@ -18,7 +18,8 @@ i18n.use(LanguageDetector).init({
         "Last name": "Last name",
         "Add Disability": "Add Disability",
         "Update Disability": "Update Disability",
-        "Update patient": "Update patient",
+        "Update Patient": "Update Patient",
+        "Remove Patient": "Remove Patient",
         "Print": "Print",
         "Date of birth": "Date of birth",
         "Address": "Address",
@@ -49,7 +50,9 @@ i18n.use(LanguageDetector).init({
         "Logout error.": "Logout error.",
         "User authentication info is missing": "User authentication info is missing",
         "Patient saved successfully.": "Patient saved successfully.",
+        "Patient removed successfully.": "Patient removed successfully.",
         "Patient saving error.": "Patient saving error.",
+        "Patient removal error.": "Patient removal error.",
         "Patients report generation error.": "Patients report generation error.",
         "Disability temporary data saved successfully.": "Disability temporary data saved successfully.",
         "Disability temporary data saving error.": "Disability temporary data saving error.",
@@ -128,6 +131,7 @@ i18n.use(LanguageDetector).init({
         "Data has been changed. Do you really want to quit without saving changes?": "Data has been changed. Do you really want to quit without saving changes?",
         "Do you want to remove diagnosis?": "Do you want to remove diagnosis?",
         "Do you want to remove appointment?": "Do you want to remove appointment?",
+        "Do you really want to delete patient and it's data?": "Do you really want to delete patient and it's data?",
         "Yes": "Yes",
         "No": "No"
       }
@@ -146,7 +150,8 @@ i18n.use(LanguageDetector).init({
         "Last name": "Pavardė",
         "Add Disability": "Pridėti neįgalumą",
         "Update Disability": "Atnaujinti neįgalumą",
-        "Update patient": "Atnaujinti pacientą",
+        "Update Patient": "Atnaujinti Pacientą",
+        "Remove Patient": "Pašalinti Pacientą",
         "Print": "Spausdinti",
         "Date of birth": "Gimimo data",
         "Address": "Adresas",
@@ -179,7 +184,10 @@ i18n.use(LanguageDetector).init({
         "Logout error.": "Nepavyko atsijungti nuo sistemos. Bandykite dar kartą.",
         "User authentication info is missing": "Prašome prisijungti prie sistemos",
         "Patient saved successfully.": "Paciento duomenys išsaugoti sėkmingai.",
+        "Patient removed successfully.": "Paciento duomenys pašalinti sėkmingai.",
         "Patient saving error.": "Paciento duomenų saugojimo klaida. Pabandykite dar kartą. " +
+        "Jei klaida kartojasi, kreipkitės į sistemos administratorių.",
+        "Patient removal error.": "Paciento duomenų šalinimo klaida. Pabandykite dar kartą. " +
         "Jei klaida kartojasi, kreipkitės į sistemos administratorių.",
         "Patients report generation error.": "Neįgalumo formos generavimo klaida. Pabandykite dar kartą. " +
         "Jei klaida kartojasi, kreipkitės į sistemos administratorių.",
@@ -264,6 +272,7 @@ i18n.use(LanguageDetector).init({
           "Duomenys buvo pakeisti. Ar tikrai norite išeiti neišsaugoję pakeitimų?",
         "Do you want to remove diagnosis?": "Ar tikrai norite pašalinti diagnozę?",
         "Do you want to remove appointment?": "Ar tikrai norite pašalinti aprašymą?",
+        "Do you really want to delete patient and it's data?": "Ar tikrai norite pašalinti pacientą ir jo visus duomenis?",
         "Yes": "Taip",
         "No": "Ne"
       }

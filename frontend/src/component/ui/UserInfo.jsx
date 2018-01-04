@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 import {translate} from "react-i18next";
-import {MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Glyphicon, MenuItem, Nav, Navbar, NavDropdown} from "react-bootstrap";
 
 const UserInfo = ({user, onLogout = f => f, t = f => f}) => {
     if (!user.doctor) {
@@ -10,7 +10,7 @@ const UserInfo = ({user, onLogout = f => f, t = f => f}) => {
   return <Navbar.Collapse>
     <Nav pullRight>
       <NavDropdown eventKey={1} title={user.doctor.firstName+" "+user.doctor.lastName} id="basic-nav-dropdown">
-        <MenuItem eventKey={1.1} onClick={onLogout}>{t('Logout')}</MenuItem>
+        <MenuItem eventKey={1.1} onClick={onLogout}><Glyphicon glyph="log-out"/> {t('Logout')}</MenuItem>
       </NavDropdown>
     </Nav>
   </Navbar.Collapse>;
