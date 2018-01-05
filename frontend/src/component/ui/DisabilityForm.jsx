@@ -173,6 +173,8 @@ class DisabilityForm extends React.Component {
 
   handleSubmit(input) {
     const {disability, pressed} = input;
+    const {dirty} = this.props;
+
     switch (pressed) {
       case 'Save':
         this.validate(disability);
@@ -180,8 +182,12 @@ class DisabilityForm extends React.Component {
         this.props.onSave(disability);
         break;
       default:
-        this.removeInvalidDates(disability);
-        this.props.onSaveTmp(disability);
+        if (dirty) {
+          this.removeInvalidDates(disability);
+          this.props.onSaveTmp(disability);
+        } else {
+          this.props.onBack(dirty);
+        }
         break;
     }
 
@@ -249,6 +255,7 @@ class DisabilityForm extends React.Component {
              id="disability.disabilityTypes" label={t("Disability types")} columns={4}
              checkboxes={DISABILITY_TYPES}/>
 
+
       <ButtonToolbar>
         <Button onClick={handleSubmit(values => this.handleSubmit.apply(this, [{
           disability: {...values}, pressed: 'Save'
@@ -258,7 +265,7 @@ class DisabilityForm extends React.Component {
           disability: {...values}, pressed: 'Close'
         }]))}><Glyphicon glyph="level-up"/> {t("Close")}
         </Button>
-        <Button onClick={(e) => this.props.onBack(e, dirty)}><Glyphicon glyph="level-up"/> {t("Cancel")}
+        <Button onClick={(e) => {e.preventDefault(); this.props.onBack(dirty);}}><Glyphicon glyph="level-up"/> {t("Cancel")}
         </Button>
       </ButtonToolbar>
     </Form>

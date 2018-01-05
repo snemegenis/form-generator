@@ -64,8 +64,14 @@ const VisiblePatients = translate()(connect(state => ({
     onFilter(filter) {
       dispatch(filterPatientListAction(filter));
     },
-    onPrint(id, firstName, lastName) {
-      dispatch(printPatientAction(id, firstName, lastName));
+    onPrint(id, firstName, lastName, tempSaved) {
+      if (tempSaved) {
+        showConfirmation(dispatch, "Patient {{firstName}} {{lastName}} has temporary changes " +
+          "and these changes will not be reflected. Do you want to continue?", {firstName, lastName}, false,
+          () => dispatch(printPatientAction(id, firstName, lastName)), true);
+      } else {
+        dispatch(printPatientAction(id, firstName, lastName));
+      }
     },
     onAdd() {
       hashHistory.push('/patient/add');
@@ -80,8 +86,9 @@ const VisiblePatients = translate()(connect(state => ({
     onUpdate(patientId) {
       hashHistory.push(`/patient/${patientId}/update`);
     },
-    onRemove(patientId) {
-      showConfirmation(dispatch, "Do you really want to delete patient and it's data?", false,
+    onRemove(patientId, firstName, lastName) {
+      showConfirmation(dispatch, "Do you really want to delete patient {{firstName}} {{lastName}} and it's data?",
+        {firstName, lastName}, false,
         () => {
           dispatch(removePatientAction(patientId));
         }, true);
@@ -114,7 +121,7 @@ const ModifyPatient = translate()(connect(
     onBack(e, changed) {
       e.preventDefault();
       if (changed) {
-        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", false,
+        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", {}, false,
           () => {
             hashHistory.push('/');
           }, true);
@@ -159,19 +166,18 @@ const ModifyDisability = translate()(connect(
       dispatch(saveDisabilityTmpAction(disability, true));
     },
     onRemoveDiagnosis(removeAction) {
-      showConfirmation(dispatch, "Do you want to remove diagnosis?", false, removeAction, true);
+      showConfirmation(dispatch, "Do you want to remove diagnosis?", {}, false, removeAction, true);
     },
     onRemoveAppointment(removeAction) {
-      showConfirmation(dispatch, "Do you want to remove appointment?", false, removeAction, true);
+      showConfirmation(dispatch, "Do you want to remove appointment?", {}, false, removeAction, true);
     },
     onSave(disability) {
       console.log('disability: ', disability);
       dispatch(saveDisabilityAction(disability));
     },
-    onBack(e, changed) {
-      e.preventDefault();
+    onBack(changed) {
       if (changed) {
-        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", false,
+        showConfirmation(dispatch, "Data has been changed. Do you really want to quit without saving changes?", {}, false,
           () => {
             dispatch(cancelDisability("activeDisability"));
             hashHistory.push('/');

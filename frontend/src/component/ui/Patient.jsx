@@ -20,12 +20,12 @@ const Patient = (props) => {
             {disabilityReportId &&
             <Button onClick={() => onDisabilityUpdate(id, disabilityReportId, tempSaved)}>
               <Glyphicon glyph="edit"/> {t('Update Disability')}</Button>}
-            {disabilityReportId && <Button onClick={() => onPrint(id, firstName, lastName)}>
+            {disabilityReportId && <Button onClick={() => onPrint(id, firstName, lastName, tempSaved)}>
               <Glyphicon glyph="print"/> {t('Print')}</Button>}
           </ButtonToolbar>
       </td>
       <td className="delete-action">
-        <Button onClick={() => onRemove(id)}><Glyphicon glyph="remove"/> {t('Remove Patient')}</Button>
+        <Button onClick={() => onRemove(id, firstName, lastName)}><Glyphicon glyph="remove"/> {t('Remove Patient')}</Button>
       </td>
   </tr>
 };

@@ -19,7 +19,7 @@ i18n.use(LanguageDetector).init({
         "Add Disability": "Add Disability",
         "Update Disability": "Update Disability",
         "Update Patient": "Update Patient",
-        "Remove Patient": "Remove Patient",
+        "Remove Patient": "Remove",
         "Print": "Print",
         "Date of birth": "Date of birth",
         "Address": "Address",
@@ -111,6 +111,7 @@ i18n.use(LanguageDetector).init({
         "Save": "Save",
         "Close": "Close",
         "Cancel": "Cancel",
+        "Remove temporary changes": "Remove temporary changes",
         "Enter history.": "Enter history.",
         "Enter other treatment.": "Enter other treatment.",
         "Enter one treatment at least.": "Enter one treatment at least.",
@@ -128,12 +129,16 @@ i18n.use(LanguageDetector).init({
         "Enter valid date": "Enter valid date",
         "Enter doctor type": "Enter doctor type",
         "Enter observation": "Enter observation",
-        "Data has been changed. Do you really want to quit without saving changes?": "Data has been changed. Do you really want to quit without saving changes?",
+        "Data has been changed. Do you really want to quit without saving changes?":
+          "Data has been changed. Do you really want to quit without saving changes?",
         "Do you want to remove diagnosis?": "Do you want to remove diagnosis?",
         "Do you want to remove appointment?": "Do you want to remove appointment?",
-        "Do you really want to delete patient and it's data?": "Do you really want to delete patient and it's data?",
+        "Do you really want to delete patient {{firstName}} {{lastName}} and it's data?":
+          "Do you really want to delete patient {{firstName}} {{lastName}}and it's data?",
         "Yes": "Yes",
-        "No": "No"
+        "No": "No",
+        "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?":
+        "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?"
       }
     },
     lt: {
@@ -151,7 +156,7 @@ i18n.use(LanguageDetector).init({
         "Add Disability": "Pridėti neįgalumą",
         "Update Disability": "Atnaujinti neįgalumą",
         "Update Patient": "Atnaujinti Pacientą",
-        "Remove Patient": "Pašalinti Pacientą",
+        "Remove Patient": "Pašalinti",
         "Print": "Spausdinti",
         "Date of birth": "Gimimo data",
         "Address": "Adresas",
@@ -251,6 +256,7 @@ i18n.use(LanguageDetector).init({
         "Save": "Išsaugoti",
         "Close": "Uždaryti",
         "Cancel": "Atšaukti pakeitimus",
+        "Remove temporary changes": "Atšaukti visus laikinus pakeitimus",
         "Enter history.": "Įveskite išsamią ligos anamnezę",
         "Enter other treatment.": "Įveskite kito gydymo būdą.",
         "Enter one treatment at least.": "Įveskite bent vieną taikyto gydymo būdą.",
@@ -272,9 +278,12 @@ i18n.use(LanguageDetector).init({
           "Duomenys buvo pakeisti. Ar tikrai norite išeiti neišsaugoję pakeitimų?",
         "Do you want to remove diagnosis?": "Ar tikrai norite pašalinti diagnozę?",
         "Do you want to remove appointment?": "Ar tikrai norite pašalinti aprašymą?",
-        "Do you really want to delete patient and it's data?": "Ar tikrai norite pašalinti pacientą ir jo visus duomenis?",
+        "Do you really want to delete patient {{firstName}} {{lastName}} and it's data?":
+          "Ar tikrai norite pašalinti pacientą {{firstName}} {{lastName}} ir jo visus duomenis?",
         "Yes": "Taip",
-        "No": "Ne"
+        "No": "Ne",
+        "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?":
+        "Laikini paciento {{firstName}} {{lastName}} neįgalumo pakeitimai dar nėra išsaugoti ir nebus spausdinami. Ar norite tęsti?"
       }
     }
   },
