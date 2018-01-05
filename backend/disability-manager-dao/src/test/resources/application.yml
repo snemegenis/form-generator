@@ -1,0 +1,8 @@
+jdbc:
+  driver:
+    class: org.h2.Driver
+  url: jdbc:h2:mem:memdb;DB_CLOSE_DELAY=-1
+#  url: jdbc:h2:file:~/test
+#  url: jdbc:h2:tcp://10.1.2.48:9092/~/test
+  username: sa
+  password:
