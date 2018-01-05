@@ -20,7 +20,7 @@ const Appointments = ({onRemoveAppointment, t, fields, meta, label}) => (
       </thead>
       <tbody>
       {fields.map((appointment, index) =>
-        <tr>
+        <tr key={index}>
           <td>
             <Field name={`${appointment}.date`}
                    component={MaskedInput} mask="9999-99-99"

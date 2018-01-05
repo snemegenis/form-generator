@@ -265,7 +265,8 @@ class DisabilityForm extends React.Component {
           disability: {...values}, pressed: 'Close'
         }]))}><Glyphicon glyph="level-up"/> {t("Close")}
         </Button>
-        <Button onClick={(e) => {e.preventDefault(); this.props.onBack(dirty);}}><Glyphicon glyph="level-up"/> {t("Cancel")}
+        <Button className="pull-right" onClick={(e) => {e.preventDefault(); this.props.onBack(dirty);}}>
+          <Glyphicon glyph="level-up"/> {t("Cancel")}
         </Button>
       </ButtonToolbar>
     </Form>
