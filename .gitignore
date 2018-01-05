@@ -8,3 +8,4 @@ bin
 /build/
 .classpath
 *.jasper
+disability-manager-backend.log
