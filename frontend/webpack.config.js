@@ -14,11 +14,13 @@ var CMP_DIR = path.resolve(SRC_DIR, 'component');
 // Loading user configuration.
 let nconf = require('nconf');
 if (process.env.NODE_ENV == 'prod') {
-  nconf.file('./src/config/prodConfig.json');
+  nconf.file('overrides', './src/config/prodConfig.json');
+} else {
+  nconf.file('overrides', './src/config/devConfig.json');
 }
-nconf.file('./src/config/devConfig.json');
-nconf.file('./src/config/commonConfig.json');
+nconf.file('default', './src/config/commonConfig.json');
 let appConfig = nconf.get();
+console.log('config: ' + JSON.stringify(appConfig));
 
 var CSSLoader = [
   'css?sourceMap&-minimize',
