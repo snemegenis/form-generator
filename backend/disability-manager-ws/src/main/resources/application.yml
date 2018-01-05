@@ -1,5 +1,5 @@
 server:
-  contextPath: /form
+  contextPath: /
 rest:
   base:
     path: /rest/v1
