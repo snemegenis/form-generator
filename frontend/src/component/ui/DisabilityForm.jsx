@@ -3,7 +3,7 @@ import {Field, FieldArray, Form, SubmissionError} from "redux-form";
 import moment from "moment";
 import {trimmedEmpty, maskedInvalid} from "../../util/ValidationUtil";
 import {Button, ButtonToolbar, Col, Glyphicon, Row} from "react-bootstrap";
-import {DISABILITY_TYPES, TREATMENTS} from "../../constants/disability";
+import {DISABILITY_TYPES, TREATMENTS} from "./constant";
 import Input from "./form/Input.jsx";
 import Appointments from "./Appointments.jsx";
 import NumberInput from "./form/NumberInput.jsx";

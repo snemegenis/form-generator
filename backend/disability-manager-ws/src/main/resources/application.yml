@@ -15,8 +15,6 @@ spring:
   output:
     ansi:
       enabled: always
-  profiles:
-    active: prod
 
 ---
 
@@ -39,10 +37,13 @@ server:
 
 spring:
   profiles: prod
+  h2:
+    console:
+      enabled: false
   datasource:
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
+    url: jdbc:h2:file:~/test
+    username: admin
+    password: admin123
     driver-class-name: org.h2.Driver
 server:
   port: 8443
@@ -52,3 +53,11 @@ server:
     key-store-type: PKCS12
     key-alias: disability-manager
     enabled: true
+
+---
+
+spring:
+  profiles: test
+security:
+  basic:
+    enabled: false

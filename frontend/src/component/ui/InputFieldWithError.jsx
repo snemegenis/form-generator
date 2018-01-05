@@ -11,7 +11,7 @@ const InputFieldWithError = ({id, label, outerDivClass, labelClass, inputClass, 
 
 InputFieldWithError.propTypes = {
     id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     outerDivClass: PropTypes.string,
     labelClass: PropTypes.string,
     inputClass: PropTypes.string,

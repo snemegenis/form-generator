@@ -3,12 +3,14 @@ package report;
 import bean.DisabilityReport;
 import bean.Doctor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import config.ApplicationConfig;
 import config.ConfigForTest;
 import constants.ReportConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,12 +32,16 @@ import java.util.Map;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ConfigForTest.class})
+@ContextConfiguration(classes = { ApplicationConfig.class, ConfigForTest.class})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class ITextReportGeneratorImplTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    @Qualifier("ITextReportGenerator")
+    private ReportGenerator reportGenerator;
 
     @Test
     public void testGenerate() throws Exception {
@@ -47,7 +53,7 @@ public class ITextReportGeneratorImplTest {
         parameters.put(ReportConstants.PARAM_USER, Doctor.builder()
                 .code("AKM123").firstName("Ona Laimute").lastName("Liutkiene").occupation("Seimos gydytoja").build());
 
-        byte[] report = new ITextReportGeneratorImpl().generate(ReportConstants.DISABILITY_REPORT_CODE, parameters,
+        byte[] report = reportGenerator.generate(ReportConstants.DISABILITY_REPORT_CODE, parameters,
                 Collections.singleton(inputData));
         String filePath = Files.createTempDirectory("form-generator").toString();
         log.info(filePath);

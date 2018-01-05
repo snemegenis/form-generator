@@ -6,6 +6,7 @@ dependencies {
     compile group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.2.0'
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-tomcat")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.session:spring-session")
     compile("io.jsonwebtoken:jjwt:0.7.0")
@@ -25,3 +26,6 @@ jar {
 
 jar.dependsOn(':frontend:webpack_build')
 
+bootRun {
+    environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: "dev"
+}

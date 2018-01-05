@@ -814,7 +814,9 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
                 document.add(signatureTable);
                 footerEvent.setPrint(true);
             } finally {
-                document.close();
+                if (document.isOpen()) {
+                    document.close();
+                }
                 if (writer != null) {
                     writer.close();
                 }

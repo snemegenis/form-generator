@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import report.ITextReportGeneratorImpl;
 
 /**
  * Created by liutkvai on 8/31/2016.
@@ -35,6 +36,11 @@ public class ConfigForTest {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(objectMapper());
         return new HttpMessageConverters(converter);
+    }
+
+    @Bean("ITextReportGenerator")
+    public ITextReportGeneratorImpl iTextReportGenerator() {
+        return new ITextReportGeneratorImpl();
     }
 
 }

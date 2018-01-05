@@ -6,7 +6,11 @@ import thunkMiddleware from 'redux-thunk';
 import {routerReducer} from 'react-router-redux'
 import {reducer as notificationsReducer} from 'reapop';
 import { reducer as formReducer } from 'redux-form'
-const logger = createLogger();
+import constants from "../action/constant";
+
+const logger = createLogger(APP_CONFIG.LOG_APP_EVENTS_ONLY ? {
+    predicate: (getState, action) => constants.hasOwnProperty(action.type)
+  } : {});
 
 const storeFactory = (initialState = initialStateData) =>
   applyMiddleware(thunkMiddleware, logger)(createStore)(combineReducers(

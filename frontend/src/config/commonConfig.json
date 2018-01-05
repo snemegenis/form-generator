@@ -1,6 +1,5 @@
 {
-  "API_URL": "http://localhost:8090",
   "API_APP_PREFIX": "/rest/v1",
-  "AUTO_SAVE_INTERVAL": 120000
-
+  "AUTO_SAVE_INTERVAL": 120000,
+  "LOG_APP_EVENTS_ONLY": false
 }
