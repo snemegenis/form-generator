@@ -65,7 +65,7 @@
 			<column name="treatment_history">Some treatment history of Petras</column>
 			<column name="barthel_index">2</column>
 			<column name="latest_disability_desc">Some latest disability description of Petras</column>
-			<column name="active">TRUE</column>
+			<column name="active" valueBoolean="TRUE" />
 			<column name="created">2010-12-12T12:55:00.001</column>
 			<column name="modified">2010-12-12T12:55:00.001</column>
 		</insert>
@@ -104,7 +104,7 @@
 		<insert tableName="diagnosis">
 			<column name="id">1</column>
 			<column name="disability_report_id">1</column>
-			<column name="is_primary">TRUE</column>
+			<column name="is_primary" valueBoolean="TRUE" />
 			<column name="code">SER-0000</column>
 			<column name="text">Rhinitus posiblus vulgaris</column>
 			<column name="functional_class">The first class</column>
@@ -118,7 +118,7 @@
 		<insert tableName="diagnosis">
 			<column name="id">2</column>
 			<column name="disability_report_id">1</column>
-			<column name="is_primary">FALSE</column>
+			<column name="is_primary" valueBoolean="FALSE" />
 			<column name="code">SER-0001</column>
 			<column name="text">Rhinitus posiblus vulgaris 1</column>
 			<column name="functional_class">The first class 1</column>

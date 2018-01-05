@@ -67,7 +67,7 @@ public interface DisabilityMapper {
     @Insert({"<script>" +
             "   INSERT INTO disability_type (disability_report_id, name) VALUES " +
             "   <foreach collection='disabilityTypes' item='disabilityType' index='index' open='(' separator = '),(' close=')'>" +
-            "       #{disabilityReportId}, #{disabilityType.name}, " +
+            "       #{disabilityReportId}, #{disabilityType.name} " +
             "   </foreach>" +
             "</script>"})
     void assignDisabilities(@Param("disabilityReportId") int disabilityReportId, @Param("disabilityTypes")
