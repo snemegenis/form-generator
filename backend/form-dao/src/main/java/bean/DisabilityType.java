@@ -1,8 +1,0 @@
-package bean;
-
-/**
- * Created by liutkvai on 6/27/2016.
- */
-public enum DisabilityType {
-	WORKING_CAPACITY_LEVEL, FIRST_TIME, DISABILITY_LEVEL, EXPIRED, SPECIAL_REQUIREMENT, HEALTH_COND_CHANGED, REQUIRED_BY_PERSON
-}
