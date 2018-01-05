@@ -47,21 +47,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${rest.base.path}")
     private String basePath;
 
-//    @Bean
-//    @Profile("dev")
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurerAdapter() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping(basePath)
-//                        .allowedOrigins("http://localhost:8081");
-//            }
-//        };
-//    }
+    //    @Bean
+    //    @Profile("dev")
+    //    public WebMvcConfigurer corsConfigurer() {
+    //        return new WebMvcConfigurerAdapter() {
+    //            @Override
+    //            public void addCorsMappings(CorsRegistry registry) {
+    //                registry.addMapping(basePath)
+    //                        .allowedOrigins("http://localhost:8081");
+    //            }
+    //        };
+    //    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.headers().frameOptions().sameOrigin().and()
+                .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers(basePath + "/auth/**")
