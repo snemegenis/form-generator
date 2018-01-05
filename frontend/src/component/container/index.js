@@ -158,11 +158,9 @@ const ModifyDisability = translate()(connect(
       dispatch(submit("activeDisability"));
     },
     onAutoSaveTmp(disability) {
-      console.log('disability: ', disability);
       dispatch(saveDisabilityTmpAction(disability, false));
     },
     onSaveTmp(disability) {
-      console.log('disability: ', disability);
       dispatch(saveDisabilityTmpAction(disability, true));
     },
     onRemoveDiagnosis(removeAction) {
@@ -172,7 +170,6 @@ const ModifyDisability = translate()(connect(
       showConfirmation(dispatch, "Do you want to remove appointment?", {}, false, removeAction, true);
     },
     onSave(disability) {
-      console.log('disability: ', disability);
       dispatch(saveDisabilityAction(disability));
     },
     onBack(changed) {
