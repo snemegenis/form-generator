@@ -66,8 +66,8 @@ const PatientList = (props) => {
         <td colSpan={5}>{t("No patients found")}</td>
       </tr>}
       {
-        filteredPatients.map(patient =>
-          <Patient key={patient.id} id={patient.id} personalId={patient.personalId}
+        filteredPatients.map((patient, index) =>
+          <Patient key={index} id={patient.id} personalId={patient.personalId}
                    firstName={patient.firstName} lastName={patient.lastName}
                    onPrint={onPrint}
                    onUpdate={onUpdate}

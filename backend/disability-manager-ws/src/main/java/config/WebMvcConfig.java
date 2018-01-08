@@ -77,6 +77,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
         private Resource createRelative(Resource resource, String relativePath) {
             try {
+                log.debug("Resolving resource {} with relative path {}", resource, relativePath);
                 return resource.createRelative(relativePath);
             } catch (IOException e) {
                 log.error("Resolving relative path: " + relativePath, e);

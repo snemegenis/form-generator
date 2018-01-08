@@ -113,7 +113,7 @@ const ModifyPatient = translate()(connect(
   }),
   (dispatch) => ({
     onPrint(patient) {
-      dispatch(savePatientAction(patient));
+      dispatch(printPatientAction(patient.id, patient.firstName, patient.lastName));
     },
     onSave(patient) {
       dispatch(savePatientAction(patient));

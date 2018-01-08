@@ -28,16 +28,17 @@ export const patients = (state = {isLoading: false, isLoadingError: false, data:
         ...state,
         isLoading: false,
         isLoadingError: false,
-        data: [...state.data].filter(patient => patient.id !== action.patientId),
+        data: state.data.filter(patient => patient.id !== action.patientId),
         error: null
       };
     case constants.SAVE_PATIENT_SUCCESS:
+      let new_data = [action.patient, ...state.data.filter(patient => patient.id !== action.patient.id)];
       return {
         ...state,
         isLoading: false,
         isLoadingError: false,
         savedAt: action.savedAt,
-        data: [action.patient, ...state.data].sort((p1, p2) => {
+        data: new_data.sort((p1, p2) => {
           let result = sortByField(p1, p2, "firstName");
           if (!result) {
             result = sortByField(p1, p2, "lastName");

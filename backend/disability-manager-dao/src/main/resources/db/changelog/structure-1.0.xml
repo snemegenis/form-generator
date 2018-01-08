@@ -19,6 +19,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-user">
 		<createTable tableName="user">
@@ -33,6 +36,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-patient">
 		<createTable tableName="patient">
@@ -64,6 +70,9 @@
 			<column name="employer" type="VARCHAR(100)">
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-disability_report">
 		<createTable tableName="disability_report">
@@ -93,6 +102,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-treatment">
 		<createTable tableName="treatment">
@@ -103,6 +115,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-appointment">
 		<createTable tableName="appointment">
@@ -123,6 +138,9 @@
 			</column>
 			<column name="attachment" type="VARCHAR(200)" />
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-diagnosis">
 		<createTable tableName="diagnosis">
@@ -157,6 +175,9 @@
 				<constraints nullable="true"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-disability_type">
 		<createTable tableName="disability_type">
@@ -167,6 +188,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="table-disability_report_tmp">
 		<createTable tableName="disability_report_tmp">
@@ -177,6 +201,9 @@
 				<constraints nullable="false"/>
 			</column>
 		</createTable>
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8MB4 COLLATE UTF8MB4_UNICODE_CI"/>
+		</modifySql>
 	</changeSet>
 	<changeSet author="liutkvai" id="foreign-keys">
 		<addForeignKeyConstraint constraintName="user_doctor_fk"
