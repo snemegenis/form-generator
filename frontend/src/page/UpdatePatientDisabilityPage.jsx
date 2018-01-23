@@ -3,6 +3,7 @@ import {ModifyDisability} from '../component/container/index';
 import PageTemplate from './PageTemplate.jsx';
 import RequireAuth from "../component/container/RequireAuth.jsx";
 import i18n from "../i18n/i18n"
+import { withRouter } from 'react-router'
 
 const UpdatePatientDisabilityPage = (match) => {
   return (
@@ -13,4 +14,4 @@ const UpdatePatientDisabilityPage = (match) => {
   );
 };
 
-export default RequireAuth(UpdatePatientDisabilityPage);
+export default RequireAuth(withRouter(UpdatePatientDisabilityPage));

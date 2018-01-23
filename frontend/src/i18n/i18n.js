@@ -138,7 +138,8 @@ i18n.use(LanguageDetector).init({
         "Yes": "Yes",
         "No": "No",
         "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?":
-        "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?"
+        "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?",
+        "Data is loading..." : "Data is loading..."
       }
     },
     lt: {
@@ -283,7 +284,8 @@ i18n.use(LanguageDetector).init({
         "Yes": "Taip",
         "No": "Ne",
         "Patient {{firstName}} {{lastName}} has temporary changes and these changes will not be reflected. Do you want to continue?":
-        "Laikini paciento {{firstName}} {{lastName}} neįgalumo pakeitimai dar nėra išsaugoti ir nebus spausdinami. Ar norite tęsti?"
+        "Laikini paciento {{firstName}} {{lastName}} neįgalumo pakeitimai dar nėra išsaugoti ir nebus spausdinami. Ar norite tęsti?",
+        "Data is loading...": "Vyksta duomenų atnaujinimas - prašome palaukti"
       }
     }
   },

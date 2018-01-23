@@ -18,8 +18,8 @@ import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.min.css';
 import '!style-loader!css-loader!font-awesome/css/font-awesome.min.css';
 
 import './style/main.css';
-import {setupAxiosInterceptors} from "../api/interceptor";
-import LoginPage from "../page/LoginPage.jsx";
+import {setupAxiosInterceptors} from "./api/interceptor";
+import LoginPage from "./page/LoginPage.jsx";
 import {bindActionCreators} from "redux";
 
 let store = storeFactory();

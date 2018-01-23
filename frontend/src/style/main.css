@@ -39,3 +39,10 @@
 .delete-action {
     text-align: right;
 }
+
+.loading {
+    text-align: center;
+}
+.loading span {
+
+}

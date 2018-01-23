@@ -1,7 +1,7 @@
 {
   "patients": {
-    "isLoading": false,
-    "isLoadingError": false,
+    "isProcessing": false,
+    "isProcessingError": false,
     "activePatient": {},
     "data": []
   },

@@ -4,8 +4,11 @@ import NotificationsSystem from 'reapop';
 import {UserInfoView} from "../component/container/index";
 import {Navbar, PageHeader} from "react-bootstrap";
 import i18n from "../i18n/i18n";
+import {connect} from 'react-redux'
+import Loading from 'react-loading-spinner';
+import Spinner from '../component/ui/Spinner.jsx';
 
-const PageTemplate = ({header, children}) =>
+const PageTemplate = ({isProcessing, header, children}) =>
   <div className="container">
     <Navbar collapseOnSelect>
       <Navbar.Header>
@@ -16,7 +19,9 @@ const PageTemplate = ({header, children}) =>
     </Navbar>
     <PageHeader>{header}</PageHeader>
     <NotificationsSystem theme={theme}/>
-    {children}
+    <Loading isLoading={isProcessing} loadingClassName="loading" children={children} spinner={Spinner}/>
   </div>;
 
-export default PageTemplate;
+export default connect(state => ({
+  isProcessing: state.patients.isProcessing || state.user.isProcessing
+}), null)(PageTemplate);

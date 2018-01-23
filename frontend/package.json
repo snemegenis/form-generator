@@ -57,6 +57,7 @@
     "react-file-download": "^0.3.4",
     "react-i18next": "^7.0.2",
     "react-input-mask": "^1.0.7",
+    "react-loading-spinner": "^1.0.12",
     "react-number-format": "^3.0.2",
     "react-redux": "^5.0.6",
     "react-router": "^2.8.1",

@@ -10,10 +10,6 @@ const PatientList = (props) => {
     onPrint, onAdd, onUpdate, onRemove, onShowAll, onFilter, t
   } = props;
 
-  if (loading) {
-    return <div>Data is loading</div>
-  }
-
   let filterInput;
 
   const onShowAllClick = () => {
@@ -85,7 +81,6 @@ const PatientList = (props) => {
 
 PatientList.propTypes = {
   patients: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
   onPrint: PropTypes.func.isRequired,
   onDisabilityAdd: PropTypes.func.isRequired,
   onDisabilityUpdate: PropTypes.func.isRequired,
