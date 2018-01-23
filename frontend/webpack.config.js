@@ -8,8 +8,6 @@ const ExtendedDefinePlugin = require('extended-define-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'build');
 var SRC_DIR = path.resolve(__dirname, 'src');
-var APP_DIR = path.resolve(SRC_DIR, 'app');
-var CMP_DIR = path.resolve(SRC_DIR, 'component');
 
 // Loading user configuration.
 let nconf = require('nconf');
@@ -30,7 +28,7 @@ var CSSLoader = [
 ].join('&');
 
 var common = {
-  entry: APP_DIR + '/app.jsx',
+  entry: SRC_DIR + '/App.jsx',
   output: {
     path: BUILD_DIR,
     filename: '[name].js'

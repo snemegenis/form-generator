@@ -1,24 +1,23 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import storeFactory from '../store/index.js';
-import {loginAction, redirectToLoginWithMessage} from '../action/action';
-import {loadPatientsAction} from '../action/action';
+import storeFactory from './store/index.js';
+import {redirectToLoginWithMessage} from './action/action';
 import {Provider} from 'react-redux'
 import {Router, Route, hashHistory} from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import PatientsPage from '../page/PatientsPage.jsx'
-import AddPatientPage from '../page/AddPatientPage.jsx'
-import UpdatePatientPage from "../page/UpdatePatientPage.jsx";
-import AddPatientDisabilityPage from "../page/AddPatientDisabilityPage.jsx";
-import UpdatePatientDisabilityPage from "../page/UpdatePatientDisabilityPage.jsx";
+import PatientsPage from './page/PatientsPage.jsx'
+import AddPatientPage from './page/AddPatientPage.jsx'
+import UpdatePatientPage from "./page/UpdatePatientPage.jsx";
+import AddPatientDisabilityPage from "./page/AddPatientDisabilityPage.jsx";
+import UpdatePatientDisabilityPage from "./page/UpdatePatientDisabilityPage.jsx";
 import {I18nextProvider} from "react-i18next";
-import i18n from "../i18n/i18n";
+import i18n from "./i18n/i18n";
 
 import '!style-loader!css-loader!bootstrap/dist/css/bootstrap.min.css';
 import '!style-loader!css-loader!font-awesome/css/font-awesome.min.css';
 
-import '../style/main.css';
+import './style/main.css';
 import {setupAxiosInterceptors} from "../api/interceptor";
 import LoginPage from "../page/LoginPage.jsx";
 import {bindActionCreators} from "redux";
