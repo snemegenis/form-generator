@@ -32,6 +32,10 @@ class DisabilityForm extends React.Component {
     clearInterval(this.autoSaveTimer);
   }
 
+  isDiagnosisCodeInvalid(code) {
+    return !(code && code.match(/^\w+-\w+$/) !== null);
+  }
+
   isDiagnosisInvalid(diagnosis, error) {
 
     const {t} = this.props;
@@ -40,7 +44,7 @@ class DisabilityForm extends React.Component {
     if (!diagnosis) {
       diagnosis = {};
     }
-    if (maskedInvalid(diagnosis.code)) {
+    if (this.isDiagnosisCodeInvalid(diagnosis.code)) {
       error.code = t('Enter valid code');
       errorExist = true;
     }

@@ -266,7 +266,7 @@ i18n.use(LanguageDetector).init({
         "Enter one disability at least.": "Įveskite bent vieną siuntimo į neįgalumo ir darbingumo nustatymo tarnybą priežastį.",
         "Enter valid barthel index.": "Įveskite tesingą Barthel indekso reikšmę.",
         "Enter latest disability description.": "Įveskite laikinojo nedarbingumo trukmę per paskutinius 12 mėn.",
-        "Enter valid code": "Įveskite TLK-10-AM kodą",
+        "Enter valid code": "Įveskite teisingą TLK-10-AM kodą",
         "Enter text": "Įveskite TLK-10-AM kodą žodžiais",
         "Enter functional class": "Įveskite funkcinę klasę",
         "Enter degree": "Įveskite laipsnį",

@@ -5,11 +5,13 @@ import InputArea from "./form/InputArea.jsx";
 import Input from "./form/Input.jsx";
 import MaskedInput from "./form/MaskedInput.jsx";
 
+const normalizeCode = (value, previousValue) => value && value.match(/[\w-]+/) ? value : previousValue;
+
 const Diagnosis = ({t, name, withDetails = false}) => (
   <div className="form-group">
     <Row>
       <Field name={`${name}.code`} id={`disability.${name}.code`} label={t("Code")}
-             component={MaskedInput} mask="aaa-9999" outerDivClass="col-lg-2"/>
+             component={Input}  outerDivClass="col-lg-2" normalize={normalizeCode}/>
       <Field name={`${name}.text`} id={`disability.${name}.code`} label={t("Text")}
              component={Input} outerDivClass="col-lg-10"/>
     </Row>
