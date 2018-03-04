@@ -5,7 +5,7 @@ import InputArea from "./form/InputArea.jsx";
 import Input from "./form/Input.jsx";
 import MaskedInput from "./form/MaskedInput.jsx";
 
-const normalizeCode = (value, previousValue) => value && value.match(/[\w-]+/) ? value : previousValue;
+const normalizeCode = (value, previousValue) => !value || /^[\w\-]+$/.test(value) ? value : previousValue;
 
 const Diagnosis = ({t, name, withDetails = false}) => (
   <div className="form-group">
