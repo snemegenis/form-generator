@@ -43,6 +43,7 @@ public class AuthenticationController {
         ValidationHelper.validateRequired("credentials.username", credentials.getUsername());
         ValidationHelper.validateRequired("credentials.password", credentials.getPassword());
 
+        log.info("Trying to authenticate with user: {}", credentials.getUsername());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

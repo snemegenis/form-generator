@@ -3,7 +3,7 @@ import {translate} from "react-i18next";
 
 const Spinner = ({t = f=>f}) => {
   return <div>
-    <i className="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+    <i className="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true" />
     <h4>{t("Data is loading...")}</h4>
   </div>;
 };

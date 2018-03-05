@@ -8,7 +8,7 @@ import InputArea from "./form/InputArea.jsx";
 const Appointments = ({onRemoveAppointment, t, fields, meta, label}) => (
   <div className={"form-group " + (meta.error ? "has-error " : "")}>
     <label htmlFor="appointmentsTable" className="control-label">{label}</label>
-    <Table id="appointmentsTable" className="appointments borderless-but-last-body">
+    <Table id="appointmentsTable" className="appointments borderless-but-last-body" responsive={true}>
       <thead>
       <tr>
         <th>{t("Date")}</th>

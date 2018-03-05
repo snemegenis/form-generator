@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Patient from "./Patient.jsx";
 import {translate} from "react-i18next";
-import {Button, FormGroup, Glyphicon, InputGroup} from "react-bootstrap";
+import {Button, FormGroup, Glyphicon, InputGroup, Table} from "react-bootstrap";
 
 
 const PatientList = (props) => {
@@ -48,7 +48,7 @@ const PatientList = (props) => {
         </FormGroup>
       </div>
     </div>
-    <table className="patient-list table">
+    <Table className="patient-list" responsive={true}>
       <thead>
       <tr>
         <th>{t('Personal id')}</th>
@@ -74,7 +74,7 @@ const PatientList = (props) => {
                    onDisabilityUpdate={onDisabilityUpdate}/>)
       }
       </tbody>
-    </table>
+    </Table>
       <Button  onClick={() => onAdd()}><Glyphicon glyph="plus"/> {t('Add Patient')}</Button>
   </div>
 };
