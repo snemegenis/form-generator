@@ -6,7 +6,7 @@
 	<changeSet author="liutkvai" id="data-1">
 		<insert tableName="doctor">
 			<column name="id">1</column>
-			<column name="code">AKM-123</column>
+			<column name="code">08202</column>
 			<column name="first_name">Ona-Laimutė</column>
 			<column name="last_name">Liutkienė</column>
 			<column name="occupation">Šeimos gydytoja</column>
