@@ -26,8 +26,7 @@ public class Diagnosis implements Serializable{
 
     @JsonIgnore
     public boolean isValid() {
-        return code != null && text != null && functionalClass != null &&
-                degree != null && stage != null && history != null;
+        return code != null && text != null;
     }
 
 }

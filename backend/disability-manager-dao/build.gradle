@@ -24,13 +24,13 @@ ext.runList='prod'
 liquibase {
     activities {
         prod {
-            changeLogFile 'src/main/resources/db/changelog/change-log-1.0.xml'
+            changeLogFile 'src/main/resources/db/changelog/change-log.xml'
             url 'jdbc:mariadb://localhost:3306/disabilitymanager'
             username 'admin'
             password 'admin123'
         }
         dev {
-            changeLogFile 'src/main/resources/db/changelog/change-log-1.0.xml'
+            changeLogFile 'src/main/resources/db/changelog/change-log.xml'
             url 'jdbc:h2:mem//test'
             username 'sa'
             password ''

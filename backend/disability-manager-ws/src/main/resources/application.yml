@@ -7,7 +7,7 @@ security:
   basic:
     enabled: true
 liquibase:
-  change-log: "classpath:/db/changelog/change-log-1.0.xml"
+  change-log: "classpath:/db/changelog/change-log.xml"
 
 spring:
   session:
@@ -51,7 +51,7 @@ spring:
     password: admin123
     driver-class-name: org.mariadb.jdbc.Driver
 server:
-  contextPath: /disability-manager-ws
+  contextPath: /disabilitymanager
   port: 8443
   ssl:
     key-store: keystore.p12

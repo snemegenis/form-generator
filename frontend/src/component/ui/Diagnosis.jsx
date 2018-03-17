@@ -3,7 +3,7 @@ import {Row} from "react-bootstrap";
 import {Field} from "redux-form";
 import InputArea from "./form/InputArea.jsx";
 import Input from "./form/Input.jsx";
-import MaskedInput from "./form/MaskedInput.jsx";
+import {normalizeEmptyString} from "../../util/FieldUtil"
 
 const normalizeCode = (value, previousValue) => !value || /^[\w\-]+$/.test(value) ? value : previousValue;
 
@@ -17,16 +17,16 @@ const Diagnosis = ({t, name, withDetails = false}) => (
     </Row>
     <Row>
       <Field name={`${name}.functionalClass`} id={`disability.${name}.functionalClass`} label={t("Functional class")}
-             component={Input} outerDivClass="col-lg-4"/>
+             component={Input} outerDivClass="col-lg-4" normalize={normalizeEmptyString}/>
       <Field name={`${name}.degree`} id={`disability.${name}.degree`} label={t("Degree")}
-             component={Input} outerDivClass="col-lg-4"/>
+             component={Input} outerDivClass="col-lg-4" normalize={normalizeEmptyString}/>
       <Field name={`${name}.stage`} id={`disability.${name}.stage`} label={t("Stage")}
-             component={Input} outerDivClass="col-lg-4"/>
+             component={Input} outerDivClass="col-lg-4" normalize={normalizeEmptyString}/>
     </Row>
     <Field name={`${name}.history`} id={`disability.${name}.history`} label={t("Diagnosis history")}
-           component={InputArea} rows={4}/>
+           component={InputArea} rows={4} normalize={normalizeEmptyString}/>
     {withDetails && <Field name={`${name}.details`} id={`disability.${name}.details`} label={t("Diagnosis details")}
-                           component={InputArea} rows={4}/>}
+                           component={InputArea} rows={4} normalize={normalizeEmptyString}/>}
   </div>
 );
 

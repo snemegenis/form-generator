@@ -61,7 +61,7 @@ public class PersistenceConfigForTest {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDropFirst(true);
         liquibase.setDataSource(dataSource());
-        liquibase.setChangeLog("classpath:/db/changelog/change-log-1.0.xml");
+        liquibase.setChangeLog("classpath:/db/changelog/change-log.xml");
         return liquibase;
     }
 

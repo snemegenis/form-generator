@@ -611,16 +611,16 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
                         new Chunk(getBundleMessage("diagnosis.functional.class"), fontNormal));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
                 paragraphMainDiagnosisSecondLine.add(
-                        new Chunk(mainDiagnosis.getFunctionalClass(), fontNormalUnderLine));
+                        new Chunk(getMessageOrEmpty(mainDiagnosis.getFunctionalClass()), fontNormalUnderLine));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(getBundleMessage("diagnosis.degree"), fontNormal));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
-                paragraphMainDiagnosisSecondLine.add(new Chunk(mainDiagnosis.getDegree(), fontNormalUnderLine));
+                paragraphMainDiagnosisSecondLine.add(new Chunk(getMessageOrEmpty(mainDiagnosis.getDegree()), fontNormalUnderLine));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(getBundleMessage("diagnosis.stage"), fontNormal));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
-                paragraphMainDiagnosisSecondLine.add(new Chunk(mainDiagnosis.getStage(), fontNormalUnderLine));
+                paragraphMainDiagnosisSecondLine.add(new Chunk(getMessageOrEmpty(mainDiagnosis.getStage()), fontNormalUnderLine));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(getBundleMessage("diagnosis.history"), fontNormal));
                 paragraphMainDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
-                paragraphMainDiagnosisSecondLine.add(new Chunk(mainDiagnosis.getHistory(), fontNormalUnderLine));
+                paragraphMainDiagnosisSecondLine.add(new Chunk(getMessageOrEmpty(mainDiagnosis.getHistory()), fontNormalUnderLine));
                 document.add(paragraphMainDiagnosisSecondLine);
 
                 // Other diagnosis
@@ -652,22 +652,22 @@ public class ITextReportGeneratorImpl implements ReportGenerator {
                                 new Chunk(getBundleMessage("diagnosis.functional.class"), fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(
-                                new Chunk(otherDiagnosis.getFunctionalClass(), fontNormalUnderLine));
+                                new Chunk(getMessageOrEmpty(otherDiagnosis.getFunctionalClass()), fontNormalUnderLine));
                         paragraphOtherDiagnosisSecondLine.add(
                                 new Chunk(getBundleMessage("diagnosis.degree"), fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(
-                                new Chunk(otherDiagnosis.getDegree(), fontNormalUnderLine));
+                                new Chunk(getMessageOrEmpty(otherDiagnosis.getDegree()), fontNormalUnderLine));
                         paragraphOtherDiagnosisSecondLine.add(
                                 new Chunk(getBundleMessage("diagnosis.stage"), fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(
-                                new Chunk(otherDiagnosis.getStage(), fontNormalUnderLine));
+                                new Chunk(getMessageOrEmpty(otherDiagnosis.getStage()), fontNormalUnderLine));
                         paragraphOtherDiagnosisSecondLine.add(
                                 new Chunk(getBundleMessage("diagnosis.history"), fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(new Chunk(" ", fontNormal));
                         paragraphOtherDiagnosisSecondLine.add(
-                                new Chunk(otherDiagnosis.getHistory(), fontNormalUnderLine));
+                                new Chunk(getMessageOrEmpty(otherDiagnosis.getHistory()), fontNormalUnderLine));
 
                         if (otherDiagnosis.getDetails() != null) {
                             document.add(paragraphOtherDiagnosisSecondLine);

@@ -6,13 +6,13 @@
 			</encoder>
 		</appender>
 
-		<root level="debug">
+		<root level="info">
 			<appender-ref ref="STDOUT" />
 		</root>
 	</springProfile>
 	<springProfile name="prod">
 		<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-			<file>c:\temp\disability-manager-backend.log</file>
+			<file>c:\DisabilityManager\disability-manager-backend.log</file>
 			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 				<!-- rollover daily -->
 				<fileNamePattern>disability-manager-backend-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>

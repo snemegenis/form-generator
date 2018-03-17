@@ -52,22 +52,6 @@ class DisabilityForm extends React.Component {
       error.text = t('Enter text');
       errorExist = true;
     }
-    if (trimmedEmpty(diagnosis.functionalClass)) {
-      error.functionalClass = t('Enter functional class');
-      errorExist = true;
-    }
-    if (trimmedEmpty(diagnosis.degree)) {
-      error.degree = t('Enter degree');
-      errorExist = true;
-    }
-    if (trimmedEmpty(diagnosis.stage)) {
-      error.stage = t('Enter stage');
-      errorExist = true;
-    }
-    if (trimmedEmpty(diagnosis.history)) {
-      error.history = t('Enter diagnosis history');
-      errorExist = true;
-    }
 
     return errorExist;
 

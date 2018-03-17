@@ -90,7 +90,6 @@ export const patients = (state = {isProcessing: false, isProcessingError: false,
     case constants.SAVE_DISABILITY_ERROR:
       return {
         ...state,
-        activeDisability: null,
         isProcessing: false,
         isProcessingError: true,
         error: action.data

@@ -1,0 +1,12 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="liutkvai" id="update-table-diagnosis">
+        <dropNotNullConstraint columnName="functional_class" tableName="diagnosis" columnDataType="VARCHAR(100)"/>
+        <dropNotNullConstraint columnName="degree" tableName="diagnosis" columnDataType="VARCHAR(100)"/>
+        <dropNotNullConstraint columnName="stage" tableName="diagnosis" columnDataType="VARCHAR(100)"/>
+        <dropNotNullConstraint columnName="history" tableName="diagnosis" columnDataType="VARCHAR(3000)"/>
+    </changeSet>
+</databaseChangeLog>
